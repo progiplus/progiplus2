@@ -1,0 +1,279 @@
+/* ============================= */
+/* ============================= */
+/* ========== GENERAL ========== */
+/* ============================= */
+/* ============================= */
+*{
+    margin: 0;
+    padding:0;
+}
+body{
+    width: auto;
+    margin: auto;
+	background-color:#264040;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.wrapper{
+    width: 960px;
+    margin: auto;
+    margin-top: 30px;
+}
+nav{
+    width: 200px;
+	display: inline-block;
+}
+h1{
+	color:white;
+	position:relative;
+	text-align:center;
+    height: 100px;
+	padding-top: 100px;
+}
+section{
+	width: 750px;
+	display: inline-block;
+	float: right;
+	text-align: center;
+}
+.separation{
+	border: 2px solid white;
+	margin: 20px 0;
+}
+/* ================================ */
+/* ================================ */
+/* ========== NAVIGATION ========== */
+/* ================================ */
+/* ================================ */
+
+#logo{
+    width: 200px;
+}
+#menu{
+    width: 200px;
+    height: 600px;
+    background-color: rgb(67, 112, 112);
+}
+#menu ul {
+    list-style-type: none;
+    width: auto;
+    z-index: 10;
+ }
+#menu ul li{
+    text-align:center;
+    height:40px;
+    line-height: 40px;	
+}
+#menu ul li:first-child{
+    text-align:center;
+    height:40px;
+    line-height: 40px;
+}
+#menu ul li a:hover {
+    background-color: #555;
+    color: white;
+}
+#menu ul li a {
+    display:block;
+    width:200px;
+    color:white;
+    font-weight:bold;
+    text-decoration:none;
+ }
+#menu ul li ul {
+    position:absolute;
+	margin-left:100px;
+	background-color: #555;
+	margin-top: -40px;
+	display:none;
+}
+#menu ul li:hover ul {
+    display:inline-block;
+}
+#menu ul li:hover ul li {
+
+ float:none;
+}
+#menu ul a:hover ul li {
+    background-color: yellow;
+    color: white;
+}
+
+#formMenu{
+	text-align: center;
+	padding-top: 10px;
+}
+#rechercher{
+	width:180px;
+	height:30px;
+	margin:10px 0 10px 0;
+}
+#rechercher input
+{
+    width: 162px;
+    height: 36px;
+    display:inline-block;
+}
+#rechercher button{
+	height: 40px;
+    float: right;
+}
+
+#icone-man{
+    width:30px;
+	margin: auto;	
+}
+#icone-man svg{
+	fill: white;
+}
+#input-rechercher{
+	margin-top: 10px;
+	display:inline-block;
+}
+#input-rechercher input{
+	margin-left: 10px;
+	width:140px;
+}
+#button-search{
+    background-color:#264040;
+    display:inline;
+    margin-left: -5px;
+}
+
+#button-search svg
+{
+    display: inline-block;
+    height: 10px;
+    width: 18px;
+    /*background-color:;*/
+    fill: white;
+}
+.imageRechercher
+{
+	width: 30px;
+	height: 36px;
+}
+
+/* ================================ */
+/* ================================ */
+/* ========== DATA TABLE ========== */
+/* ================================ */
+/* ================================ */
+table
+{
+  border-collapse: collapse;
+  width: 100%;
+
+}
+table,th,td
+{
+  border: 1px solid silver;
+}
+
+
+th,td
+{
+  padding: 3px;
+  padding-left: 15px;
+}
+
+
+th
+{
+    background-color: #4CAF50;
+    color:white;
+}
+tr:nth-child(even)
+{
+  background-color: #f2f2f2;
+}
+#bouton_ajouter
+{
+	position:relative;
+	margin-bottom: 10px;
+	width:30%;
+	float:right;
+}
+.dataTables_wrapper
+{
+	position:relative;
+	text-align: center;
+	margin-left: auto;
+  margin-right: auto;
+}
+#table_produits_length,#table_produits_filter,#table_produits_info,#table_produits_previous,#table_produits_next
+{
+	color:white;
+}
+/* The Modal (background) */
+#modal_modif_produit,#modal_ajouter_produit
+{
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* Modal Content */
+
+.modal-content {
+
+	position: relative;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 0;
+	border: 1px solid #888;
+	width: 50%;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+
+/* The Close Button */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.close {
+	color: white;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+.close:hover,.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+.modal-header {
+	padding: 2px 16px;
+	background-color: #5cb85c;
+	color: white;
+}
+.modal-body {
+	padding: 2px 16px;
+}
+
+.modal-footer {
+	padding: 2px 16px;
+	background-color: #5cb85c;
+	color: white;
+}
+.imageTableau{
+	height: 20px;
+}
+.dataTables_length{
+	margin-bottom: 10px;
+
+}

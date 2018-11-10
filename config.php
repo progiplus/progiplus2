@@ -5,7 +5,7 @@ class Database
     private static $hote = 'localhost' ;
     private static $bdd = 'progiplus';
     private static $dbUser = 'root';
-    private static $dbMdp = '';
+    private static $dbMdp = 'Rugbyman47';
     
     private static $pdo = null;
     
@@ -42,6 +42,7 @@ $emailEnt = "contact@progiplus.fr";
 $rueEnt = "22 rue des Genies";
 $codePostalEnt = "33000";
 $villeEnt = "Bordeaux";
+$siret = "1234567890123";
 
 
 ?>

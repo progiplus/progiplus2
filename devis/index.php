@@ -1,8 +1,18 @@
 <?php 
 	require_once('../config.php');
+	require_once('../functions.php');
+	require_once('../includes/Models/devis.php');
 
-	/*requete php a mettre ici*/
-	
+
+	$db = Database::connect();
+//SQL liste devis : Code client, Civilite Nom prenom ou raison social, date devis, montant 
+
+	$statement = $db->query(' 
+		SELECT client.code_client AS code_cli,client.raison_sociale AS rs,CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom) AS nom_cli,contact.service
+		FROM contact
+		INNER JOIN client ON client.id_client = contact.id_client
+		INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite');
+	Database::disconnect();
 	
 ?>
 
@@ -19,10 +29,36 @@
 			<?php include('../nav.php'); ?>
 
 			<section>
-				<h1>Progiplus</h1>
-			 <!--code a mettre ici-->
-				
-				
+				<h1>Liste Devis</h1>
+				<table id="table_client" class="display">
+					<thead>
+						<tr>
+							<th>Code client</th>
+							<th>Raison sociale ou Civilite/Nom/prenom</th>
+							<th>date devis</th>
+							<th>Montant</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+			 	<?php 
+					while($devis = $statement->fetchObject())
+					{
+								
+						
+						print '<tr>';
+							print '<td>' . $devis->code_cli . '</td>';
+							print(identiteClient($devis->rs,$devis->nom_cli));
+						
+							print '<td><a href="#"><img src="View/assets/pencil.png" class="imageTableau" title="Modifier Profil client" alt="bouton_modifier"/></a>
+							   <a href="#"><img src="View/assets/cancel.png" class="imageTableau" title="Supprimer Profil client" alt="bouton_supprimer"/></a>
+							</td>';
+						print '</tr>';
+					}
+					Database::disconnect();
+					?>
+					</tbody>
+				</table>
 			</section>
 		</div>
     </body>    

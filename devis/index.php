@@ -48,7 +48,7 @@
 						
 						print '<tr>';
 							print '<td>' . $devis->code_cli . '</td>';
-							print(identiteClient($devis->rs,$devis->nom_cli));
+							identiteClient($devis->rs,$devis->nom_cli);
 						
 							print '<td><a href="#"><img src="View/assets/pencil.png" class="imageTableau" title="Modifier Profil client" alt="bouton_modifier"/></a>
 							   <a href="#"><img src="View/assets/cancel.png" class="imageTableau" title="Supprimer Profil client" alt="bouton_supprimer"/></a>

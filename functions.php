@@ -13,7 +13,7 @@ function checkInput($data)
 
 function identiteClient($ent,$part){
 	if(!empty($ent)){
-		$result = print '<td>'. $ent .'</td>';
+		$result = print '<td>'.$ent.'</td>';
 	}
 	else{
 		$result = print '<td>'.$part.'</td>';

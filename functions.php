@@ -19,12 +19,7 @@ function identiteClient($ent,$part){
 
 function dateFr($dateAmericaine){
 	$date = explode("-",$dateAmericaine);
-	$jour = $date[2];
-	$mois = $date[1];
-	$annee = $date[0];
-	
-	$nouvelleDate = implode("-","-",$date);
-	
+	$nouvelleDate = $date[2].'-'.$date[1].'-'.$date[0];
 	return $nouvelleDate;
 }
 ?>

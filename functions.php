@@ -1,7 +1,4 @@
 <?php
-require_once('../includes/Models/devis.php');
-	require_once('../includes/Models/client.php');
-
 function checkInput($data) 
 {
 	$data = trim($data);

@@ -8,10 +8,11 @@
 //SQL liste devis : Code client, Civilite Nom prenom ou raison social, date devis, montant 
 
 	$statement = $db->query(' 
-		SELECT client.code_client AS code_cli,client.raison_sociale AS rs,CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom) AS nom_cli,contact.service
+		SELECT client.code_client AS code_cli,client.raison_sociale AS rs,CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom) AS nom_cli,contact.service,devis.date_devis AS dateDevis
 		FROM contact
-		INNER JOIN client ON client.id_client = contact.id_client
-		INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite');
+		INNER JOIN client ON contact.id_client = client.id_client
+		INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite
+		INNER JOIN devis ON client.id_client = devis.id_client');
 	Database::disconnect();
 	
 ?>
@@ -44,12 +45,10 @@
 			 	<?php 
 					while($devis = $statement->fetchObject())
 					{
-								
-						
 						print '<tr>';
 							print '<td>' . $devis->code_cli . '</td>';
 							identiteClient($devis->rs,$devis->nom_cli);
-						
+							print '<td>' . dateFr($devis->dateDevis) . '</td>';
 							print '<td><a href="#"><img src="View/assets/pencil.png" class="imageTableau" title="Modifier Profil client" alt="bouton_modifier"/></a>
 							   <a href="#"><img src="View/assets/cancel.png" class="imageTableau" title="Supprimer Profil client" alt="bouton_supprimer"/></a>
 							</td>';

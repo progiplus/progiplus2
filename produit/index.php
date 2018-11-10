@@ -20,7 +20,7 @@
 
 			<section>
 				<h1>Progiplus</h1>
-			 <!--code a mettre ici-->
+			 	<!--code a mettre ici-->
 				
 				<!--PENSE A FAIRE EN SORTE QU ON PUISSE CREER LES CATEGORIES, MARQUES .... 
 				DOUBLE TRAVAIL

@@ -42,6 +42,7 @@ $emailEnt = "contact@progiplus.fr";
 $rueEnt = "22 rue des Genies";
 $codePostalEnt = "33000";
 $villeEnt = "Bordeaux";
+$siret = "1234567890123";
 
 
 ?>

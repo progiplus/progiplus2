@@ -30,7 +30,10 @@
 <html>
     <head>
          <title> Devis</title>
-         <link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/style.css">
+         <link rel="stylesheet" type="text/css" href="../includes/styles/datatables.css">
+         <link rel="stylesheet" type="text/css" href="../includes/styles/style.css">
+         <link rel="icon" href="../includes/assets/favicon.ico" />
+         <script type="text/javascript"  src="../includes/scripts/general.js"></script>
          <meta charset="UTF-8">    
     </head>
     
@@ -70,11 +73,16 @@
 							</td>';
 						print '</tr>';
 					}
-					Database::disconnect();
 					?>
 					</tbody>
+					<tfoot>
+						<tr><td colspan="7"><a href="#"><button>Nouveau Devis</button></a></td></tr>
+
+					</tfoot>
 				</table>
 			</section>
 		</div>
-    </body>    
+    </body>
+    <script type="text/javascript"  src="../includes/scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript"  src="../includes/scripts/datatables.js"></script>
 </html>

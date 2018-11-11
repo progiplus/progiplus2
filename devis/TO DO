@@ -3,3 +3,12 @@ BDD : reglage des chiffres apres la virgule (2)
 
 Tableau : 
 bouton action : annuler, transformer en facture, imprimer
+
+page devis : ajout bouton '+' afin d'ajouter des lignes
+recuperation des clients, produits
+calcul du prix par ligne
+calcul total ht
+calcul de la tva
+calcul total ttc
+
+Ajouter la possibilite de faire des remises

@@ -43,6 +43,13 @@ $rueEnt = "22 rue des Genies";
 $codePostalEnt = "33000";
 $villeEnt = "Bordeaux";
 $siret = "1234567890123";
-
+$infoEnt =
+	$nomEnt .'</br>
+	Tel : '. $telFixeEnt.'</br>
+	Mobile : '.$telMobileEnt.'</br>
+	Email : '.$emailEnt.'</br>
+	'.$rueEnt.'</br>
+	'.$codePostalEnt.' '. $villeEnt .'</br>
+	Siret : '.$siret;
 
 ?>

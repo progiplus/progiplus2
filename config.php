@@ -2,13 +2,13 @@
 
 class Database
 {
-    private static $hote = 'localhost' ;
+    private static $hote = 'localhost:3308' ;
     private static $bdd = 'progiplus';
     private static $dbUser = 'root';
-    private static $dbMdp = '';
-    
+    private static $dbMdp = 'assbutt33';
+
     private static $pdo = null;
-    
+
     public static function connect()
     {
         try
@@ -22,16 +22,16 @@ class Database
         }
         return self::$pdo;
     }
-    
+
     public static function disconnect()
     {
         self::$pdo = null;
-    } 
+    }
 }
 
 /**
 *
-* INFO ENTREPRISE UTILISATRICE 
+* INFO ENTREPRISE UTILISATRICE
 *
 **/
 

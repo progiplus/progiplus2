@@ -2,24 +2,17 @@
 	require_once('../config.php');
 	require '../modales.php';
 
-	// $db = Database::connect();
-	//
-	// $statement = $db->query('
-	//
-	// 	SELECT 	client.code_client AS code_cli,
-	// 			client.raison_sociale AS rs,
-	// 			CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom) AS nom_cli,
-	// 			devis.date_devis AS date,
-	// 			devis.id_devis AS numDevis,
-	// 			SUM(ligne_devis_client.quantite * ligne_devis_client.prixU) AS montant
-	// 	FROM contact
-	// 	INNER JOIN client ON client.id_client = contact.id_client
-	// 	INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite
-	// 	INNER JOIN devis ON client.id_client = devis.id_client
-	// 	INNER JOIN ligne_devis_client ON devis.id_devis = ligne_devis_client.id_devis
-	// 	GROUP BY devis.id_devis,nom_cli
-	// 	');
-	// Database::disconnect();
+	$db = Database::connect();
+
+	$statement = $db->query('
+	SELECT reference, designation, prix_unitaire_ht, categorie.libelle as libelleC, marque.nom as nomM, gamme.libelle as libelleG FROM produit
+	INNER JOIN categorie ON categorie.id_categorie=produit.id_categorie
+	INNER JOIN gamme ON gamme.id_gamme=produit.id_gamme
+	INNER JOIN marque ON marque.id_marque=gamme.id_marque
+	GROUP BY produit.reference, produit.designation;
+	');
+
+	Database::disconnect();
 ?>
 
 <!DOCTYPE html>
@@ -37,14 +30,12 @@
 			<?php include('../nav.php'); ?>
 
 			<section>
-				<h1>Progiplus</h1>
 
 				<h1>Liste des Produits</h1>
 
 				<button id="bouton_ajouter" type="button">Ajouter un nouveau produit</button>
 
-				<!--<table id="table_produits" class="display">-->
-				<table id="table_produits">
+				<table id="table_produits" class="display">
 				  <thead>
 				    <tr>
 							<th>Référence</th>
@@ -57,36 +48,22 @@
 				    </tr>
 				  </thead>
 				  <tbody>
-				    <tr>
-				      <td>---</td>
-				      <td>---</td>
-				      <td>---</td>
-							<td>---</td>
-							<td>---</td>
-							<td>---</td>
-				      <td><img class="modal_modif" src="../includes/assets/pencil.png" title="Modifier Profil produit" alt="bouton_modifier" height="20">
-				          <a href="#"><img src="../includes/assets/cancel.png" title="Supprimer Profil produit" alt="bouton_supprimer" height="20"/></a></td>
-				    </tr>
-				    <tr>
-				      <td>---</td>
-				      <td>---</td>
-				      <td>---</td>
-							<td>---</td>
-							<td>---</td>
-							<td>---</td>
-				      <td><img class="modal_modif" src="../includes/assets/pencil.png" title="Modifier Profil produit" alt="bouton_modifier" height="20">
-				          <a href="#"><img src="../includes/assets/cancel.png" title="Supprimer Profil produit" alt="bouton_supprimer" height="20"/></a></td>
-				    </tr>
-				    <tr>
-				      <td>---</td>
-				      <td>---</td>
-				      <td>---</td>
-							<td>---</td>
-							<td>---</td>
-							<td>---</td>
-				      <td><img class="modal_modif" src="../includes/assets/pencil.png" title="Modifier Profil produit" alt="bouton_modifier" height="20">
-				          <a href="#"><img src="../includes/assets/cancel.png" title="Supprimer Profil produit" alt="bouton_supprimer" height="20"/></a></td>
-				    </tr>
+						<?php
+							while($produit = $statement->fetchObject())
+							{
+								print '<tr>';
+									print '<td>' . $produit->reference . '</td>';
+									print '<td>' . $produit->designation . '</td>';
+									print '<td>' . $produit->prix_unitaire_ht . '</td>';
+									print '<td>' . $produit->nomM . '</td>';
+									print '<td>' . $produit->libelleG . '</td>';
+									print '<td>' . $produit->libelleC . '</td>';
+									print '<td><img class="modal_modif" src="../includes/assets/pencil.png" title="Modifier Produit" alt="bouton_modifier" height="20">
+						          <a href="#"><img src="../includes/assets/cancel.png" title="Supprimer Produit" alt="bouton_supprimer" height="20"/></a></td>';
+								print '</tr>';
+							}
+							Database::disconnect();
+							?>
 				  </tbody>
 				</table>
 

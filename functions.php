@@ -22,4 +22,5 @@ function dateFr($dateAmericaine){
 	$nouvelleDate = $date[2].'-'.$date[1].'-'.$date[0];
 	return $nouvelleDate;
 }
+
 ?>

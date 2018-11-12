@@ -5,7 +5,7 @@ class Database
     private static $hote = 'localhost' ;
     private static $bdd = 'progiplus';
     private static $dbUser = 'root';
-    private static $dbMdp = '';
+    private static $dbMdp = 'Rugbyman47';
     
     private static $pdo = null;
     
@@ -52,4 +52,6 @@ $infoEnt =
 	'.$codePostalEnt.' '. $villeEnt .'</br>
 	Siret : '.$siret;
 
+
+$dateActuel = date("d/m/Y");
 ?>

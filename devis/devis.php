@@ -33,6 +33,7 @@
 							 ?>
 							</div>
 							<div id="infoClient">
+								<label class="labelEnLigne">Code client : </label><input type="text" name="codeClient" id="codeClient"/><br>
 								<input type="radio" name="rdciv" value="1" />Madame
 								<input type="radio" name="rdciv" value="2" />Monsieur <br>
 								<label class="labelEnLigne">Nom : </label><input type="text" name="nomClient" id="nomClient"/><br>
@@ -44,7 +45,7 @@
 						</div>
 						<div id="infoDevis">
 							<div id="numDevis"> Devis Numero : </div>
-							<div id="dateDevis"><?php print "Fait a  $villeEnt le Date"?></div>
+							<div id="dateDevis"><?php print 'Fait a '. $villeEnt.' le '. $dateActuel?></div>
 						</div>
 						<table id="corpsDevis">
 							<thead>

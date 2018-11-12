@@ -76,7 +76,7 @@
 					?>
 					</tbody>
 					<tfoot>
-						<tr><td colspan="7"><a href="#"><button>Nouveau Devis</button></a></td></tr>
+						<tr><td colspan="7"><a href="devis.php"><button>Nouveau Devis</button></a></td></tr>
 
 					</tfoot>
 				</table>

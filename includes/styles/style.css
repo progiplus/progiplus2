@@ -277,3 +277,17 @@ tr:nth-child(even)
 	margin-bottom: 10px;
 
 }
+
+/* Formulaire Client */
+
+
+.label{
+    color: white;
+}
+input {
+ background: #2d2d2d;
+    border-radius: 10px;
+    margin: 10px;
+    width: 430px;
+}
+

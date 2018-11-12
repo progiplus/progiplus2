@@ -9,10 +9,10 @@ function checkInput($data)
 
 function identiteClient($ent,$part){
 	if(!empty($ent)){
-		$result = print '<td>'.$ent.'</td>';
+		$result = $ent;
 	}
 	else{
-		$result = print '<td>'.$part.'</td>';
+		$result = $part;
 	}
 	return $result;
 }

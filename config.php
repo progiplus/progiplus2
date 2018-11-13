@@ -6,6 +6,8 @@ class Database
     private static $bdd = 'progiplus';
     private static $dbUser = 'root';
     private static $dbMdp = 'Rugbyman47';
+    private static $dbMdp = 'root';
+
     
     private static $pdo = null;
     
@@ -52,6 +54,6 @@ $infoEnt =
 	'.$codePostalEnt.' '. $villeEnt .'</br>
 	Siret : '.$siret;
 
-
 $dateActuel = date("d/m/Y");
+
 ?>

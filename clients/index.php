@@ -1,6 +1,5 @@
 <?php 
 	require_once('../config.php');
-
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +16,16 @@
 
 			<section>
 				<h1>Progiplus</h1>
+                <table id="table_client" class="display">
+                    <thead>
+                        <tr>
+                            <td>Nom</td>
+                            <td>Prenom</td>
+
+                        </tr>
+                    </thead>
+                </table>
 			</section>
 		</div>
-    </body>    
+    </body>
 </html>

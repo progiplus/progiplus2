@@ -5,11 +5,10 @@
 
 
 	$db = Database::connect();
-//SQL liste devis : Code client, Civilite Nom prenom ou raison social, date devis, montant 
-
 	$statement = $db->query(' 
 
 		SELECT 	client.code_client AS code_cli,
+				client.id_client,
 				client.raison_sociale AS rs,
 				CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom) AS nom_cli,
 				devis.date_devis AS date,
@@ -58,18 +57,17 @@
 			 	<?php 
 					while($devis = $statement->fetchObject())
 					{
-
 						print '<tr>';
 							print '<td>' . $devis->numDevis . '</td>';
 							print '<td>' . $devis->code_cli . '</td>';
-							identiteClient($devis->rs,$devis->nom_cli);
+							print '<td>' . identiteClient($devis->rs,$devis->nom_cli) .'</td>';
 							print '<td>' . dateFr($devis->date) . '</td>';
 							print '<td>' . $devis->montant . '</td>';
 							print '<td>
-										<a href="#"><img src="../includes/assets/pencil.png" class="imageTableau" title="Modifier Devis" alt="bouton_modifier"/></a>
-							   			<a href="#"><img src="../includes/assets/cancel.png" class="imageTableau" title="Supprimer Profil client" alt="bouton_supprimer"/></a>
-							   			<a href="#"><img src="#" class="imageTableau" title="Supprimer Profil client" alt="voir"/></a>
-							   			<a href="#"><img src="#" class="imageTableau" title="Supprimer Profil client" alt="Facture"/></a>
+										<a href="view.php?id='.$devis->id_client.'"><img src="../includes/assets/pencil.png" class="imageTableau" title="Modifier Devis" alt="bouton_modifier"/></a>
+							   			<a href="#"><img src="../includes/assets/cancel.png" class="imageTableau" title="Supprimer Devis" alt="bouton_supprimer"/></a>
+							   			<a href="#"><img src="#" class="imageTableau" title="Voir devis" alt="voir"/></a>
+							   			<a href="#"><img src="#" class="imageTableau" title="Envoyer en facture" alt="Facture"/></a>
 							</td>';
 						print '</tr>';
 					}

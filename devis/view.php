@@ -1,9 +1,35 @@
 <?php
 	require_once('../config.php');
 	require_once('../functions.php');
-
-
-
+	if(!empty($_GET)){
+		if(isset($_GET)){
+			$id=$_GET['id'];
+			$db = Database::connect();
+			$statement = $db->prepare('
+				SELECT 	client.code_client AS code_cli,
+						client.id_client,
+						civilite.libelle,contact.nom,contact.prenom,
+						devis.date_devis AS dateDevis,
+						devis.id_devis
+				FROM devis
+				INNER JOIN client ON client.id_client = devis.id_client
+				INNER JOIN contact ON client.id_client = contact.id_client
+				INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite
+				INNER JOIN ligne_devis_client ON devis.id_devis = ligne_devis_client.id_devis
+				Where devis.id_devis = ?
+				');
+			$statement->execute(array($id));
+			Database::disconnect();
+			while($devis = $statement->fetchObject()){
+				$numDevis = $devis->id_devis;
+				$codeClient = $devis->code_cli;
+				$civiliteClient = $devis->libelle;
+				$nomClient = $devis->nom;
+				$prenomClient = $devis->prenom;
+				$date = dateFr($devis->dateDevis);
+			}
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -24,8 +50,7 @@
 		<?php include('../nav.php'); ?>
 
 		<section>
-			<h1>Nouveau devis Devis</h1>
-
+			<h1>Devis num <?php print $numDevis ?></h1>
 			<section id="devis">
 				<form method="post" action="devis.php">
 					<div id="info">
@@ -34,21 +59,22 @@
 								print $infoEnt;
 							 ?>
 						</div>
+
 						<div id="infoClient">
-							<label class="labelEnLigne">Code client : </label><input type="text" name="codeClient" id="codeClient" /><br>
+							<label class="labelEnLigne">Code client : </label><input type="text" name="codeClient" id="codeClient" value="<?php print $codeClient?>" /><br>
 							<input type="radio" name="rdciv" value="1" />Madame
 							<input type="radio" name="rdciv" value="2" />Monsieur <br>
-							<label class="labelEnLigne">Nom : </label><input type="text" name="nomClient" id="nomClient" /><br>
-							<label class="labelEnLigne">Prenom : </label><input type="text" name="prenomClient" id="prenomClient" /><br>
+							<label class="labelEnLigne">Nom : </label><input type="text" name="nomClient" id="nomClient" value="<?php print $nomClient?>"/><br>
+							<label class="labelEnLigne">Prenom : </label><input type="text" name="prenomClient" id="prenomClient" value="<?php print $prenomClient?>"/><br>
 							<label class="labelEnLigne">rue : </label><input type="text" name="rue" id="rue" /><br>
 							<label class="labelEnLigne">ville : </label><input type="text" name="ville" id="ville" /><br>
 							<label class="labelEnLigne">tel : </label><input type="text" name="tel" id="tel" /><br>
 						</div>
 					</div>
 					<div id="infoDevis">
-						<div id="numDevis"> Devis Numero : </div>
+						<div id="numDevis"> Devis Numero : <?php print $numDevis ?></div>
 						<div id="dateDevis">
-							<?php print 'Fait a '. $villeEnt.' le '. $dateActuel?>
+							<?php print 'Fait a '. $villeEnt.' le '. $date ?>
 						</div>
 					</div>
 					<table id="corpsDevis">

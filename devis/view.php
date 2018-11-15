@@ -163,7 +163,7 @@
 							</tr>
 							<tr>
 								<td colspan="3"></td>
-								<td colspan="2"><button type="submit" class="btn-valide">Valider</button><button class="btn-warning">Annuler</button></td>
+								<td colspan="2"><button type="submit" class="btn-xl btn-valide">Facturation</button><button class="btn-xl btn-warning">Annulation</button></td>
 							</tr>
 						</tfoot>
 					</table>

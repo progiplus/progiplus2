@@ -57,17 +57,27 @@
 #corpsDevis .quantiteProduit{
 	width: 50px;
 }
-.btn-valide, .btn-warning{
-	width: 80px;
-	height: 30px;
+.btn-l, .btn-xl{
 	border-radius: 5px;
 	color: white;
-	font-size: 16px;
 	font-weight: bold;
 }
+
+.btn-l{
+	width: 80px;
+	height: 30px;
+	font-size: 16px;
+}
+.btn-xl{
+	width: 100px;
+	height: 40px;
+	font-size: 16px;
+}
+
 .btn-valide{
 	background-color: darkgreen;
 }
 .btn-warning{
 	background-color: darkred;
 }
+

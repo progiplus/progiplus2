@@ -46,10 +46,10 @@
 						<tr>
 							<th style="width: 100px">N Devis</th>
 							<th style="width: 100px">Code client</th>
-							<th style="width: 200px">Raison sociale ou Civilite/Nom/prenom</th>
+							<th style="width: 200px">Clients</th>
 							<th style="width: 100px">date devis</th>
 							<th style="width: 100px">Montant</th>
-							<th style="width: 100px" colspan="2">Actions</th>
+							<th style="width: 100px">Actions</th>
 						</tr>
 					</thead>
 					<tbody>

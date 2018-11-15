@@ -12,7 +12,7 @@
 					CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom) AS nom_cli,
 					moyen_comm.valeur, type_moyen_comm.libelle,
 					liste_adresse.libelle AS libAdresse, CONCAT(adresse.ligne1," ",adresse.ligne2) AS adresse,
-					CONCAT(ville.cp_ville," ",ville.nom_ville)AS ville
+					CONCAT(ville.cp_ville," ",ville.nom_ville)AS ville,devis.id_devis,devis.date_devis
 			FROM contact
 			INNER JOIN client ON client.id_client = contact.id_client
 			INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite
@@ -52,7 +52,8 @@
 				$nomClient = $devis->nom_cli;
 				$adresse = $devis->adresse;
 				$ville = $devis->ville;
-
+				$numDevis = $devis->id_devis;
+				$dateDevis = dateFr($devis->date_devis);
 
 				if(!empty($devis->libelle)){
 					if($devis->libelle == "telephone"){
@@ -70,6 +71,7 @@
 					$fixe = $mobile = $fax = $email = " ";
 				}
 			}
+
 		}
 	}
 ?>
@@ -118,7 +120,7 @@
 					<div id="infoDevis">
 						<div id="numDevis"> Devis Numero : <?php print $numDevis ?></div>
 						<div id="dateDevis">
-							<?php print 'Fait a '. $villeEnt.' le ' ?>
+							<?php print 'Fait a '. $villeEnt.' le '. $dateDevis ?>
 						</div>
 					</div>
 					<table id="corpsDevis">
@@ -132,8 +134,6 @@
 						<tbody>
 							<?php
 								while($corpsDevis = $statementDevis->fetchObject()){
-									$date = dateFr($corpsDevis->date_devis);
-									$numDevis = $corpsDevis->date_devis;
 									print 	'<tr>
 												<td class="codeProduit">'.$corpsDevis->reference .'</td>
 												<td>'.$corpsDevis->designation .'</td>

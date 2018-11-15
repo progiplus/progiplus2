@@ -5,8 +5,7 @@
 
 
 	$db = Database::connect();
-	$statement = $db->query(' 
-
+	$statement = $db->query('
 		SELECT 	client.code_client AS code_cli,
 				client.id_client,
 				client.raison_sociale AS rs,
@@ -66,8 +65,7 @@
 							print '<td>
 										<a href="view.php?id='.$devis->id_client.'"><img src="../includes/assets/pencil.png" class="imageTableau" title="Modifier Devis" alt="bouton_modifier"/></a>
 							   			<a href="#"><img src="../includes/assets/cancel.png" class="imageTableau" title="Supprimer Devis" alt="bouton_supprimer"/></a>
-							   			<a href="#"><img src="#" class="imageTableau" title="Voir devis" alt="voir"/></a>
-							   			<a href="#"><img src="#" class="imageTableau" title="Envoyer en facture" alt="Facture"/></a>
+
 							</td>';
 						print '</tr>';
 					}

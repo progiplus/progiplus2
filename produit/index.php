@@ -4,11 +4,11 @@
 	$db = Database::connect();
 
 	$statement = $db->query('
-	SELECT reference, designation, prix_unitaire_ht, categorie.libelle as libelleC, marque.nom as nomM, gamme.libelle as libelleG FROM produit
+	SELECT reference, designation, prix_unitaire_ht, produit.actif, categorie.libelle as libelleC, marque.nom as nomM, gamme.libelle as libelleG FROM produit
 	INNER JOIN categorie ON categorie.id_categorie=produit.id_categorie
 	INNER JOIN gamme ON gamme.id_gamme=produit.id_gamme
 	INNER JOIN marque ON marque.id_marque=gamme.id_marque
-	GROUP BY produit.reference, produit.designation;
+	ORDER BY produit.reference
 	');
 
 	Database::disconnect();
@@ -59,12 +59,16 @@ require_once('../modales.php');
 									print '<td>' . $produit->nomM . '</td>';
 									print '<td>' . $produit->libelleG . '</td>';
 									print '<td>' . $produit->libelleC . '</td>';
-									print '<td><img class="boutonAppel" src="../includes/assets/pencil.png" title="Modifier Produit" alt="bouton_modifier" height="20">
-						          <a href="#"><img src="../includes/assets/cancel.png" title="Supprimer Produit" alt="bouton_supprimer" height="20"/></a></td>';
+									print '<td><img class="boutonAppel" src="../includes/assets/pencil.png" title="Modifier un Produit" alt="bouton_modifier" height="20">
+						          	 <input type="checkbox" title="Activer ou Désactiver un Produit" name= "actOrDeact" onclick="return confirm(\'Etes-vous sûr ?\');"/></td>';
 								print '</tr>';
 							}
 							Database::disconnect();
+
+
+
 							?>
+
 				  </tbody>
 				</table>
 
@@ -92,18 +96,18 @@ require_once('../modales.php');
 				}
 
 				$(".boutonAppel").on('click', function(){
-						$(".titreModale").text('Modifier la fiche Produit');
-						displayModal();
-					});
+					$(".titreModale").text('Modifier la fiche Produit');
+					displayModal();
+				});
 
 				$("#bouton_ajouter").on('click', function(){
-						$(".titreModale").text('Ajouter un Produit');
-						displayModal();
-					});
+					$(".titreModale").text('Ajouter un Produit');
+					displayModal();
+				});
 
 				$(document).ready( function () {
-				    $('#table_produits').DataTable();
-				} );
+					$('#table_produits').DataTable();
+				});
 
 				</script>
 

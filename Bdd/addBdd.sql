@@ -16,12 +16,12 @@ VALUES
 ("22 rue de la poste",NULL,1),
 ("2 avenue de la plage",NULL,3);
 
-INSERT INTO client (code_client, raison_sociale, actif)
+INSERT INTO client (code_client, raison_sociale, actif, id_adresse_facturation)
 VALUES 
-("Cl28",NULL,true),
-("ClPro25","Peinture and Co",true),
-("Cl29",NULL,true),
-("ClPro30","Le roi du bricolage",true);
+("Cl28",NULL,true,1),
+("ClPro25","Peinture and Co",true,2),
+("Cl29",NULL,true,3),
+("ClPro30","Le roi du bricolage",true,4);
 
 INSERT INTO contact (nom,prenom,service,id_client,id_civilite)
 VALUES 	("Duck","Donald",NULL,1,1),
@@ -36,7 +36,7 @@ VALUES
 ("0553349827",1),("0553345827",2),("0606060606",3),("Blablabla@email.fr",4);
 
 INSERT INTO contact_comm (id_contact, id_mcomm)
-VALUES (1,1),(2,2),(3,3),(4,4);
+VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(2,4),(3,1),(3,2),(3,3),(3,4),(4,1),(4,2),(4,3),(4,4);
 
 INSERT INTO liste_adresse(libelle,actif,id_client,id_adresse)
 VALUES

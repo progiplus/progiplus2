@@ -6,11 +6,25 @@ create table civilite(
 	id_civilite int(10) PRIMARY KEY AUTO_INCREMENT,
 	libelle VARCHAR(50) NOT NULL
 );
+CREATE TABLE ville(
+	id_ville INT(10) PRIMARY KEY AUTO_INCREMENT,
+	nom_ville VARCHAR(50) NOT NULL,
+	cp_ville VARCHAR(5)
+);
+CREATE TABLE adresse(
+	id_adresse INT(10) PRIMARY KEY AUTO_INCREMENT,
+	ligne1 VARCHAR(50) NOT NULL,
+	ligne2 VARCHAR(50),
+	id_ville INT  NOT NULL,
+	CONSTRAINT fk_id_ville FOREIGN KEY(id_ville) REFERENCES ville(id_ville)
+);
 CREATE TABLE client(
 	id_client INT(10) PRIMARY KEY AUTO_INCREMENT,
 	code_client VARCHAR(25) NOT NULL,
 	raison_sociale VARCHAR(150),
-    actif BOOL NOT NULL
+    actif BOOL NOT NULL,
+    id_adresse_facturation INT(10),
+    CONSTRAINT fk_client_adresse FOREIGN KEY(id_adresse_facturation) REFERENCES adresse(id_adresse)
 );
 CREATE TABLE contact(
 	id_contact INT(10) PRIMARY KEY AUTO_INCREMENT,
@@ -39,18 +53,6 @@ CREATE TABLE contact_comm(
 	CONSTRAINT fk_id_contact FOREIGN KEY(id_contact) REFERENCES contact(id_contact),
 	CONSTRAINT fk_id_mcomm FOREIGN KEY(id_mcomm) REFERENCES moyen_comm(id_mcomm)
 );
-CREATE TABLE ville(
-	id_ville INT(10) PRIMARY KEY AUTO_INCREMENT,
-	nom_ville VARCHAR(50) NOT NULL,
-	cp_ville VARCHAR(5)
-);
-CREATE TABLE adresse(
-	id_adresse INT(10) PRIMARY KEY AUTO_INCREMENT,
-	ligne1 VARCHAR(50) NOT NULL,
-	ligne2 VARCHAR(50),
-	id_ville INT  NOT NULL,
-	CONSTRAINT fk_id_ville FOREIGN KEY(id_ville) REFERENCES ville(id_ville)
-);
 CREATE TABLE liste_adresse(
 	id_liste_adresse INT(10) PRIMARY KEY AUTO_INCREMENT,
 	libelle VARCHAR(50) NOT NULL,
@@ -62,7 +64,7 @@ CREATE TABLE liste_adresse(
 );
 CREATE TABLE tva(
 	id_tva int (10) PRIMARY KEY AUTO_INCREMENT,
-	taux DECIMAL(4,2) NOT NULL,
+	taux FLOAT(4,2) NOT NULL,
 	actif BOOL NOT NULL,
 	CONSTRAINT chk_taux CHECK (taux > 0 )
 );
@@ -87,7 +89,7 @@ CREATE TABLE gamme(
 CREATE TABLE produit(
 	reference VARCHAR(50) PRIMARY KEY,
 	designation VARCHAR(50) NOT NULL,
-	prix_unitaire_ht DECIMAL(6,2) NOT NULL,
+	prix_unitaire_ht FLOAT(6,2) NOT NULL,
 	actif BOOL NOT NULL,
 	id_gamme INT(10) NOT NULL,
 	id_categorie INT NOT NULL,
@@ -121,8 +123,8 @@ CREATE TABLE facture(
 );
 CREATE TABLE ligne_devis_client(
 	id_ligne_devis INT(10) PRIMARY KEY AUTO_INCREMENT,
-	quantite DECIMAL(5,2) NOT NULL,
-    prixU DECIMAL(6,2) NOT NULL,
+	quantite FLOAT(5,2) NOT NULL,
+    prixU FLOAT(6,2) NOT NULL,
 	reference VARCHAR(50) NOT NULL,
 	id_tva INT(10) NOT NULL,
 	id_devis INT(10) NOT NULL,
@@ -133,8 +135,8 @@ CREATE TABLE ligne_devis_client(
 );
 CREATE TABLE ligne_facture_client(
 	id_ligne_facture INT(10) PRIMARY KEY AUTO_INCREMENT,
-	quantite DECIMAL(5,2) NOT NULL,
-	prixU DECIMAL(6,2) NOT NULL,
+	quantite FLOAT(5,2) NOT NULL,
+	prixU FLOAT(6,2) NOT NULL,
 	reference VARCHAR(50) NOT NULL,
 	id_tva INT(10) NOT NULL,
 	id_facture INT(10) NOT NULL,
@@ -155,7 +157,7 @@ CREATE TABLE bl(
 );
 CREATE TABLE ligne_bl(
 	id_ligne_bl INT(10) PRIMARY KEY AUTO_INCREMENT,
-	quantite DECIMAL(5,2) NOT NULL,
+	quantite FLOAT(5,2) NOT NULL,
     id_bl INT(10) NOT NULL,
 	id_ligne_facture INT(10) NOT NULL,
 	CONSTRAINT fk_bl FOREIGN KEY(id_bl) REFERENCES bl(id_bl),

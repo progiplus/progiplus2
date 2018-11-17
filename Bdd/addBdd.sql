@@ -16,12 +16,12 @@ VALUES
 ("22 rue de la poste",NULL,1),
 ("2 avenue de la plage",NULL,3);
 
-INSERT INTO client (code_client, raison_sociale, actif)
+INSERT INTO client (code_client, raison_sociale, actif,id_adresse_facturation)
 VALUES
-("Cl28",NULL,true),
-("ClPro25","Peinture and Co",true),
-("Cl29",NULL,true),
-("ClPro30","Le roi du bricolage",true);
+("Cl28",NULL,true,1),
+("ClPro25","Peinture and Co",true,1),
+("Cl29",NULL,true,1),
+("ClPro30","Le roi du bricolage",true,1);
 
 INSERT INTO contact (nom,prenom,service,id_client,id_civilite)
 VALUES 	("Duck","Donald",NULL,1,1),

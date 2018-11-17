@@ -11,7 +11,7 @@
 					client.raison_sociale AS rs,
 					CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom) AS nom_cli,
 					moyen_comm.valeur, type_moyen_comm.libelle,
-					liste_adresse.libelle AS libAdresse, CONCAT(adresse.ligne1," ",adresse.ligne2) AS adresse,
+					CONCAT(adresse.ligne1," ",adresse.ligne2) AS adresse,
 					CONCAT(ville.cp_ville," ",ville.nom_ville)AS ville,devis.id_devis,devis.date_devis
 			FROM contact
 			INNER JOIN client ON client.id_client = contact.id_client
@@ -19,33 +19,13 @@
 			INNER JOIN contact_comm ON contact_comm.id_contact = contact.id_contact
 			INNER JOIN moyen_comm ON moyen_comm.id_mcomm = contact_comm.id_mcomm
 			INNER JOIN type_moyen_comm ON type_moyen_comm.id_type_moyen_comm = moyen_comm.id_type_moyen_comm
-			INNER JOIN liste_adresse ON client.id_client = liste_adresse.id_client
-			INNER JOIN adresse ON liste_adresse.id_adresse = adresse.id_adresse
+			INNER JOIN adresse ON client.id_adresse_facturation = adresse.id_adresse
 			INNER JOIN ville ON adresse.id_ville = ville.id_ville
 			INNER JOIN devis ON devis.id_client=client.id_client
-			WHERE client.id_client = ? AND liste_adresse.libelle = "facturation"
+			WHERE devis.id_devis = ?
 			');
 			$statement->execute(array($id));
 			Database::disconnect();
-
-			$db = Database::connect();
-			$statementDevis = $db->prepare('
-			SELECT 	client.id_client, (prixU * quantite) AS totalLigne,
-					devis.date_devis,devis.duree_validite,
-					devis.id_devis,
-					ligne_devis_client.quantite,
-					ligne_devis_client.prixU,
-					tva.taux,produit.reference,produit.designation
-			FROM client
-			INNER JOIN devis ON devis.id_client=client.id_client
-			INNER JOIN ligne_devis_client ON ligne_devis_client.id_devis = devis.id_devis
-			INNER JOIN tva ON tva.id_tva= ligne_devis_client.id_tva
-			INNER JOIN produit ON produit.reference = ligne_devis_client.reference
-			WHERE client.id_client = ?
-			');
-			$statementDevis->execute(array($id));
-			Database::disconnect();
-
 			while($devis = $statement->fetchObject()){
 
 				$codeClient = $devis->code_cli;
@@ -72,6 +52,42 @@
 				}
 			}
 
+			$db = Database::connect();
+			$statementDevis = $db->prepare('
+			SELECT 	client.id_client, (prixU * quantite) AS totalLigne,
+					devis.date_devis,devis.duree_validite,
+					devis.id_devis,
+					ligne_devis_client.quantite,
+					ligne_devis_client.prixU,
+					tva.taux,produit.reference,produit.designation
+			FROM client
+			INNER JOIN devis ON devis.id_client=client.id_client
+			INNER JOIN ligne_devis_client ON ligne_devis_client.id_devis = devis.id_devis
+			INNER JOIN tva ON tva.id_tva= ligne_devis_client.id_tva
+			INNER JOIN produit ON produit.reference = ligne_devis_client.reference
+			WHERE devis.id_devis = ?
+			');
+			$statementDevis->execute(array($id));
+			Database::disconnect();
+
+			$db = Database::connect();
+			$statementTotalTTC = $db->prepare('
+				SELECT 	SUM(ldc.quantite*ldc.prixU) AS totalHT,
+						SUM(ldc.quantite*ldc.prixU*tx.taux/100) AS taxe,
+						SUM((ldc.quantite*ldc.prixU *tx.taux/100) + (ldc.quantite*ldc.prixU)) AS totalTTC
+				FROM devis as d
+				INNER JOIN ligne_devis_client ldc ON ldc.id_ligne_devis = d.id_devis
+				INNER JOIN tva tx ON ldc.id_tva = tx.id_tva
+				WHERE ldc.id_devis = ?
+				');
+			$statementTotalTTC->execute(array($id));
+			Database::disconnect();
+
+			while($total = $statementTotalTTC->fetchObject()){
+				$totalHT = $total->totalHT;
+				$totalTva = $total->taxe;
+				$totalTTC = $total->totalTTC;
+			}
 		}
 	}
 ?>
@@ -149,17 +165,17 @@
 							<tr>
 								<td colspan="3"></td>
 								<td>Total HT</td>
-								<td></td>
+								<td><?php print $totalHT ?></td>
 							</tr>
 							<tr>
 								<td colspan="3"></td>
 								<td>TVA</td>
-								<td></td>
+								<td><?php print $totalHT ?> </td>
 							</tr>
 							<tr>
 								<td colspan="3"></td>
 								<td>Total TTC</td>
-								<td></td>
+								<td><?php print $totalTTC ?></td>
 							</tr>
 							<tr>
 								<td colspan="3"></td>

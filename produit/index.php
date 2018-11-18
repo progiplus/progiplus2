@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <title> Produit</title>
+         <title>Produit</title>
          <link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/style.css">
 				 <link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/datatables.css">
          <meta charset="UTF-8">
@@ -50,6 +50,7 @@ require_once('../modales.php');
 				  </thead>
 				  <tbody>
 						<?php
+
 							while($produit = $statement->fetchObject())
 							{
 								print '<tr>';
@@ -60,12 +61,13 @@ require_once('../modales.php');
 									print '<td>' . $produit->libelleG . '</td>';
 									print '<td>' . $produit->libelleC . '</td>';
 									print '<td><img class="boutonAppel" src="../includes/assets/pencil.png" title="Modifier un Produit" alt="bouton_modifier" height="20">
-						          	 <input type="checkbox" title="Activer ou Désactiver un Produit" name= "actOrDeact" onclick="return confirm(\'Etes-vous sûr ?\');"/></td>';
+						          	 <input type="checkbox" title="Activer ou Désactiver un Produit" data-id="'.$produit->reference.'" id="checkbox" value="actif"';
+														 if($produit->actif==1){
+														 print ("checked='checked'");
+													 }print '/></td>';
 								print '</tr>';
 							}
 							Database::disconnect();
-
-
 
 							?>
 
@@ -108,6 +110,43 @@ require_once('../modales.php');
 				$(document).ready( function () {
 					$('#table_produits').DataTable();
 				});
+
+				$("input:checkbox").on("change", function() {
+		        var xhr;
+		        if (window.XMLHttpRequest)
+		            xhr = new XMLHttpRequest();
+		        else
+		            xhr = new ActiveXObject("microsoft.Xmlhttp");
+		        xhr.onreadystatechange = function() {
+		            if (xhr.readyState == 4) {
+		                var retourAjax = xhr.responseText;
+		                console.log(retourAjax);
+		            }
+		        }
+		        alert("Vous allez modifier le statut de ce produit.");
+		        var reference = $(this).data("id");
+		        console.log(reference);
+		        var val = $(this).val();
+		        console.log(val);
+		        var apply = $(this).is(':checked') ? true : false;
+		        console.log(apply);
+		        var data = "reference=" + reference + "&apply=" + apply;
+		        xhr.open('post', '../includes/scripts/ajaxProduit.php', true);
+		        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+		        xhr.send(data);
+
+		        $.ajax({
+		            type: "POST",
+		            url: "../includes/scripts/ajaxProduit.php",
+		            data: {
+		                reference: reference,
+		                val: val,
+		                apply: apply
+		            }
+
+		        });
+
+		    });
 
 				</script>
 

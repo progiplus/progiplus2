@@ -8,16 +8,6 @@
   ORDER BY libelle;
 	');
 
-  //  $listeMarque = $db->query('
-  // SELECT id_marque, nom FROM marque
-  //  ORDER BY nom;
-  //  ');
-
-  // $listeGamme = $db->query('
-  // SELECT id_gamme, libelle FROM gamme
-  // ORDER BY libelle;
-  // ');
-
 	$listeGamme = $db->query('
   SELECT id_gamme, concat(nom,\'/\',libelle) as libelle FROM gamme
 	INNER JOIN marque ON marque.id_marque=gamme.id_marque
@@ -30,8 +20,6 @@
 <!--Ajouter / Modifier un produit-->
 
 <?php
-
-	 //if(isset($_POST['submit'])) {
 
 		$id = isset($_GET['reference'])?$_GET['reference']:0;
 			if (!empty($_POST)){
@@ -50,7 +38,6 @@
 						print('<script type="text/javascript">document.location.href=\'index.php\';</script>');
 					}
 			}
-	 //}
 
 ?>
 
@@ -71,38 +58,21 @@
       <p><label for="prixht_produit">Prix unitaire HT :</label>
       <input type="text" id="prixht_produit" name="prixht_produit"></p>
 
-      <!--<p><label for="marqueProduit">Marque :</label>
-      <select onchange="checkNewMarque" name="marqueProduit" id="marqueProduit">
-        <option value="0">Sélectionnez</option>
-        <?php /*while ($marque=$listeMarque->fetchObject()){
-          print"<option value=\"$marque->id_marque\">$marque->nom</option>";
-        }*/?>
-        <option value="newP">-Nouveau-</option>
-        <input type="text" id="newMarque" name="newMarque">
-			</select></p>-->
-
       <p><label for="gammeProduit">Marque / Gamme :</label>
-      <select onchange="checkNewGamme" name="gammeProduit" id="gammeProduit">
+      <select name="gammeProduit" id="gammeProduit">
         <option value="0">Sélectionnez</option>
         <?php while ($gamme=$listeGamme->fetchObject()){
           print"<option value=\"$gamme->id_gamme\">$gamme->libelle</option>";
         }?>
-        <!-- <option value="newG">-Nouveau-</option>
-        <input type="text" id="newGamme" name="newGamme"> -->
         </select></p>
 
       <p><label for="catégorieProduit">Catégorie :</label>
-      <select onchange="checkNewCatégorie" name="catégorieProduit" id="catégorieProduit">
+      <select name="catégorieProduit" id="catégorieProduit">
         <option value="0">Sélectionnez</option>
         <?php while ($categorie=$listeCategorie->fetchObject()){
           print"<option value=\"$categorie->id_categorie\">$categorie->libelle</option>";
         }?>
-        <!-- <option value="newC">-Nouveau-</option>
-        <input type="text" id="newCatégorie" name="newCatégorie"> -->
         </select></p>
-
-      <!-- <p>Laisser cette case cochée pour activer le produit :<br>
-      <input type="checkbox" name="inactif" id="produitActif" /> <label for="inactif"></label></p> -->
 
      <button type="submit" id="btnAjouterProduit">Ajouter produit</button>
 		 <button type="submit" id="btnModifierProduit">Modifier produit</button>
@@ -122,14 +92,6 @@ function checkGenerique(that, idNew, valueNew) {
       newElem.style.display = 'none';
   }
 }
-
-/*var marqueProduit = document.getElementById('marqueProduit');
-marqueProduit.onchange = checkNewMarque;
-marqueProduit.onchange();*/
-
-// function checkNewMarque() {
-//   checkGenerique(this, 'newMarque', 'newP');
-// }
 
 //TODO var gammeProduit = document.getElementById('gammeProduit');
 // gammeProduit.onchange = checkNewGamme;

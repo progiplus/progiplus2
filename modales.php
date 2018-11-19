@@ -1,5 +1,5 @@
 <?php
-	require_once('../config.php');
+	require_once('config.php');
 
 	$db = Database::connect();
 
@@ -29,58 +29,58 @@
 
 <div id="modaleProduit" class="modal">
   <div class="modal-content">
-  <div class="modal-header">
-    <span class="close">&times;</span>
-    <h2 class="titreModale"></h2>
-  </div>
-  <div class="modal-body">
-    <form>
-      <p><label for="referenceProduit">Référence :</label>
-      <input type="text" id="referenceProduit" name="referenceProduit"></p>
+	  <div class="modal-header">
+		<span class="close">&times;</span>
+		<h2 class="titreModale"></h2>
+	  </div>
+	  <div class="modal-body">
+		<form>
+		  <p><label for="referenceProduit">Référence :</label>
+		  <input type="text" id="referenceProduit" name="referenceProduit"></p>
 
-      <p><label for="designationProduit">Désignation :</label>
-      <input type="text" id="designationProduit" name="designationProduit"></p>
+		  <p><label for="designationProduit">Désignation :</label>
+		  <input type="text" id="designationProduit" name="designationProduit"></p>
 
-      <p><label for="prixht_produit">Prix unitaire :</label>
-      <input type="text" id="prixht_produit" name="prixht_produit"></p>
+		  <p><label for="prixht_produit">Prix unitaire :</label>
+		  <input type="text" id="prixht_produit" name="prixht_produit"></p>
 
-      <p><label for="marqueProduit">Marque :</label>
-      <select onchange="checkNewMarque" name="marqueProduit" id="marqueProduit">
-        <option value="0">Sélectionnez</option>
-        <?php while ($marque=$listeMarque->fetchObject()){
-          print"<option value=\"$marque->id_marque\">$marque->nom</option>";
-        }?>
-        <option value="newP">-Nouveau-</option>
-        <input type="text" id="newMarque" name="newMarque">
-        </select></p>
+		  <p><label for="marqueProduit">Marque :</label>
+		  <select onchange="checkNewMarque" name="marqueProduit" id="marqueProduit">
+			<option value="0">Sélectionnez</option>
+			<?php while ($marque=$listeMarque->fetchObject()){
+			  print"<option value=\"$marque->id_marque\">$marque->nom</option>";
+			}?>
+			<option value="newP">-Nouveau-</option>
+			<input type="text" id="newMarque" name="newMarque">
+			</select></p>
 
-      <p><label for="gammeProduit">Gamme :</label>
-      <select onchange="checkNewGamme" name="gammeProduit" id="gammeProduit">
-        <option value="0">Sélectionnez</option>
-        <?php while ($gamme=$listeGamme->fetchObject()){
-          print"<option value=\"$gamme->id_gamme\">$gamme->libelle</option>";
-        }?>
-        <option value="newG">-Nouveau-</option>
-        <input type="text" id="newGamme" name="newGamme">
-        </select></p>
+		  <p><label for="gammeProduit">Gamme :</label>
+		  <select onchange="checkNewGamme" name="gammeProduit" id="gammeProduit">
+			<option value="0">Sélectionnez</option>
+			<?php while ($gamme=$listeGamme->fetchObject()){
+			  print"<option value=\"$gamme->id_gamme\">$gamme->libelle</option>";
+			}?>
+			<option value="newG">-Nouveau-</option>
+			<input type="text" id="newGamme" name="newGamme">
+			</select></p>
 
-      <p><label for="catégorieProduit">Catégorie :</label>
-      <select onchange="checkNewCatégorie" name="catégorieProduit" id="catégorieProduit">
-        <option value="0">Sélectionnez</option>
-        <?php while ($categorie=$listeCategorie->fetchObject()){
-          print"<option value=\"$categorie->id_categorie\">$categorie->libelle</option>";
-        }?>
-        <option value="newC">-Nouveau-</option>
-        <input type="text" id="newCatégorie" name="newCatégorie">
-        </select></p>
+		  <p><label for="catégorieProduit">Catégorie :</label>
+		  <select onchange="checkNewCatégorie" name="catégorieProduit" id="catégorieProduit">
+			<option value="0">Sélectionnez</option>
+			<?php while ($categorie=$listeCategorie->fetchObject()){
+			  print"<option value=\"$categorie->id_categorie\">$categorie->libelle</option>";
+			}?>
+			<option value="newC">-Nouveau-</option>
+			<input type="text" id="newCatégorie" name="newCatégorie">
+			</select></p>
 
-      <p>Cocher cette case pour désactiver le produit :<br>
-      <input type="checkbox" name="inactif" id="produitActif" /> <label for="inactif"></label></p>
+		  <p>Cocher cette case pour désactiver le produit :<br>
+		  <input type="checkbox" name="inactif" id="produitActif" /> <label for="inactif"></label></p>
 
-     <button type="button" id="btnAjouterProduit">Ajouter produit</button>
-		 <button type="button" id="btnModifierProduit">Modifier produit</button>
-     <button type="button" id="btnAnnuler">Annuler</button>
-  </div>
+		 <button type="button" id="btnAjouterProduit">Ajouter produit</button>
+			 <button type="button" id="btnModifierProduit">Modifier produit</button>
+		 <button type="button" id="btnAnnuler">Annuler</button>
+	  </div>
   </div>
 </div>
 

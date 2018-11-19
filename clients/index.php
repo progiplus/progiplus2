@@ -52,7 +52,7 @@ Database::disconnect();
                             print '<td>'.$client->code.'</td>';
                             print '<td>'.identiteClient($client->raisonsoc,$client->nom_cli).'</td>';
                             print '<td class="action"><a href="formulaire.php?id='.$client->id_client.'"><img src="../includes/assets/pencil.png" class="petit_logo" alt="Modifier" /></a></td>
-                            <td class="action"><a href="detail.php?id='.$client->id_client.'"><img src="../includes/assets/pencil.png" class="petit_logo" alt="details" /></a></td>';
+                            <td class="action"><a href="detail.php?id='.$client->id_client.'"><img src="../includes/assets/zoom.png" class="petit_logo" alt="details" /></a></td>';
                             print '<td class="data" data-id="'.$client->id_client.'"><input type="checkbox" name="checkbox" data-id="'.$client->id_client.'" id="checkbox" value="actif"  ';
                                 if($client->actif== 1){
                                 print ("checked='checked'");

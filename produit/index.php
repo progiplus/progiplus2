@@ -76,8 +76,15 @@
 
 				<script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
 				<script type="text/javascript" src="../includes/scripts/datatables.js"></script>
+				<script type="text/javascript" src="../includes/scripts/general.js"></script>
 
 				<script type="text/javascript">
+
+				$(document).ready(function(){
+					$('#table_produits').DataTable({
+						"language": getLangageDataTable("produit", false)
+					});
+				});
 
 				var modaleGen = document.getElementById("modaleProduit");
 
@@ -85,16 +92,15 @@
 					modaleGen.style.display = "block";
 				}
 
-				var span_ajout = document.getElementsByClassName("close")[0];
+				var closeModal = document.getElementsByClassName("close")[0];
+				var cancelModal = document.getElementById("btnAnnuler");
 
-				span_ajout.onclick = function() {
+				closeModal.onclick = function() {
 				  modaleGen.style.display = "none";
 				}
 
-				window.onclick = function(event) {
-				  if (event.target == modaleGen) {
-				    modaleGen.style.display = "none";
-				  }
+				cancelModal.onclick = function() {
+				  modaleGen.style.display = "none";
 				}
 
 				$(".boutonAppel").on('click', function(){
@@ -111,11 +117,14 @@
 
 				$("#bouton_ajouter").on('click', function(){
 					$(".titreModale").text('Ajouter un Produit');
+					$("#referenceProduit").val("");
+					$("#designationProduit").val("");
+					$("#prixht_produit").val("");
+					$("#catégorieProduit").val(0);
+					$("#gammeProduit").val(0);
+					$("#marqueProduit").val(0);
+					$("#produitActif").prop("checked", true);
 					displayModal();
-				});
-
-				$(document).ready( function () {
-					$('#table_produits').DataTable();
 				});
 
 				$("input:checkbox").on("change", function() {
@@ -154,6 +163,8 @@
 		        });
 
 		    });
+
+
 
 				</script>
 

@@ -23,6 +23,10 @@
 
 <!--Ajouter / Modifier un produit-->
 
+<?php
+
+?>
+
 <div id="modaleProduit" class="modal">
   <div class="modal-content">
   <div class="modal-header">
@@ -73,8 +77,9 @@
       <p>Cocher cette case pour désactiver le produit :<br>
       <input type="checkbox" name="inactif" id="produitActif" /> <label for="inactif"></label></p>
 
-     <button type="button">Valider</button>
-     <button type="button">Annuler</button>
+     <button type="button" id="btnAjouterProduit">Ajouter produit</button>
+		 <button type="button" id="btnModifierProduit">Modifier produit</button>
+     <button type="button" id="btnAnnuler">Annuler</button>
   </div>
   </div>
 </div>
@@ -83,13 +88,10 @@
 
 function checkGenerique(that, idNew, valueNew) {
   var newElem = document.getElementById(idNew);
-  // var validerElem = document.getElementById(idValider);
   if (that.options[that.selectedIndex].value === valueNew) {
       newElem.style.display = '';
-      // validerElem.style.display = '';
   } else {
       newElem.style.display = 'none';
-      // validerElem.style.display = 'none';
   }
 }
 
@@ -116,8 +118,5 @@ catégorieProduit.onchange();
 function checkNewCatégorie() {
   checkGenerique(this, 'newCatégorie', 'newC');
 }
-
-
-
 
 </script>

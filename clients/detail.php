@@ -99,11 +99,13 @@ Database::disconnect();
 
         <section>
             <h1>Progiplus</h1>
+            <br><input type="button" name="lienForm" value="revenir a la liste" onclick="self.location.href='index.php'" style="background-color:#3cb371" style="color:white; font-weight:bold" onclick>
 
-                        </br><h2>Informations Client:</h2>
-                        <div class="cadre">
+            </br>
+            <h2>Informations Client:</h2>
+            <div class="cadre">
 
-                        <p>
+                <p>
 
                     <?php
                    // select type_moyen_comm.libelle as type, moyen_comm.valeur as valeur
@@ -111,22 +113,23 @@ Database::disconnect();
                             print 'Code client :'.$client->code.'';
                             print '</br>Raison Sociale: '.$client->rs.'';
                             print '</br>Actif ou non actif: '.$client->actif.'';
-                            print '</br><Adresse de Facturation: >'.$client->ligne1.' '.$client->ligne2.' '.$client->cp.' '.$client->ville.'';
+                            print '</br><Adresse de Facturation: >'.$client->ligne1.', '.$client->ligne2.', '.$client->cp.' '.$client->ville.'';
                         print '';
 
 
 					?>
-        </p>
-           </div>
+                </p>
+            </div>
 
-            </br><h2>Contact</h2>
+            </br>
+            <h2>Contact</h2>
             <table id="table_contact" class="display">
                 <thead>
                     <tr>
                         <th>Code client</th>
                         <th>civilite</th>
-                         <th>nom</th>
-                         <th>prenom</th>
+                        <th>nom</th>
+                        <th>prenom</th>
                         <th>service</th>
                     </tr>
                 </thead>
@@ -149,14 +152,15 @@ Database::disconnect();
 					?>
                 </tbody>
             </table>
-            </br><h2>Adresse</h2>
-                        <table id="table_adresse" class="display">
+            </br>
+            <h2>Adresse</h2>
+            <table id="table_adresse" class="display">
                 <thead>
                     <tr>
                         <th>Ligne1</th>
                         <th>Ligne 2</th>
-                         <th>Code Postal</th>
-                         <th>Ville</th>
+                        <th>Code Postal</th>
+                        <th>Ville</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -176,8 +180,9 @@ Database::disconnect();
 					?>
                 </tbody>
             </table>
-            </br><h2>Communication</h2>
-                                    <table id="table_comm" class="display">
+            </br>
+            <h2>Communication</h2>
+            <table id="table_comm" class="display">
                 <thead>
                     <tr>
                         <th>Type</th>
@@ -199,13 +204,14 @@ Database::disconnect();
                 </tbody>
             </table>
 
-                        </br><h2>Devis</h2>
+            </br>
+            <h2>Devis</h2>
             <table id="table_devis" class="display">
                 <thead>
                     <tr>
                         <th>date</th>
-                         <th>durée validité</th>
-                         <th>actif/inactif</th>
+                        <th>durée validité</th>
+                        <th>actif/inactif</th>
                         <th>quantité ligne devis</th>
                         <th>prix Unitaire</th>
                         <th>reference</th>
@@ -248,16 +254,16 @@ Database::disconnect();
 <script type="text/javascript">
     function init() {
         $('#table_comm').DataTable({
-            "language": getLangageDataTable("client", true)
+            "language": getLangageDataTable("Moyens communication")
         });
-           $('#table_adresse').DataTable({
-            "language": getLangageDataTable("client", true)
+        $('#table_adresse').DataTable({
+            "language": getLangageDataTable("adresse", true)
         });
-           $('#table_contact').DataTable({
-            "language": getLangageDataTable("client", true)
+        $('#table_contact').DataTable({
+            "language": getLangageDataTable("contact")
         });
-         $('#table_devis').DataTable({
-            "language": getLangageDataTable("client", true)
+        $('#table_devis').DataTable({
+            "language": getLangageDataTable("devi")
         });
     }
 

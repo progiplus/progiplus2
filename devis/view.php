@@ -6,12 +6,12 @@
 			$id=$_GET['id'];
 			$db = Database::connect();
 			$statement = $db->prepare('
-			SELECT 	client.code_client AS code_cli,
+			SELECT 	client.code_client AS code_cli,client.id_adresse_facturation,
 					client.id_client,
 					client.raison_sociale AS rs,
 					CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom) AS nom_cli,
 					moyen_comm.valeur, type_moyen_comm.libelle,
-					CONCAT(adresse.ligne1," ",adresse.ligne2) AS adresse,
+					adresse.ligne1,adresse.ligne2,
 					CONCAT(ville.cp_ville," ",ville.nom_ville)AS ville,devis.id_devis,devis.date_devis
 			FROM contact
 			INNER JOIN client ON client.id_client = contact.id_client
@@ -30,7 +30,8 @@
 
 				$codeClient = $devis->code_cli;
 				$nomClient = $devis->nom_cli;
-				$adresse = $devis->adresse;
+				$adresse = $devis->ligne1;
+				$adresse2 = $devis->ligne2;
 				$ville = $devis->ville;
 				$numDevis = $devis->id_devis;
 				$dateDevis = dateFr($devis->date_devis);
@@ -72,9 +73,9 @@
 
 			$db = Database::connect();
 			$statementTotalTTC = $db->prepare('
-				SELECT 	SUM(ldc.quantite*ldc.prixU) AS totalHT,
-						SUM(ldc.quantite*ldc.prixU*tx.taux/100) AS taxe,
-						SUM((ldc.quantite*ldc.prixU *tx.taux/100) + (ldc.quantite*ldc.prixU)) AS totalTTC
+				SELECT 	ROUND(SUM(ldc.quantite*ldc.prixU),2) AS totalHT,
+						ROUND(SUM(ldc.quantite*ldc.prixU*tx.taux/100),2) AS taxe,
+						ROUND(SUM((ldc.quantite*ldc.prixU *tx.taux/100) + (ldc.quantite*ldc.prixU)),2) AS totalTTC
 				FROM devis as d
 				INNER JOIN ligne_devis_client ldc ON ldc.id_ligne_devis = d.id_devis
 				INNER JOIN tva tx ON ldc.id_tva = tx.id_tva
@@ -125,6 +126,7 @@
 
 							<?php print $nomClient.'<br>'.
 										$adresse.'<br>'.
+										$adresse2.'<br>'.
 										$ville .'<br>'?>
 
 							Tel : <?php print $fixe ?><br>
@@ -170,7 +172,7 @@
 							<tr>
 								<td colspan="3"></td>
 								<td>TVA</td>
-								<td><?php print $totalHT ?> </td>
+								<td><?php print $totalTva ?> </td>
 							</tr>
 							<tr>
 								<td colspan="3"></td>

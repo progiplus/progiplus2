@@ -21,7 +21,6 @@ Database::disconnect();
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <title> Client</title>
     <link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/style.css">

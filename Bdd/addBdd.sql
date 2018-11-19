@@ -18,7 +18,6 @@ VALUES
 
 INSERT INTO client (code_client, raison_sociale, actif,id_adresse_facturation)
 VALUES
-
 ("Cl28",NULL,true,1),
 ("ClPro25","Peinture and Co",true,2),
 ("Cl29",NULL,true,3),

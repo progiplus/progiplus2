@@ -5,7 +5,7 @@ class Database
     private static $hote = 'localhost' ;
     private static $bdd = 'progiplus';
     private static $dbUser = 'root';
-    private static $dbMdp = '';
+    private static $dbMdp = 'root';
 
     
     private static $pdo = null;

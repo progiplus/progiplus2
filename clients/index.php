@@ -127,5 +127,4 @@ Database::disconnect();
     window.onload = init;
 
 </script>
-
 </html>

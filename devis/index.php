@@ -5,8 +5,7 @@
 
 
 	$db = Database::connect();
-	$statement = $db->query(' 
-
+	$statement = $db->query('
 		SELECT 	client.code_client AS code_cli,
 				client.id_client,
 				client.raison_sociale AS rs,
@@ -47,10 +46,10 @@
 						<tr>
 							<th style="width: 100px">N Devis</th>
 							<th style="width: 100px">Code client</th>
-							<th style="width: 200px">Raison sociale ou Civilite/Nom/prenom</th>
+							<th style="width: 200px">Clients</th>
 							<th style="width: 100px">date devis</th>
 							<th style="width: 100px">Montant</th>
-							<th style="width: 100px" colspan="2">Actions</th>
+							<th style="width: 100px">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -64,10 +63,9 @@
 							print '<td>' . dateFr($devis->date) . '</td>';
 							print '<td>' . $devis->montant . '</td>';
 							print '<td>
-										<a href="view.php?id='.$devis->id_client.'"><img src="../includes/assets/pencil.png" class="imageTableau" title="Modifier Devis" alt="bouton_modifier"/></a>
+										<a href="view.php?id='.$devis->numDevis.'"><img src="../includes/assets/pencil.png" class="imageTableau" title="Modifier Devis" alt="bouton_modifier"/></a>
 							   			<a href="#"><img src="../includes/assets/cancel.png" class="imageTableau" title="Supprimer Devis" alt="bouton_supprimer"/></a>
-							   			<a href="#"><img src="#" class="imageTableau" title="Voir devis" alt="voir"/></a>
-							   			<a href="#"><img src="#" class="imageTableau" title="Envoyer en facture" alt="Facture"/></a>
+
 							</td>';
 						print '</tr>';
 					}

@@ -24,6 +24,29 @@
 <!--Ajouter / Modifier un produit-->
 
 <?php
+var_dump($_GET);
+var_dump($_POST);
+	// if(isset($_POST['submit'])) {
+
+		$id = isset($_GET['reference'])?$_GET['reference']:0;
+			if (!empty($_POST)){
+
+				$reference = $_POST['referenceProduit'];
+				$designation = $_POST['designationProduit'];
+				$Query = "UPDATE produit SET designation = \"$designation\" WHERE reference = \"$reference\"";
+				// $Statement = $db->prepare($Query);
+				// $Statement->bindValue(':reference', $reference);
+				// $Statement->bindValue(':designation', $designation);
+				$Statement=$db->query($Query);
+				echo $Query;
+				$Statement->fetchObject();
+				$Statement->closeCursor();
+
+					if ($Statement->execute()){
+						print('<script type="text/javascript">document.location.href=\'index.php\';</script>');
+					}
+			}
+	// }
 
 ?>
 
@@ -34,7 +57,7 @@
     <h2 class="titreModale"></h2>
   </div>
   <div class="modal-body">
-    <form>
+    <form method="post">
       <p><label for="referenceProduit">Référence :</label>
       <input type="text" id="referenceProduit" name="referenceProduit"></p>
 
@@ -77,10 +100,11 @@
       <p>Cocher cette case pour désactiver le produit :<br>
       <input type="checkbox" name="inactif" id="produitActif" /> <label for="inactif"></label></p>
 
-     <button type="button" id="btnAjouterProduit">Ajouter produit</button>
-		 <button type="button" id="btnModifierProduit">Modifier produit</button>
+     <button type="submit" id="btnAjouterProduit">Ajouter produit</button>
+		 <button type="submit" id="btnModifierProduit">Modifier produit</button>
      <button type="button" id="btnAnnuler">Annuler</button>
-  </div>
+	 </form>
+	</div>
   </div>
 </div>
 

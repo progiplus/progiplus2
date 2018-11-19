@@ -3,6 +3,13 @@
 	require_once('../functions.php');
 
 
+	$db = Database::connect();
+		$statement = $db->query('
+		SELECT 	id_client,code_client
+		FROM client
+		');
+	$statement->execute();
+	Database::disconnect();
 
 ?>
 
@@ -35,14 +42,18 @@
 							 ?>
 						</div>
 						<div id="infoClient">
-							<label class="labelEnLigne">Code client : </label><input type="text" name="codeClient" id="codeClient" /><br>
-							<input type="radio" name="rdciv" value="1" />Madame
-							<input type="radio" name="rdciv" value="2" />Monsieur <br>
-							<label class="labelEnLigne">Nom : </label><input type="text" name="nomClient" id="nomClient" /><br>
-							<label class="labelEnLigne">Prenom : </label><input type="text" name="prenomClient" id="prenomClient" /><br>
-							<label class="labelEnLigne">rue : </label><input type="text" name="rue" id="rue" /><br>
-							<label class="labelEnLigne">ville : </label><input type="text" name="ville" id="ville" /><br>
-							<label class="labelEnLigne">tel : </label><input type="text" name="tel" id="tel" /><br>
+							<label>Code client : </label>
+							<select type="text" name="codeClient" id="codeClient">
+							<option value="0">---</option>
+							<?php
+								while($clients = $statement->fetchObject()){
+									print ('<option class="data" value="'.$clients->code_client.'">'.$clients->code_client.'</option>');
+								}
+							?>
+							</select>
+
+							<div class="clientinfo"></div>
+
 						</div>
 					</div>
 					<div id="infoDevis">
@@ -101,5 +112,72 @@
 </body>
 <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../includes/scripts/datatables.js"></script>
+
+<script type="text/javascript" >
+	$(document).ready(function (){
+		var client = false;
+		var clientEnCours = 0;
+
+		function getXhrReq(){
+			var xhr;
+			if(window.XMLHttpRequest){
+				xhr = new  XMLHttpRequest();
+			}else{
+				xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			return xhr;
+		}
+
+		$('#codeClient').change(function(){
+			xhr = getXhrReq();
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4){
+					var obj = JSON.parse(xhr.responseText);
+					console.log(obj);
+					var codeClient = $('#codeClient').val();
+
+					if(clientEnCours != codeClient){
+						var adresse ="";
+						if(obj.ligne2){
+							adresse = obj.ligne1 + '<br>' + obj.ligne2;
+						}else{
+							adresse = obj.ligne1;
+						}
+
+						if(!client){
+							clientEnCours = codeClient;
+
+							if(obj.rs){
+								$('.clientinfo').append('<p>'  + obj.rs + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
+
+							}
+							else{
+								$('.clientinfo').append('<p>'  + obj.nom_cli + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
+							}
+							return client=true;
+						}
+						else{
+							$('.clientinfo').empty();
+							clientEnCours = codeClient;
+								if(obj.rs){
+									$('.clientinfo').append('<p>'  + obj.rs + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
+								}
+								else{
+									$('.clientinfo').append('<p>'  + obj.nom_cli + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
+
+								}
+							return client=true;
+						}
+					}
+				}
+			}
+
+			var data = "code=" + $(this).val();
+			xhr.open('POST', '../includes/scripts/json/devisClient.php', true);
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
+			xhr.send(data);
+		});
+	});
+</script>
 
 </html>

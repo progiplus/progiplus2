@@ -8,3 +8,14 @@ height:20px;
   width: 60px;
   height: 34px;
 }
+h2 {
+ color:whitesmoke;
+}
+
+p {
+    color:whitesmoke;
+    font-size: 20px;
+    border: 5px solid red;
+    border-radius: 10px;
+}
+

@@ -8,13 +8,19 @@
   ORDER BY libelle;
 	');
 
-  $listeMarque = $db->query('
-  SELECT id_marque, nom FROM marque
-  ORDER BY nom;
-  ');
+  //  $listeMarque = $db->query('
+  // SELECT id_marque, nom FROM marque
+  //  ORDER BY nom;
+  //  ');
 
-  $listeGamme = $db->query('
-  SELECT id_gamme, libelle FROM gamme
+  // $listeGamme = $db->query('
+  // SELECT id_gamme, libelle FROM gamme
+  // ORDER BY libelle;
+  // ');
+
+	$listeGamme = $db->query('
+  SELECT id_gamme, concat(nom,\'/\',libelle) as libelle FROM gamme
+	INNER JOIN marque ON marque.id_marque=gamme.id_marque
   ORDER BY libelle;
   ');
 
@@ -32,12 +38,11 @@
 
 				$reference = $_POST['referenceProduit'];
 				$designation = $_POST['designationProduit'];
-				$Query = "UPDATE produit SET designation = \"$designation\" WHERE reference = \"$reference\"";
-				// $Statement = $db->prepare($Query);
-				// $Statement->bindValue(':reference', $reference);
-				// $Statement->bindValue(':designation', $designation);
+				$prixht_produit = $_POST['prixht_produit'];
+				$gammeProduit = $_POST['gammeProduit'];
+				$catégorieProduit = $_POST['catégorieProduit'];
+				$Query = "UPDATE produit SET designation = \"$designation\", prix_unitaire_ht = \"$prixht_produit\", id_gamme = $gammeProduit, id_categorie = $catégorieProduit WHERE reference = \"$reference\"";
 				$Statement=$db->query($Query);
-				//print $Query;
 				$Statement->fetchObject();
 				$Statement->closeCursor();
 
@@ -66,24 +71,24 @@
       <p><label for="prixht_produit">Prix unitaire HT :</label>
       <input type="text" id="prixht_produit" name="prixht_produit"></p>
 
-      <p><label for="marqueProduit">Marque :</label>
+      <!--<p><label for="marqueProduit">Marque :</label>
       <select onchange="checkNewMarque" name="marqueProduit" id="marqueProduit">
         <option value="0">Sélectionnez</option>
-        <?php while ($marque=$listeMarque->fetchObject()){
+        <?php /*while ($marque=$listeMarque->fetchObject()){
           print"<option value=\"$marque->id_marque\">$marque->nom</option>";
-        }?>
+        }*/?>
         <option value="newP">-Nouveau-</option>
         <input type="text" id="newMarque" name="newMarque">
-        </select></p>
+			</select></p>-->
 
-      <p><label for="gammeProduit">Gamme :</label>
+      <p><label for="gammeProduit">Marque / Gamme :</label>
       <select onchange="checkNewGamme" name="gammeProduit" id="gammeProduit">
         <option value="0">Sélectionnez</option>
         <?php while ($gamme=$listeGamme->fetchObject()){
           print"<option value=\"$gamme->id_gamme\">$gamme->libelle</option>";
         }?>
-        <option value="newG">-Nouveau-</option>
-        <input type="text" id="newGamme" name="newGamme">
+        <!-- <option value="newG">-Nouveau-</option>
+        <input type="text" id="newGamme" name="newGamme"> -->
         </select></p>
 
       <p><label for="catégorieProduit">Catégorie :</label>
@@ -92,12 +97,12 @@
         <?php while ($categorie=$listeCategorie->fetchObject()){
           print"<option value=\"$categorie->id_categorie\">$categorie->libelle</option>";
         }?>
-        <option value="newC">-Nouveau-</option>
-        <input type="text" id="newCatégorie" name="newCatégorie">
+        <!-- <option value="newC">-Nouveau-</option>
+        <input type="text" id="newCatégorie" name="newCatégorie"> -->
         </select></p>
 
-      <p>Cocher cette case pour désactiver le produit :<br>
-      <input type="checkbox" name="inactif" id="produitActif" /> <label for="inactif"></label></p>
+      <!-- <p>Laisser cette case cochée pour activer le produit :<br>
+      <input type="checkbox" name="inactif" id="produitActif" /> <label for="inactif"></label></p> -->
 
      <button type="submit" id="btnAjouterProduit">Ajouter produit</button>
 		 <button type="submit" id="btnModifierProduit">Modifier produit</button>
@@ -118,28 +123,28 @@ function checkGenerique(that, idNew, valueNew) {
   }
 }
 
-var marqueProduit = document.getElementById('marqueProduit');
+/*var marqueProduit = document.getElementById('marqueProduit');
 marqueProduit.onchange = checkNewMarque;
-marqueProduit.onchange();
+marqueProduit.onchange();*/
 
-function checkNewMarque() {
-  checkGenerique(this, 'newMarque', 'newP');
-}
+// function checkNewMarque() {
+//   checkGenerique(this, 'newMarque', 'newP');
+// }
 
-var gammeProduit = document.getElementById('gammeProduit');
-gammeProduit.onchange = checkNewGamme;
-gammeProduit.onchange();
-
-function checkNewGamme() {
-  checkGenerique(this, 'newGamme', 'newG');
-}
-
-var catégorieProduit = document.getElementById('catégorieProduit');
-catégorieProduit.onchange = checkNewCatégorie;
-catégorieProduit.onchange();
-
-function checkNewCatégorie() {
-  checkGenerique(this, 'newCatégorie', 'newC');
-}
+//TODO var gammeProduit = document.getElementById('gammeProduit');
+// gammeProduit.onchange = checkNewGamme;
+// gammeProduit.onchange();
+//
+// function checkNewGamme() {
+//   checkGenerique(this, 'newGamme', 'newG');
+// }
+//
+// var catégorieProduit = document.getElementById('catégorieProduit');
+// catégorieProduit.onchange = checkNewCatégorie;
+// catégorieProduit.onchange();
+//
+// function checkNewCatégorie() {
+//   checkGenerique(this, 'newCatégorie', 'newC');
+// }
 
 </script>

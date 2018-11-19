@@ -19,9 +19,9 @@ VALUES
 INSERT INTO client (code_client, raison_sociale, actif,id_adresse_facturation)
 VALUES
 ("Cl28",NULL,true,1),
-("ClPro25","Peinture and Co",true,1),
-("Cl29",NULL,true,1),
-("ClPro30","Le roi du bricolage",true,1);
+("ClPro25","Peinture and Co",true,2),
+("Cl29",NULL,true,3),
+("ClPro30","Le roi du bricolage",true,4);
 
 INSERT INTO contact (nom,prenom,service,id_client,id_civilite)
 VALUES 	("Duck","Donald",NULL,1,1),

@@ -24,9 +24,8 @@
 <!--Ajouter / Modifier un produit-->
 
 <?php
-var_dump($_GET);
-var_dump($_POST);
-	// if(isset($_POST['submit'])) {
+
+	 //if(isset($_POST['submit'])) {
 
 		$id = isset($_GET['reference'])?$_GET['reference']:0;
 			if (!empty($_POST)){
@@ -38,7 +37,7 @@ var_dump($_POST);
 				// $Statement->bindValue(':reference', $reference);
 				// $Statement->bindValue(':designation', $designation);
 				$Statement=$db->query($Query);
-				echo $Query;
+				//print $Query;
 				$Statement->fetchObject();
 				$Statement->closeCursor();
 
@@ -46,7 +45,7 @@ var_dump($_POST);
 						print('<script type="text/javascript">document.location.href=\'index.php\';</script>');
 					}
 			}
-	// }
+	 //}
 
 ?>
 
@@ -64,7 +63,7 @@ var_dump($_POST);
       <p><label for="designationProduit">Désignation :</label>
       <input type="text" id="designationProduit" name="designationProduit"></p>
 
-      <p><label for="prixht_produit">Prix unitaire :</label>
+      <p><label for="prixht_produit">Prix unitaire HT :</label>
       <input type="text" id="prixht_produit" name="prixht_produit"></p>
 
       <p><label for="marqueProduit">Marque :</label>

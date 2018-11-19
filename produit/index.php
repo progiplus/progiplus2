@@ -104,7 +104,7 @@
 
 				$(".boutonAppel").on('click', function(){
 					$(".titreModale").text('Modifier la fiche Produit');
-					$("#referenceProduit").prop("disabled", true);
+					$("#referenceProduit").prop("readonly", true);
 					$('#btnAjouterProduit').hide();
 					$('#btnModifierProduit').show();
 					$("#referenceProduit").val($(this).data("id"));
@@ -119,7 +119,7 @@
 
 				$("#bouton_ajouter").on('click', function(){
 					$(".titreModale").text('Ajouter un Produit');
-					$("#referenceProduit").prop("disabled", false);
+					$("#referenceProduit").prop("readonly", false);
 					$('#btnAjouterProduit').show();
 					$('#btnModifierProduit').hide();
 					$("#referenceProduit").val("");

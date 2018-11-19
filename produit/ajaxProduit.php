@@ -1,6 +1,6 @@
 <?php
-require_once('../../config.php');
-require_once('../../functions.php');
+require_once('../config.php');
+require_once('../functions.php');
 
 $produit = $_POST['reference'];
 print('il y a '.$_POST['reference']);

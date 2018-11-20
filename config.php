@@ -2,11 +2,11 @@
 
 class Database
 {
+
     private static $hote = 'localhost:3306' ;
     private static $bdd = 'progiplus';
     private static $dbUser = 'root';
     private static $dbMdp = 'azertysio';
-
 
     private static $pdo = null;
 

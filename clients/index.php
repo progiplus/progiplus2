@@ -41,7 +41,7 @@ Database::disconnect();
                         <th>Code client</th>
                         <th>Raison sociale</th>
                         <th colspan="2">Actions</th>
-                        <th>Actif/inactif</th>
+                        <th>Actif?</th>
                     </tr>
                 </thead>
                 <tbody>

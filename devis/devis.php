@@ -44,14 +44,13 @@
 						<div id="infoClient">
 							<label>Code client : </label>
 							<select type="text" name="codeClient" id="codeClient">
-							<option value="0">---</option>
-							<?php
+								<option value="0">---</option>
+								<?php
 								while($clients = $statement->fetchObject()){
 									print ('<option class="data" value="'.$clients->code_client.'">'.$clients->code_client.'</option>');
 								}
 							?>
 							</select>
-
 							<div class="clientinfo"></div>
 
 						</div>
@@ -68,26 +67,22 @@
 							<th style="width:300px">Designation</th>
 							<th class="quantiteProduit">quantite</th>
 							<th style="width:70px">prixU</th>
-							<th style="width:100px">Total</th>
+							<th class="totalHTLigne" style="width:100px">Total</th>
 						</thead>
 						<tbody>
-							<?php
-								for($i=0; $i<10; $i++){
-									print 	'<tr>
-												<td><input class="codeProduit" type="text" name="codeProduit" id="codeProduit"/></td>
-												<td></td>
-												<td><input class="quantiteProduit" type="number"/></td>
-												<td></td>
-												<td></td>
-											</tr>';
-								}
-							?>
+						 	<tr>
+								<td><input class="codeProduit" type="text" name="codeProduit" /></td>
+								<td><input class="designation" type="text" readonly/> </td>
+								<td><input class="quantiteProduit" type="number"/></td>
+								<td><input class="prix" type="text" readonly/></td>
+								<td><input class="totalHTLigne" type="text" readonly/></td>
+							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<td colspan="3"></td>
 								<td>Total HT</td>
-								<td></td>
+								<td ><input class="totalHT" type="text" readonly/></td>
 							</tr>
 							<tr>
 								<td colspan="3"></td>
@@ -113,60 +108,109 @@
 <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../includes/scripts/datatables.js"></script>
 
-<script type="text/javascript" >
-	$(document).ready(function (){
+<script type="text/javascript">
+	$(document).ready(function() {
 		var client = false;
 		var clientEnCours = 0;
+		var idLigne = 0;
+		var qt=0;
+		var px=0;
+		var totalHTLigne = 0;
+		var totalHT = 0;
 
-		function getXhrReq(){
+
+		function getXhrReq() {
 			var xhr;
-			if(window.XMLHttpRequest){
-				xhr = new  XMLHttpRequest();
-			}else{
+			if (window.XMLHttpRequest) {
+				xhr = new XMLHttpRequest();
+			} else {
 				xhr = new ActiveXObject("Microsoft.XMLHTTP");
 			}
 			return xhr;
 		}
 
-		$('#codeClient').change(function(){
+		function updateContent(idLigne, chRefProduit){
 			xhr = getXhrReq();
-			xhr.onreadystatechange = function(){
-				if(xhr.readyState == 4){
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
 					var obj = JSON.parse(xhr.responseText);
 					console.log(obj);
+					$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .designation').val(obj.designation);
+					$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .prix').val(obj.prix_unitaire_ht);
+					$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .quantiteProduit').focus();
+				}
+			}
+			var data = "ref=" + chRefProduit;
+			xhr.open('POST', '../includes/scripts/json/produitClient.php', true);
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+			xhr.send(data);
+		}
+
+		function addNewLine(){
+			$('#corpsDevis>tbody').append('<tr><td><input class="codeProduit" type="text" name="codeProduit" class="codeProduit" autofocus/></td><td><input class="designation" type="text" readonly/> </td><td><input class="quantiteProduit" type="number"/></td><td><input class="prix" type="text" readonly/></td><td><input class="totalHTLigne" type="text" readonly/></td></tr>');
+
+			$('input.codeProduit:last').change(function (){
+				idLigne = $(this).parent().parent().index();
+				valCodePdt = $(this).val();
+				updateContent(idLigne, valCodePdt);
+			});
+
+			$('input.quantiteProduit:last').change(function (){
+				idLigne = $(this).parent().parent().index();
+				if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
+					addNewLine();
+					qt = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .quantiteProduit').val();
+					px = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .prix').val();
+					totalHTLigne = qt*px;
+					$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .totalHTLigne').val(totalHTLigne);
+
+					totalHT += totalHTLigne;
+					console.log(totalHT);
+
+					$('#corpsDevis>tfoot>tr .totalHT').val(totalHT);
+
+				}
+			});
+			$('input.codeProduit:last').focus();
+		}
+
+		$('#codeClient').change(function() {
+			xhr = getXhrReq();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					var obj = JSON.parse(xhr.responseText);
+					console.log(obj);
+
 					var codeClient = $('#codeClient').val();
 
-					if(clientEnCours != codeClient){
-						var adresse ="";
-						if(obj.ligne2){
+					if (clientEnCours != codeClient) {
+						var adresse = "";
+						if (obj.ligne2) {
 							adresse = obj.ligne1 + '<br>' + obj.ligne2;
-						}else{
+						} else {
 							adresse = obj.ligne1;
 						}
 
-						if(!client){
+						if (!client) {
 							clientEnCours = codeClient;
 
-							if(obj.rs){
-								$('.clientinfo').append('<p>'  + obj.rs + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
+							if (obj.rs) {
+								$('.clientinfo').append('<p>' + obj.rs + '<br>' + adresse + '<br>' + obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
 
+							} else {
+								$('.clientinfo').append('<p>' + obj.nom_cli + '<br>' + adresse + '<br>' + obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
 							}
-							else{
-								$('.clientinfo').append('<p>'  + obj.nom_cli + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
-							}
-							return client=true;
-						}
-						else{
+							return client = true;
+						} else {
 							$('.clientinfo').empty();
 							clientEnCours = codeClient;
-								if(obj.rs){
-									$('.clientinfo').append('<p>'  + obj.rs + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
-								}
-								else{
-									$('.clientinfo').append('<p>'  + obj.nom_cli + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
+							if (obj.rs) {
+								$('.clientinfo').append('<p>' + obj.rs + '<br>' + adresse + '<br>' + obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
+							} else {
+								$('.clientinfo').append('<p>' + obj.nom_cli + '<br>' + adresse + '<br>' + obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
 
-								}
-							return client=true;
+							}
+							return client = true;
 						}
 					}
 				}
@@ -174,8 +218,29 @@
 
 			var data = "code=" + $(this).val();
 			xhr.open('POST', '../includes/scripts/json/devisClient.php', true);
-			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
 			xhr.send(data);
+		});
+
+		$('.codeProduit').change(function() {
+			idLigne = $(this).parent().parent().index();
+			valCodePdt = $(this).val();
+			updateContent(idLigne, valCodePdt);
+		});
+
+		$('.quantiteProduit').change(function(){
+			idLigne = $(this).parent().parent().index();
+			if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
+				addNewLine();
+
+				qt = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .quantiteProduit').val();
+				px = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .prix').val();
+				totalHTLigne = qt*px;
+				$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .totalHTLigne').val(totalHTLigne);
+
+				totalHT = totalHTLigne;
+				$('#corpsDevis>tfoot>tr .totalHT').val(totalHT);
+			}
 		});
 	});
 </script>

@@ -6,8 +6,7 @@ class Database
     private static $bdd = 'progiplus';
     private static $dbUser = 'root';
     private static $dbMdp = 'root';
-
-
+	
     private static $pdo = null;
 
     public static function connect()

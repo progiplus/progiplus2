@@ -23,13 +23,11 @@
             <form id="tb" name="tb" action="" method="post">
 
                 <?php
-
           $nom = $prenom  = $codeClient = $raisonSocial = $service = $adresseC = $adresseF = $cPostale = $ville = $nomAdresse = "";
           $db = Database::connect();
-           // $db = Database::connect('mysql:host=localhost; port=3306; dbname=progiplus; charset=utf8', 'root', 'root');
-            if(!empty($_GET))
-            { //je recois quelque chose dans l'adresse
-                if (isset($_GET['id']))//recuperer les donnees
+          
+          //je recois quelque chose dans l'adresse
+                if (isset($_GET['id'])) //recuperer les donnees
                     //GET+POST modifier les donnees
                 {
                     if(!empty($_POST)) //entrer les donnees
@@ -47,15 +45,14 @@
                         $nomAdresse=$_POST['nomAdresse'];
                         $ville = $_POST['ville'];
                         $cPostale = $_POST['postale'];
-              
-
+  
 
                     }
                     else
                     {
 
                         // SELECT
-                        $SQLQuery = 'select * from client where id='.$_GET['id'];
+                        $SQLQuery = 'select * from client where id_client='.$_GET['id'];
                         $result =$db->query($SQLQuery);
                         if ($Row=$result->fetchObject())
                         {
@@ -66,7 +63,7 @@
                         $result->closecursor();
                     }
                 }
-            }
+     
             else
             {
                 if(!empty($_POST))
@@ -102,14 +99,13 @@
                         $idClient = $db->lastInsertId();
                         $result->fetchObject();
                         $result->closeCursor();
-                    
-                        $SQLlisteadresse = 'INSERT INTO liste_adresse (libelle, actif, id_client, id_adresse) VALUE ("'.$nomAdresse.'",1, '.$idClient.', '.$idAdresse.';';
-                        $result = $db->query($SQLadresse);
+                        
+                        $SQLlisteadresse = 'INSERT INTO liste_adresse (libelle, actif, id_client, id_adresse) VALUE ("'.$nomAdresse.'",1, '.$idClient.', '.$idAdresse.');';
+                        $result = $db->query($SQLlisteadresse);
                         $result->fetchObject();
                         $result->closeCursor();
                     
                         $SQLcontact = 'INSERT INTO contact (nom, prenom, service,id_civilite, id_client) VALUE ("'.$nom.'","'.$prenom.'","'.$service.'",'.$civilite.','.$idClient.');';
-                    echo $SQLcontact;
                         $result = $db->query($SQLcontact);
                         $result->fetchObject();
                         $result->closeCursor();
@@ -204,11 +200,16 @@
                             
                             
                         var codeClient = document.getElementById('code_client');
-                        var raisonSocial =  document.getElementById('raison_sociale');
+                        var raisonSocial = document.getElementById('raison_sociale');
                         var Hnom = document.getElementById('nom');
                         var Hprenom = document.getElementById('prenom');
                         var service = document.getElementById('service');
                         var adresseF = document.getElementById('id_adresse_facturation');
+                        var adresseC = document.getElementById('id_adresse_comp');
+                        var ville = document.getElementById('ville');
+                        var cPostale = document.getElementById('postale');
+                        var nomAdresse= document.getElementById('nomAdresse');
+                           
                            
                         if (!isValid($codeClient)) {
                         alert('vous devez saisir votre code client');
@@ -235,6 +236,11 @@
                     
                         if (!isValid($adresseF)) {
                         alert('vous devez saisir votre adresse de facturation');
+                        return false;
+                        }
+                        
+                        if (!isValid($adresseC)) {
+                        alert('vous devez saisir votre complement d\'adresse');
                         return false;
                         }
                             

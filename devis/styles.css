@@ -81,3 +81,13 @@
 	background-color: darkred;
 }
 
+.designation, .prix{
+	border: none;
+}
+
+.designation{
+	width: 250px;
+}
+.prix{
+	width:  60px;
+}

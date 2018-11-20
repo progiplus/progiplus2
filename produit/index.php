@@ -30,9 +30,9 @@
 			require_once('../modales.php');
 			?>
 
-	<section>
+		<section>
 
-		<h1>Liste des Produits</h1>
+			<h1>Liste des Produits</h1>
 
 			<button id="bouton_ajouter" type="button">Ajouter un nouveau produit</button>
 

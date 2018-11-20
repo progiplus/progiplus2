@@ -2,7 +2,7 @@
 
 class Database
 {
-    private static $hote = 'localhost:3308' ;
+    private static $hote = 'localhost' ;
     private static $bdd = 'progiplus';
     private static $dbUser = 'root';
     private static $dbMdp = 'root';

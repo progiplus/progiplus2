@@ -71,17 +71,17 @@ VALUES
 ("Pc portable",1,1),
 ("Voiture",2,1);
 
-INSERT INTO produit(reference,designation,prix_unitaire_ht,actif,id_categorie,id_gamme)
+INSERT INTO produit(reference,designation,prix_unitaire_ht,actif,id_categorie,id_gamme,id_tva)
 VALUES
-("S9","Galaxy s9",700,1,3,1),
-("S8","Galaxy s",600,1,3,1),
-("7","iPhone 7",700,1,3,2),
-("8","iPhone 8",800,1,3,2),
-("Z3","Sony Z3",300,1,3,4),
-("6","Lg g6",700,1,3,5),
-("10","Mate 10",700,1,3,6),
-("2.5l tsi","Audi tt essence",9999,1,4,8),
-("2.2l tdi","clio",6000,1,4,9);
+("S9","Galaxy s9",700,1,3,1,4),
+("S8","Galaxy s",600,1,3,1,4),
+("7","iPhone 7",700,1,3,2,4),
+("8","iPhone 8",800,1,3,2,4),
+("Z3","Sony Z3",300,1,3,4,4),
+("6","Lg g6",700,1,3,5,4),
+("10","Mate 10",700,1,3,6,4),
+("2.5l tsi","Audi tt essence",9999,1,4,8,4),
+("2.2l tdi","clio",6000,1,4,9,4);
 
 INSERT INTO devis(date_devis, duree_validite,actif,id_client, id_adresse)
 VALUES

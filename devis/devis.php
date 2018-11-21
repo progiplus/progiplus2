@@ -64,10 +64,10 @@
 					<table id="corpsDevis">
 						<thead>
 							<th class="codeProduit">Code</th>
-							<th style="width:300px">Designation</th>
+							<th class="designation"> Designation</th>
 							<th class="quantiteProduit">quantite</th>
 							<th style="width:70px">prixU</th>
-							<th class="totalHTLigne" style="width:100px">Total</th>
+							<th class="totalHTLigne">Total</th>
 						</thead>
 						<tbody>
 						 	<tr>
@@ -87,12 +87,12 @@
 							<tr>
 								<td colspan="3"></td>
 								<td>TVA</td>
-								<td></td>
+								<td><input class="totalTva" type="text" readonly/></td>
 							</tr>
 							<tr>
 								<td colspan="3"></td>
 								<td>Total TTC</td>
-								<td></td>
+								<td><input class="totalTTC" type="text" readonly/></td>
 							</tr>
 							<tr>
 								<td colspan="3"></td>
@@ -117,7 +117,8 @@
 		var px=0;
 		var totalHTLigne = 0;
 		var totalHT = 0;
-
+		var totalTva =0;
+		var totalTTC = 0;
 
 		function getXhrReq() {
 			var xhr;
@@ -159,16 +160,45 @@
 				idLigne = $(this).parent().parent().index();
 				if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
 					addNewLine();
+
+					// calcul HT par ligne
 					qt = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .quantiteProduit').val();
 					px = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .prix').val();
 					totalHTLigne = qt*px;
 					$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .totalHTLigne').val(totalHTLigne);
 
+					//calul HT total
 					totalHT += totalHTLigne;
 					console.log(totalHT);
 
 					$('#corpsDevis>tfoot>tr .totalHT').val(totalHT);
 
+					//Calcul de la tva total
+					totalTva = totalHT * 0.2;
+					$('#corpsDevis>tfoot>tr .totalTva').val(totalTva);
+
+					//calcul total TTC => totalHT + totalTva
+					totalTTC = totalHT + totalTva;
+					$('#corpsDevis>tfoot>tr .totalTTC').val(totalTTC);
+				}else{
+					// calcul HT par ligne
+					qt = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .quantiteProduit').val();
+					px = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .prix').val();
+					totalHTLigne = qt*px;
+					$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .totalHTLigne').val(totalHTLigne);
+
+					//calul HT total
+					totalHT = totalHTLigne;
+					$('#corpsDevis>tfoot>tr .totalHT').val(totalHT);
+
+					//Calcul de la tva total
+					totalTva = totalHT * 0.2;
+					console.log(totalTva);
+					$('#corpsDevis>tfoot>tr .totalTva').val(totalTva);
+
+					//calcul total TTC => totalHT + totalTva
+					totalTTC = totalHT + totalTva;
+					$('#corpsDevis>tfoot>tr .totalTTC').val(totalTTC);
 				}
 			});
 			$('input.codeProduit:last').focus();
@@ -230,16 +260,47 @@
 
 		$('.quantiteProduit').change(function(){
 			idLigne = $(this).parent().parent().index();
+			console.log(idLigne);
 			if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
 				addNewLine();
 
+				// calcul HT par ligne
 				qt = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .quantiteProduit').val();
 				px = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .prix').val();
 				totalHTLigne = qt*px;
 				$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .totalHTLigne').val(totalHTLigne);
 
+				//calul HT total
 				totalHT = totalHTLigne;
 				$('#corpsDevis>tfoot>tr .totalHT').val(totalHT);
+
+				//Calcul de la tva total
+				totalTva = totalHT * 0.2;
+				console.log(totalTva);
+				$('#corpsDevis>tfoot>tr .totalTva').val(totalTva);
+
+				//calcul total TTC => totalHT + totalTva
+				totalTTC = totalHT + totalTva;
+				$('#corpsDevis>tfoot>tr .totalTTC').val(totalTTC);
+			}else{
+				// calcul HT par ligne
+				qt = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .quantiteProduit').val();
+				px = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .prix').val();
+				totalHTLigne = qt*px;
+				$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .totalHTLigne').val(totalHTLigne);
+
+				//calul HT total
+				totalHT = totalHTLigne;
+				$('#corpsDevis>tfoot>tr .totalHT').val(totalHT);
+
+				//Calcul de la tva total
+				totalTva = totalHT * 0.2;
+				console.log(totalTva);
+				$('#corpsDevis>tfoot>tr .totalTva').val(totalTva);
+
+				//calcul total TTC => totalHT + totalTva
+				totalTTC = totalHT + totalTva;
+				$('#corpsDevis>tfoot>tr .totalTTC').val(totalTTC);
 			}
 		});
 	});

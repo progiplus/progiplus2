@@ -91,3 +91,6 @@
 .prix{
 	width:  60px;
 }
+.totalHTLigne, .totalTTC, .totalTva, .totalHT{
+	width: 80px;
+}

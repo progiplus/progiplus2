@@ -1,5 +1,5 @@
 <?php
-	require_once('config.php');
+	require_once('../config.php');
 
 	$db = Database::connect();
 
@@ -18,28 +18,6 @@
 ?>
 
 <!--Ajouter / Modifier un produit-->
-
-<?php
-
-		$id = isset($_GET['reference'])?$_GET['reference']:0;
-			if (!empty($_POST)){
-
-				$reference = $_POST['referenceProduit'];
-				$designation = $_POST['designationProduit'];
-				$prixht_produit = $_POST['prixht_produit'];
-				$gammeProduit = $_POST['gammeProduit'];
-				$catégorieProduit = $_POST['catégorieProduit'];
-				$Query = "UPDATE produit SET designation = \"$designation\", prix_unitaire_ht = \"$prixht_produit\", id_gamme = $gammeProduit, id_categorie = $catégorieProduit WHERE reference = \"$reference\"";
-				$Statement=$db->query($Query);
-				$Statement->fetchObject();
-				$Statement->closeCursor();
-
-					if ($Statement->execute()){
-						print('<script type="text/javascript">document.location.href=\'index.php\';</script>');
-					}
-			}
-
-?>
 
 <div id="modaleProduit" class="modal">
   <div class="modal-content">
@@ -74,8 +52,8 @@
         }?>
         </select></p>
 
-     <button type="submit" id="btnAjouterProduit">Ajouter produit</button>
-		 <button type="submit" id="btnModifierProduit">Modifier produit</button>
+     <button type="button" id="btnAjouterProduit">Ajouter produit</button>
+		 <button type="button" id="btnModifierProduit">Modifier produit</button>
      <button type="button" id="btnAnnuler">Annuler</button>
 	 </form>
 	</div>

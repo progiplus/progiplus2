@@ -1,5 +1,6 @@
 <?php
 	require_once('../config.php');
+	require_once('modaleProduit.php');
 
 	$db = Database::connect();
 
@@ -27,7 +28,7 @@
 
 			<?php
 			include('../nav.php');
-			require_once('../modales.php');
+
 			?>
 
 	<section>
@@ -102,6 +103,14 @@
 				closeModal.onclick = hideModal;
 				cancelModal.onclick = hideModal;
 
+				function verifEnvoi(data){
+					if (data=="true"){
+						document.location.href='index.php';
+					}else{
+						alert("L'envoi a échoué.");
+					}
+				}
+
 				$(".boutonAppel").on('click', function(){
 					$(".titreModale").text('Modifier la fiche Produit');
 					$("#referenceProduit").prop("readonly", true);
@@ -115,6 +124,38 @@
 					$("#marqueProduit").val($(this).data("id_marque"));
 					$("#produitActif").prop("checked", $(this).data("actif") > 0);
 					displayModal();
+				});
+
+				$("#btnModifierProduit").on('click', function(){
+					$.ajax({
+					        type: "POST",
+					        url: "ajaxProduit.php",
+									data:{
+										referenceProduit: $("#referenceProduit").val(),
+							    	designationProduit: $("#designationProduit").val(),
+							    	prixht_produit: $("#prixht_produit").val(),
+							    	gammeProduit: $("#gammeProduit").val(),
+							    	catégorieProduit: $("#catégorieProduit").val(),
+										action: "modifierProduit"
+									},
+									success: verifEnvoi
+					    })
+				});
+
+				$("#btnAjouterProduit").on('click', function(){
+					$.ajax({
+									type: "POST",
+									url: "ajaxProduit.php",
+									data:{
+										referenceProduit: $("#referenceProduit").val(),
+										designationProduit: $("#designationProduit").val(),
+										prixht_produit: $("#prixht_produit").val(),
+										gammeProduit: $("#gammeProduit").val(),
+										catégorieProduit: $("#catégorieProduit").val(),
+										action: "ajouterProduit"
+									},
+									success: verifEnvoi
+							})
 				});
 
 				$("#bouton_ajouter").on('click', function(){
@@ -151,7 +192,7 @@
 		        console.log(val);
 		        var apply = $(this).is(':checked') ? true : false;
 		        console.log(apply);
-		        var data = "reference=" + reference + "&apply=" + apply;
+		        var data = "action=changerActif&reference=" + reference + "&apply=" + apply;
 		        xhr.open('post', 'ajaxProduit.php', true);
 		        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=utf-8');
 		        xhr.send(data);

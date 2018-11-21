@@ -162,20 +162,15 @@ table
 {
   border-collapse: collapse;
   width: 100%;
-
 }
 table,th,td
 {
   border: 1px solid silver;
 }
-
-
 th,td
 {
   padding: 3px;
 }
-
-
 th
 {
     background-color: #4CAF50;
@@ -203,7 +198,12 @@ tr:nth-child(even)
 {
 	color:white;
 }
-/* The Modal (background) */
+
+/* ================================ */
+/* ================================ */
+/* ========== MODALES ========== */
+/* ================================ */
+/* ================================ */
 #modaleProduit
 {
     display: none;
@@ -218,11 +218,7 @@ tr:nth-child(even)
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 }
-
-/* Modal Content */
-
 .modal-content {
-
 	position: relative;
 	background-color: #fefefe;
 	margin: auto;
@@ -231,19 +227,6 @@ tr:nth-child(even)
 	width: 50%;
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
-
-
-/* The Close Button */
-.modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    border: 1px solid #888;
-    width: 80%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-}
-
 .close {
 	color: white;
 	float: right;
@@ -263,7 +246,6 @@ tr:nth-child(even)
 .modal-body {
 	padding: 2px 16px;
 }
-
 .modal-footer {
 	padding: 2px 16px;
 	background-color: #5cb85c;
@@ -275,4 +257,3 @@ tr:nth-child(even)
 .dataTables_length{
 	margin-bottom: 10px;
 }
-

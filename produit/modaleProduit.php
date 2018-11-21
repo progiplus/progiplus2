@@ -52,22 +52,44 @@
 	        }?>
 	        </select></p>
 
+				<p><label for="nomNewMarque">Nom :</label>
+ 			 <input type="text" id="nomNewMarque" name="nomNewMarque"></p>
+
 	     <button type="button" id="btnAjouterProduit">Ajouter produit</button>
 			 <button type="button" id="btnModifierProduit">Modifier produit</button>
+			 <button type="button" id="btnAjouterMarque">Ajouter marque</button>
+			 <button type="button" id="btnAjouterGamme">Ajouter gamme</button>
+			 <button type="button" id="btnAjouterCategorie">Ajouter categorie</button>
 	     <button type="button" id="btnAnnuler">Annuler</button>
+
 		 </form>
 		</div>
   </div>
 </div>
 
-<!--Ajouter une marque-->
+<!--Ajouter une marque / gamme / catégorie-->
 
+<!-- <div id="modaleMGC" class="modal">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <span class="close">&times;</span>
+	    <h2 class="titreModale"></h2>
+	  </div>
+	  <div class="modal-body">
+	    <form method="post">
 
-<!--Ajouter une gamme-->
+				<p><label for="nomNewMarque">Nom :</label>
+	      <input type="text" id="nomNewMarque" name="nomNewMarque"></p>
 
+				<button type="button" id="btnAjouterMarque">Ajouter marque</button>
+				<button type="button" id="btnAjouterGamme">Ajouter gamme</button>
+				<button type="button" id="btnAjouterCategorie">Ajouter categorie</button>
+				<button type="button" id="btnAnnuler2">Annuler</button>
 
-<!--Ajouter une catégorie-->
-
+			</form>
+		</div>
+	</div>
+</div> -->
 
 <script type="text/javascript">
 

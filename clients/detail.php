@@ -88,7 +88,7 @@ Database::disconnect();
 <head>
     <title> Client</title>
     <link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/style.css">
-    <link rel="stylesheet" type="text/css" href="clientstyle.css">
+    <link rel="stylesheet" type="text/css" href="styledetail.css">
     <link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/datatables.css">
     <meta charset="UTF-8">
 </head>

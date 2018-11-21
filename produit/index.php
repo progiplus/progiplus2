@@ -1,5 +1,6 @@
 <?php
 	require_once('../config.php');
+	require_once('modaleProduit.php');
 
 	$db = Database::connect();
 
@@ -25,16 +26,16 @@
 	<body>
   	<div class="wrapper">
 
-			<?php
-			include('../nav.php');
-			require_once('../modales.php');
-			?>
+			<?php include('../nav.php'); ?>
 
 	<section>
 
 		<h1>Liste des Produits</h1>
 
-			<button id="bouton_ajouter" type="button">Ajouter un nouveau produit</button>
+			<button id="boutonNouvelleC" type="button">Nouvelle catégorie</button>
+			<button id="boutonNouvelleG" type="button">Nouvelle gamme</button> <!--associer une marque-->
+			<button id="boutonNouvelleM" type="button">Nouvelle marque</button>
+			<button id="boutonNouveauP" type="button">Nouveau produit</button>
 
 			<table id="table_produits" class="display">
 				<thead>
@@ -45,8 +46,8 @@
 						<th>Marque</th>
 						<th>Gamme</th>
 						<th>Catégorie</th>
-						<th>Statut</th>
-				    <th>Actions</th>
+						<th></th>
+				    <th></th>
 				  </tr>
 				</thead>
 				<tbody>
@@ -103,6 +104,14 @@
 				  modaleGen.style.display = "none";
 				}
 
+				function verifEnvoi(data){
+					if (data=="true"){
+						document.location.href='index.php';
+					}else{
+						alert("L'envoi a échoué.");
+					}
+				}
+
 				$(".boutonAppel").on('click', function(){
 					$(".titreModale").text('Modifier la fiche Produit');
 					$(".")
@@ -116,7 +125,39 @@
 					displayModal();
 				});
 
-				$("#bouton_ajouter").on('click', function(){
+				$("#btnModifierProduit").on('click', function(){
+					$.ajax({
+					        type: "POST",
+					        url: "ajaxProduit.php",
+									data:{
+										referenceProduit: $("#referenceProduit").val(),
+							    	designationProduit: $("#designationProduit").val(),
+							    	prixht_produit: $("#prixht_produit").val(),
+							    	gammeProduit: $("#gammeProduit").val(),
+							    	catégorieProduit: $("#catégorieProduit").val(),
+										action: "modifierProduit"
+									},
+									success: verifEnvoi
+					    })
+				});
+
+				$("#btnAjouterProduit").on('click', function(){
+					$.ajax({
+									type: "POST",
+									url: "ajaxProduit.php",
+									data:{
+										referenceProduit: $("#referenceProduit").val(),
+										designationProduit: $("#designationProduit").val(),
+										prixht_produit: $("#prixht_produit").val(),
+										gammeProduit: $("#gammeProduit").val(),
+										catégorieProduit: $("#catégorieProduit").val(),
+										action: "ajouterProduit"
+									},
+									success: verifEnvoi
+							})
+				});
+
+				$("#boutonNouveauP").on('click', function(){
 					$(".titreModale").text('Ajouter un Produit');
 					$("#referenceProduit").val("");
 					$("#designationProduit").val("");
@@ -147,8 +188,8 @@
 		        console.log(val);
 		        var apply = $(this).is(':checked') ? true : false;
 		        console.log(apply);
-		        var data = "reference=" + reference + "&apply=" + apply;
-		        xhr.open('post', '../includes/scripts/ajaxProduit.php', true);
+		        var data = "action=changerActif&reference=" + reference + "&apply=" + apply;
+		        xhr.open('post', 'ajaxProduit.php', true);
 		        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=utf-8');
 		        xhr.send(data);
 
@@ -171,5 +212,5 @@
 
 			</section>
 		</div>
-    </body>
+  </body>
 </html>

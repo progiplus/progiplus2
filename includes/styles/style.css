@@ -180,11 +180,11 @@ tr:nth-child(even)
 {
   background-color: #f2f2f2;
 }
-#bouton_ajouter
+#boutonNouveauP,#boutonNouvelleC,#boutonNouvelleG,#boutonNouvelleM
 {
 	position:relative;
-	margin-bottom: 10px;
-	width:30%;
+	margin-bottom: 20px;
+	width:25%;
 	float:right;
 }
 .dataTables_wrapper

@@ -26,16 +26,16 @@
 	<body>
   	<div class="wrapper">
 
-			<?php
-			include('../nav.php');
-
-			?>
+			<?php include('../nav.php'); ?>
 
 	<section>
 
 		<h1>Liste des Produits</h1>
 
-			<button id="bouton_ajouter" type="button">Ajouter un nouveau produit</button>
+			<button id="boutonNouvelleC" type="button">Nouvelle catégorie</button>
+			<button id="boutonNouvelleG" type="button">Nouvelle gamme</button> <!--associer une marque-->
+			<button id="boutonNouvelleM" type="button">Nouvelle marque</button>
+			<button id="boutonNouveauP" type="button">Nouveau produit</button>
 
 			<table id="table_produits" class="display">
 				<thead>
@@ -46,8 +46,8 @@
 						<th>Marque</th>
 						<th>Gamme</th>
 						<th>Catégorie</th>
-						<th>Statut</th>
-				    <th>Actions</th>
+						<th></th>
+				    <th></th>
 				  </tr>
 				</thead>
 				<tbody>
@@ -158,7 +158,7 @@
 							})
 				});
 
-				$("#bouton_ajouter").on('click', function(){
+				$("#boutonNouveauP").on('click', function(){
 					$(".titreModale").text('Ajouter un Produit');
 					$("#referenceProduit").prop("readonly", false);
 					$('#btnAjouterProduit').show();
@@ -212,5 +212,5 @@
 
 			</section>
 		</div>
-    </body>
+  </body>
 </html>

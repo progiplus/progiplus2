@@ -41,7 +41,7 @@
 					<tr>
 						<th>Référence</th>
 						<th>Désignation</th>
-				    <th>Prix unitaire</th>
+						<th>Prix unitaire HT</th>
 						<th>Marque</th>
 						<th>Gamme</th>
 						<th>Catégorie</th>
@@ -92,20 +92,21 @@
 					modaleGen.style.display = "block";
 				}
 
+				function hideModal(){
+					modaleGen.style.display = "none";
+				}
+
 				var closeModal = document.getElementsByClassName("close")[0];
 				var cancelModal = document.getElementById("btnAnnuler");
 
-				closeModal.onclick = function() {
-				  modaleGen.style.display = "none";
-				}
-
-				cancelModal.onclick = function() {
-				  modaleGen.style.display = "none";
-				}
+				closeModal.onclick = hideModal;
+				cancelModal.onclick = hideModal;
 
 				$(".boutonAppel").on('click', function(){
 					$(".titreModale").text('Modifier la fiche Produit');
-					$(".")
+					$("#referenceProduit").prop("readonly", true);
+					$('#btnAjouterProduit').hide();
+					$('#btnModifierProduit').show();
 					$("#referenceProduit").val($(this).data("id"));
 					$("#designationProduit").val($(this).data("designation"));
 					$("#prixht_produit").val($(this).data("prix_unitaire_ht"));
@@ -118,6 +119,9 @@
 
 				$("#bouton_ajouter").on('click', function(){
 					$(".titreModale").text('Ajouter un Produit');
+					$("#referenceProduit").prop("readonly", false);
+					$('#btnAjouterProduit').show();
+					$('#btnModifierProduit').hide();
 					$("#referenceProduit").val("");
 					$("#designationProduit").val("");
 					$("#prixht_produit").val("");
@@ -148,24 +152,20 @@
 		        var apply = $(this).is(':checked') ? true : false;
 		        console.log(apply);
 		        var data = "reference=" + reference + "&apply=" + apply;
-		        xhr.open('post', '../includes/scripts/ajaxProduit.php', true);
+		        xhr.open('post', 'ajaxProduit.php', true);
 		        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=utf-8');
 		        xhr.send(data);
 
 		        $.ajax({
 		            type: "POST",
-		            url: "../includes/scripts/ajaxProduit.php",
+		            url: "ajaxProduit.php",
 		            data: {
 		                reference: reference,
 		                val: val,
 		                apply: apply
 		            }
-
 		        });
-
 		    });
-
-
 
 				</script>
 

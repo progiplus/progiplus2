@@ -7,7 +7,6 @@ class Database
     private static $dbUser = 'root';
     private static $dbMdp = 'Rugbyman47';
 
-
     private static $pdo = null;
 
     public static function connect()

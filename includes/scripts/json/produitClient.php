@@ -5,9 +5,10 @@ if (isset($_POST['ref'])){
 
 	$db = Database::connect();
 	$statement = $db->prepare('
-		SELECT reference,designation,prix_unitaire_ht,actif
+		SELECT reference,designation,prix_unitaire_ht,tva.taux
 		FROM produit
-		WHERE reference = ? AND actif = 1;
+		INNER JOIN tva ON tva.id_tva = produit.id_tva
+		WHERE reference = ? AND produit.actif = 1 AND tva.actif=1;
 	');
 	$statement->execute(array($id));
 

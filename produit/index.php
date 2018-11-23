@@ -5,10 +5,11 @@
 	$db = Database::connect();
 
 	$statement = $db->query('
-	SELECT reference, designation, prix_unitaire_ht, produit.actif, marque.id_marque, gamme.id_gamme, categorie.id_categorie, categorie.libelle as libelleC, marque.nom as nomM, gamme.libelle as libelleG FROM produit
+	SELECT reference, designation, prix_unitaire_ht, produit.actif, marque.id_marque, gamme.id_gamme, categorie.id_categorie, categorie.libelle as libelleC, marque.nom as nomM, gamme.libelle as libelleG, tva.id_tva, tva.taux as taux FROM produit
 	INNER JOIN categorie ON categorie.id_categorie=produit.id_categorie
 	INNER JOIN gamme ON gamme.id_gamme=produit.id_gamme
 	INNER JOIN marque ON marque.id_marque=gamme.id_marque
+	INNER JOIN tva on tva.id_tva=produit.id_tva
 	ORDER BY produit.reference
 	');
 
@@ -32,10 +33,16 @@
 
 		<h1>Liste des Produits</h1>
 
-			<button id="boutonNouvelleC" type="button">Nouvelle catégorie</button>
-			<button id="boutonNouvelleG" type="button">Nouvelle gamme</button> <!--associer une marque-->
-			<button id="boutonNouvelleM" type="button">Nouvelle marque</button>
-			<button id="boutonNouveauP" type="button">Nouveau produit</button>
+			<div class="boutonsP">
+				<div class="boutonNouveauP">
+				<button id="boutonNouveauP" type="button">Produit</button>
+			</div>
+			<div class="boutonNouveauMGC">
+				<button id="boutonNouvelleM" type="button">Marque</button>
+				<button id="boutonNouvelleG" type="button">Gamme</button> <!--associer une marque-->
+				<button id="boutonNouvelleC" type="button">Catégorie</button>
+			</div>
+			</div>
 
 			<table id="table_produits" class="display">
 				<thead>
@@ -65,7 +72,7 @@
 									if($produit->actif==1){
 									print ("checked='checked'");
 									}print '/></td>';
-								print '<td><img class="boutonAppel" data-id="'.$produit->reference.'" data-designation="'.$produit->designation.'" data-prix_unitaire_ht="'.$produit->prix_unitaire_ht.'" data-id_marque="'.$produit->id_marque.'" data-id_gamme="'.$produit->id_gamme.'" data-id_categorie="'.$produit->id_categorie.'" data-actif="'.$produit->actif.'" src="../includes/assets/pencil.png" title="Modifier un Produit" alt="bouton_modifier" height="20"></td>';
+								print '<td><img class="boutonAppel" data-id="'.$produit->reference.'" data-designation="'.$produit->designation.'" data-prix_unitaire_ht="'.$produit->prix_unitaire_ht.'" data-id_tva="'.$produit->id_tva.'" data-id_marque="'.$produit->id_marque.'" data-id_gamme="'.$produit->id_gamme.'" data-id_categorie="'.$produit->id_categorie.'" data-actif="'.$produit->actif.'" src="../includes/assets/pencil.png" title="Modifier un Produit" alt="bouton_modifier" height="20"></td>';
 							print '</tr>';
 						}
 							Database::disconnect();
@@ -117,6 +124,7 @@
 					$("#referenceProduit").val($(this).data("id"));
 					$("#designationProduit").val($(this).data("designation"));
 					$("#prixht_produit").val($(this).data("prix_unitaire_ht"));
+					$("#tva").val($(this).data("id_tva"));
 					$("#catégorieProduit").val($(this).data("id_categorie"));
 					$("#gammeProduit").val($(this).data("id_gamme"));
 					$("#marqueProduit").val($(this).data("id_marque"));
@@ -138,6 +146,7 @@
 						referenceProduit: $("#referenceProduit").val(),
 			    	designationProduit: $("#designationProduit").val(),
 			    	prixht_produit: $("#prixht_produit").val(),
+						tva: $('#tva').val(),
 			    	gammeProduit: $("#gammeProduit").val(),
 			    	catégorieProduit: $("#catégorieProduit").val(),
 						action: "modifierProduit"
@@ -148,18 +157,19 @@
 
 			$("#btnAjouterProduit").on('click', function(){
 				$.ajax({
-								type: "POST",
-								url: "ajaxProduit.php",
-								data:{
-									referenceProduit: $("#referenceProduit").val(),
-									designationProduit: $("#designationProduit").val(),
-									prixht_produit: $("#prixht_produit").val(),
-									gammeProduit: $("#gammeProduit").val(),
-									catégorieProduit: $("#catégorieProduit").val(),
-									action: "ajouterProduit"
-								},
-								success: verifEnvoi
-						})
+						type: "POST",
+						url: "ajaxProduit.php",
+						data:{
+							referenceProduit: $("#referenceProduit").val(),
+							designationProduit: $("#designationProduit").val(),
+							prixht_produit: $("#prixht_produit").val(),
+							tva: $('#tva').val(),
+							gammeProduit: $("#gammeProduit").val(),
+							catégorieProduit: $("#catégorieProduit").val(),
+							action: "ajouterProduit"
+						},
+						success: verifEnvoi
+				})
 			});
 
 			$("#boutonNouveauP").on('click', function(){
@@ -169,6 +179,7 @@
 				$("#referenceProduit").val("");
 				$("#designationProduit").val("");
 				$("#prixht_produit").val("");
+				$("#tva").val(0);
 				$("#catégorieProduit").val(0);
 				$("#gammeProduit").val(0);
 				$("#marqueProduit").val(0);
@@ -284,15 +295,15 @@
 	        xhr.send(data);
 
 	        $.ajax({
-	            type: "POST",
-	            url: "ajaxProduit.php",
-	            data: {
-	                reference: reference,
-	                val: val,
-	                apply: apply
-	            }
-	        });
-	    });
+	          type: "POST",
+	          url: "ajaxProduit.php",
+	          data: {
+	            reference: reference,
+	            val: val,
+	            apply: apply
+	          }
+	      	});
+	    	});
 
 				</script>
 

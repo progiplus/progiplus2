@@ -22,9 +22,10 @@ function modifierProduit(){
     $reference = $_POST['referenceProduit'];
     $designation = $_POST['designationProduit'];
     $prixht_produit = $_POST['prixht_produit'];
+		$TVA = $_POST['tva'];
     $gammeProduit = $_POST['gammeProduit'];
     $catégorieProduit = $_POST['catégorieProduit'];
-    $Query = "UPDATE produit SET designation = \"$designation\", prix_unitaire_ht = \"$prixht_produit\", id_gamme = $gammeProduit, id_categorie = $catégorieProduit WHERE reference = \"$reference\"";
+    $Query = "UPDATE produit SET designation = \"$designation\", prix_unitaire_ht = \"$prixht_produit\", id_tva = $TVA, id_gamme = $gammeProduit, id_categorie = $catégorieProduit WHERE reference = \"$reference\"";
     $Statement=$db->query($Query);
     $Statement->fetchObject();
     $Statement->closeCursor();
@@ -40,10 +41,11 @@ function ajouterProduit(){
 		$reference = $_POST['referenceProduit'];
 		$designation = $_POST['designationProduit'];
 		$prixht_produit = $_POST['prixht_produit'];
+		$TVA = $_POST['tva'];
 		$gammeProduit = $_POST['gammeProduit'];
 		$catégorieProduit = $_POST['catégorieProduit'];
-		$Query = 'INSERT INTO produit(reference, designation, prix_unitaire_ht, actif, id_gamme, id_categorie) VALUES ("'
-			.$reference.'", "'.$designation.'", '.$prixht_produit.', 1, '.$gammeProduit.', '.$catégorieProduit.')';
+		$Query = 'INSERT INTO produit(reference, designation, prix_unitaire_ht, actif, id_gamme, id_categorie, id_tva) VALUES ("'
+			.$reference.'", "'.$designation.'", '.$prixht_produit.', 1, '.$gammeProduit.', '.$catégorieProduit.', '.$TVA.')';
 		$Statement = $db->query($Query);
 		$Statement->fetchObject();
 		$Statement->closeCursor();

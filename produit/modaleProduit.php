@@ -3,6 +3,11 @@
 
 	$db = Database::connect();
 
+	$listeTVA = $db->query('
+	SELECT id_tva, taux FROM tva
+	ORDER BY taux;
+	');
+
 	$listeCategorie = $db->query('
 	SELECT id_categorie, libelle FROM categorie
   ORDER BY libelle;
@@ -35,6 +40,14 @@
 
 	      <p><label for="prixht_produit" class="prixht_produit">Prix unitaire HT :</label>
 	      <input type="text" id="prixht_produit" name="prixht_produit"></p>
+
+				<p><label for="tva" class="tva">TVA :</label>
+	      <select name="tva" id="tva">
+	        <option value="0">Sélectionnez</option>
+	        <?php while ($TVA=$listeTVA->fetchObject()){
+	          print"<option value=\"$TVA->id_tva\">$TVA->taux</option>";
+	        }?>
+	        </select></p>
 
 	      <p><label for="gammeProduit" class="gammeProduit">Marque / Gamme :</label>
 	      <select name="gammeProduit" id="gammeProduit">

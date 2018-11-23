@@ -2,10 +2,10 @@
 
 class Database
 {
-    private static $hote = 'localhost' ;
+    private static $hote = 'localhost;port=3308' ;
     private static $bdd = 'progiplus';
     private static $dbUser = 'root';
-    private static $dbMdp = 'root';
+    private static $dbMdp = 'assbutt33';
 
 
     private static $pdo = null;

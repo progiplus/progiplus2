@@ -131,10 +131,6 @@
 					$("#produitActif").prop("checked", $(this).data("actif") > 0);
 					$('#btnAjouterProduit').hide();
 					$('#btnModifierProduit').show();
-					$('#btnAjouterMarque').hide();
-					$('#btnAjouterGamme').hide();
-					$('#btnAjouterCategorie').hide();
-					$('#nouveauNomMGC').hide();
 					displayModal();
 				});
 
@@ -175,7 +171,6 @@
 			$("#boutonNouveauP").on('click', function(){
 				$(".titreModale").text('Ajouter un Produit');
 				$("#referenceProduit").prop("readonly", false);
-				$('#nouveauNomMGC').hide();
 				$("#referenceProduit").val("");
 				$("#designationProduit").val("");
 				$("#prixht_produit").val("");
@@ -186,87 +181,6 @@
 				$("#produitActif").prop("checked", true);
 				$('#btnAjouterProduit').show();
 				$('#btnModifierProduit').hide();
-				$('#btnAjouterMarque').hide();
-				$('#btnAjouterGamme').hide();
-				$('#btnAjouterCategorie').hide();
-				displayModal();
-			});
-
-			$("#boutonNouvelleM").on('click', function(){
-				$(".titreModale").text('Ajouter une Marque');
-				$(".nouveauNomMGC").text('Nom :');
-				$(".referenceProduit").hide();
-				$("#referenceProduit").hide();
-				$(".designationProduit").hide();
-				$("#designationProduit").hide();
-				$(".prixht_produit").hide();
-				$("#prixht_produit").hide();
-				$(".catégorieProduit").hide();
-				$("#catégorieProduit").hide();
-				$(".gammeProduit").hide();
-				$("#gammeProduit").hide();
-				$(".marqueProduit").hide();
-				$("#marqueProduit").hide();
-				$("#produitActif").hide();
-				$('.nouveauNomMGC').show();
-				$('#nouveauNomMGC').show();
-				$('#btnAjouterProduit').hide();
-				$('#btnModifierProduit').hide();
-				$('#btnAjouterMarque').show();
-				$('#btnAjouterGamme').hide();
-				$('#btnAjouterCategorie').hide();
-				displayModal();
-			});
-
-			$("#boutonNouvelleG").on('click', function(){
-				$(".titreModale").text('Ajouter une Gamme');
-				$(".nouveauNomMGC").text('Nom :');
-				$(".referenceProduit").hide();
-				$("#referenceProduit").hide();
-				$(".designationProduit").hide();
-				$("#designationProduit").hide();
-				$(".prixht_produit").hide();
-				$("#prixht_produit").hide();
-				$(".catégorieProduit").hide();
-				$("#catégorieProduit").hide();
-				$(".gammeProduit").hide();
-				$("#gammeProduit").hide();
-				$(".marqueProduit").hide();
-				$("#marqueProduit").hide();
-				$("#produitActif").hide();
-				$('.nouveauNomMGC').show();
-				$('#nouveauNomMGC').show();
-				$('#btnAjouterProduit').hide();
-				$('#btnModifierProduit').hide();
-				$('#btnAjouterMarque').hide();
-				$('#btnAjouterGamme').show();
-				$('#btnAjouterCategorie').hide();
-				displayModal();
-			});
-
-			$("#boutonNouvelleC").on('click', function(){
-				$(".titreModale").text('Ajouter une Catégorie');
-				$(".nouveauNomMGC").text('Nom :');
-				$(".referenceProduit").hide();
-				$("#referenceProduit").hide();
-				$(".designationProduit").hide();
-				$("#designationProduit").hide();
-				$(".prixht_produit").hide();
-				$("#prixht_produit").hide();
-				$(".catégorieProduit").hide();
-				$("#catégorieProduit").hide();
-				$(".gammeProduit").hide();
-				$("#gammeProduit").hide();
-				$(".marqueProduit").hide();
-				$("#marqueProduit").hide();
-				$("#produitActif").hide();
-				$('.nouveauNomMGC').show();
-				$('#nouveauNomMGC').show();
-				$('#btnAjouterProduit').hide();
-				$('#btnModifierProduit').hide();
-				$('#btnAjouterMarque').hide();
-				$('#btnAjouterGamme').hide();
-				$('#btnAjouterCategorie').show();
 				displayModal();
 			});
 

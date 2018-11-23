@@ -65,14 +65,7 @@
 	        }?>
 	        </select></p>
 
-				<p><label for="nouveauNomMGC" class="nouveauNomMGC"></label>
- 			 <input type="text" id="nouveauNomMGC" name="nouveauNomMGC"></p>
-
 	     <button type="button" id="btnAjouterProduit">Ajouter produit</button>
-			 <button type="button" id="btnModifierProduit">Modifier produit</button>
-			 <button type="button" id="btnAjouterMarque">Ajouter marque</button>
-			 <button type="button" id="btnAjouterGamme">Ajouter gamme</button>
-			 <button type="button" id="btnAjouterCategorie">Ajouter categorie</button>
 	     <button type="button" id="btnAnnuler">Annuler</button>
 
 		 </form>

@@ -24,95 +24,9 @@
             <form id="tb" name="tb" action="" method="post">
 
                 <?php
-          $nom = $prenom  = $codeClient = $raisonSocial = $service = $adresseC = $adresseF = $cPostale = $ville = $nomAdresse = "";
+          $nom = $prenom  = $codeClient = $raisonSocial = $service = $ligne1 = $ligne2 = $cPostale = $ville = $nomAdresse = "";
           $db = Database::connect();
           
-          //je recois quelque chose dans l'adresse
-                /*if (isset($_GET['id'])) //recuperer les donnees
-                    //GET+POST modifier les donnees
-                {
-                    if(!empty($_POST)) //entrer les donnees
-                    {
-                        // MISE à JOUR
-                        $idClient=$_POST['id_client'];
-                        $nom=$_POST['nom'];
-                        $prenom=$_POST['prenom'];
-                        $codeClient=$_POST['code_client'];
-                        $raisonSocial=$_POST['raison_sociale'];
-                        $service=$_POST['service'];
-                        $status=$_POST['actif'];
-                        $adresseF=$_POST['id_adresse_facturation'];
-                        $adresseC=$_POST['id_adresse_comp'];
-                        $nomAdresse=$_POST['nomAdresse'];
-                        $ville = $_POST['ville'];
-                        $cPostale = $_POST['postale'];
-  
-
-                    }
-                    else
-                    {
-
-                        // SELECT
-                        $SQLQuery = 'select * from client where id_client='.$_GET['id'];
-                        $result =$db->query($SQLQuery);
-                        if ($Row=$result->fetchObject())
-                        {
-                            $codeClient= $Row ->codeClient;
-                            $raisonSocial = $Row->raisonSocial;
-                            $status = $Row->status;
-                        }
-                        $result->closecursor();
-                    }
-                }
-     
-            else
-            {
-                if(!empty($_POST))
-
-                {
-                        $codeClient=$_POST['code_client'];
-                        $raisonSociale=$_POST['raison_sociale'];
-                        $civilite=$_POST['gender'];
-                        $nom=$_POST['nom'];
-                        $prenom=$_POST['prenom'];
-                        $service=$_POST['service'];
-                        $adresseF=$_POST['id_adresse_facturation'];
-                        $adresseC=$_POST['id_adresse_comp'];
-                        $nomAdresse=$_POST['nomAdresse'];
-                        $ville = $_POST['ville'];
-                        
-                    
-
-                        $SQLville = 'INSERT INTO ville(nom_ville, cp_ville) VALUE ("'.$ville.'","'.$cPostale.'");';
-                        $result = $db->query($SQLville);
-                        $idVille = $db->lastInsertId();
-                        $result->fetchObject();
-                        $result->closeCursor();
-                    
-                        $SQLadresse = 'INSERT INTO adresse(ligne1, ligne2, id_ville) VALUE("'.$adresseF.'","'.$adresseC.'",'.$idVille.');';
-                        $result = $db->query($SQLadresse);
-                        $idAdresse = $db->lastInsertId();
-                        $result->fetchObject();
-                        $result->closeCursor();
-                        
-                        $SQLclient = 'INSERT INTO client (code_client, raison_sociale, actif, id_adresse_facturation) VALUE("'.$codeClient.'","'.$raisonSociale.'",1,'.$idAdresse.');';
-                        $result = $db->query($SQLclient);
-                        $idClient = $db->lastInsertId();
-                        $result->fetchObject();
-                        $result->closeCursor();
-                        
-                        $SQLlisteadresse = 'INSERT INTO liste_adresse (libelle, actif, id_client, id_adresse) VALUE ("'.$nomAdresse.'",1, '.$idClient.', '.$idAdresse.');';
-                        $result = $db->query($SQLlisteadresse);
-                        $result->fetchObject();
-                        $result->closeCursor();
-                    
-                        $SQLcontact = 'INSERT INTO contact (nom, prenom, service,id_civilite, id_client) VALUE ("'.$nom.'","'.$prenom.'","'.$service.'",'.$civilite.','.$idClient.');';
-                        $result = $db->query($SQLcontact);
-                        $result->fetchObject();
-                        $result->closeCursor();
-    
-                }
-            }*/
 
         ?>
                 <fieldset>
@@ -148,10 +62,10 @@
                             <input type="text" id="service" name="service" value="<?php echo $service; ?>"></div><br>
 
 
-                        <div class="element"> <label style="width:170px;" for="id_adresse_facturation">Adresse de facturation :</label>
-                            <input type="text" style="margin-right:34px;" id="id_adresse_facturation" name="id_adresse_facturation" value="<?php echo $adresseF; ?>"></div><br>
-                        <div class="element"> <label style="width:170px;" for="id_adresse_comp">Complément d'adresse :</label>
-                            <input type="text" style="margin-right:34px;" id="id_adresse_comp" name="id_adresse_comp" value="<?php echo $adresseC; ?>"></div><br>
+                        <div class="element"> <label style="width:170px;" for="ligne2">Adresse de facturation :</label>
+                            <input type="text" style="margin-right:34px;" id="ligne1" name="id_adresse_facturation" value="<?php echo $ligne1; ?>"></div><br>
+                        <div class="element"> <label style="width:170px;" for="ligne2">Complément d'adresse :</label>
+                            <input type="text" style="margin-right:34px;" id="ligne2" name="id_adresse_comp" value="<?php echo ligne2; ?>"></div><br>
 
                         <div class="element"> <label for="nomAdresse">Nom d'adresse :</label>
                             <input type="text" id="nomAdresse" name="nomAdresse" value="<?php echo $nomAdresse; ?>"></div> <br>
@@ -212,8 +126,8 @@
             var Hnom = document.getElementById('nom');
             var Hprenom = document.getElementById('prenom');
             var service = document.getElementById('service');
-            var adresseF = document.getElementById('id_adresse_facturation');
-            var adresseC = document.getElementById('id_adresse_comp');
+            var ligne1 = document.getElementById('ligne1');
+            var ligne2 = document.getElementById('ligne2');
             var ville = document.getElementById('ville');
             var cPostale = document.getElementById('postale');
             var nomAdresse = document.getElementById('nomAdresse');
@@ -242,12 +156,12 @@
                 return false;
             }
 
-            if (!isValid(adresseF)) {
+            if (!isValid(ligne1)) {
                 alert('vous devez saisir votre adresse de facturation');
                 return false;
             }
 
-            if (!isValid(adresseC)) {
+            if (!isValid(ligne2)) {
                 alert('vous devez saisir votre complement d\'adresse');
                 return false;
             }
@@ -271,8 +185,8 @@
                         nom: $('#nom').val(),
                         prenom: $('#prenom').val(),
                         service: $('#service').val(),
-                        id_adresse_facturation: $('#id_adresse_facturation').val(),
-                        id_adresse_comp: $('#id_adresse_comp').val(),
+                        ligne1: $('#ligne&').val(),
+                        ligne2: $('#ligne2').val(),
                         nomAdresse: $('#nomAdresse').val(),
                         cPostale: $('#cPostale').val(),
                         ville: $('#ville').val()

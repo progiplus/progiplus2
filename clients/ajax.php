@@ -104,42 +104,39 @@ function modifierClient()
             $nom=$_POST['nom'];
             $prenom=$_POST['prenom'];
             $service=$_POST['service'];
-            ligne1=$_POST['ligne1'];
-            ligne2=$_POST['ligne2'];
+            $ligne1=$_POST['ligne1'];
+            $ligne2=$_POST['ligne2'];
             $nomAdresse=$_POST['nomAdresse'];
             $cPostale=$_POST['cPostale'];
             $ville = $_POST['ville'];
-            $idVille = '';
-            $idAdresseFacturation = '';
-            $actif_client ='';
-            $idContact ='';
-            $idClient='';
-            $idCivilite='';
+            $idVille = $_POST['id_ville'];
+            $idAdresseFacturation = $_POST['id_adresse_facturation'];
+            $actif_client =$_POST['clientActif'];
+            $idContact =$_POST['id_contact'];
+            $idClient=$_POST['id_client'];
 
-            $SQLville = "UPDATE ville SET nom_ville = '$ville', cp_ville='$cPostale'  WHERE $idVille=1;";
+            $SQLville = "UPDATE ville SET nom_ville = '$ville', cp_ville='$cPostale'  WHERE id_ville = $idVille;";
             $result = $db->query($SQLville);
-            $idVille = $db->lastInsertId();
             $result->fetchObject();
+
             $result->closeCursor();
 
-            $SQLadresse = "UPDATE adresse SET ligne1='$ligne1', ligne2='$ligne2'  WHERE =$idAdresseFacturation;";
+            $SQLadresse = "UPDATE adresse SET ligne1='$ligne1', ligne2='$ligne2'  WHERE id_adresse=$idAdresseFacturation;";
             $result = $db->query($SQLadresse);
-            $idAdresse = $db->lastInsertId();
             $result->fetchObject();
             $result->closeCursor();
 
-            $SQLclient ="UPDATE client SET code_client='$codeClient', raison_sociale='$raisonSociale', actif='$actif_client' id_adresse_facturation = $idAdresseFacturation WHERE id_client= $idClient;";
+            $SQLclient ="UPDATE client SET code_client='$codeClient', raison_sociale='$raisonSociale', actif=$actif_client, id_adresse_facturation = $idAdresseFacturation WHERE id_client= $idClient;";
             $result = $db->query($SQLclient);
-            $idClient = $db->lastInsertId();
             $result->fetchObject();
             $result->closeCursor();
 
-            $SQLlisteadresse = "UPDATE liste_adresse SET libelle= '$nomAdresse' WHERE id_adresse=$idAdresse;";
+            $SQLlisteadresse = "UPDATE liste_adresse SET libelle= '$nomAdresse' WHERE id_adresse=$idAdresseFacturation;";
             $result = $db->query($SQLlisteadresse);
             $result->fetchObject();
             $result->closeCursor();
 
-            $SQLcontact = "UPDATE contact SET nom='$nom', prenom='$prenom', service='$service' , id_civilite=$idCivilite WHERE id_contact=$idContact;";
+            $SQLcontact = "UPDATE contact SET nom='$nom', prenom='$prenom', service='$service' , id_civilite=$civilite WHERE id_contact=$idContact;";
             $result = $db->query($SQLcontact);
             $result->fetchObject();
             $result->closeCursor();

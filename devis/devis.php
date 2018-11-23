@@ -178,7 +178,7 @@
 				$('#corpsDevis>tfoot>tr .totalTTC').val(totalTTC);
 		}
 		function addNewLine(){
-			$('#corpsDevis>tbody').append('<tr><td><input class="codeProduit" type="text" name="codeProduit" class="codeProduit" autofocus/></td><td><input class="designation" type="text" readonly/> </td><td><input class="quantiteProduit" type="number"/></td><td><input class="prix" type="text" readonly/></td><td><input class="totalHTLigne" type="text" value="0" readonly/></td><td><button class="btn-circle btn-add btn-circle-md" type="button">+</button><button class="btn-circle btn-sup btn-circle-md" type="button">-</button></td></tr>');
+			$('#corpsDevis>tbody').append('<tr><td><input class="codeProduit" type="text" name="codeProduit" class="codeProduit" autofocus/></td><td><input class="designation" type="text" readonly/> </td><td><input class="quantiteProduit" type="number"/></td><td><input class="prix" type="text" readonly/></td><td><input class="totalHTLigne" type="text" readonly/></td><td><button class="btn-circle btn-add btn-circle-md" type="button">+</button><button class="btn-circle btn-sup btn-circle-md" type="button">-</button></td></tr>');
 
 			$('input.codeProduit:last').change(function (){
 				idLigne = $(this).parent().parent().index();
@@ -196,6 +196,17 @@
 				}
 			});
 			$('input.codeProduit:last').focus();
+
+			$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .btn-sup').click(function(){
+				idLigne = $(this).parent().parent().index();
+				supLigne(idLigne);
+				majDevis();
+			});
+		}
+
+		function supLigne(idLIgne){
+				$('#corpsDevis>tbody>tr:eq(' + idLigne + ')').remove();
+				majDevis();
 		}
 
 		$('#codeClient').change(function() {
@@ -252,17 +263,17 @@
 			updateContent(idLigne, valCodePdt);
 		});
 
-		$('.btn-add').click(function() {
-			console.log('je click');
-			idLigne = $(this).parent().parent().index();
-			if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
-				addNewLine();
-			}
+		$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .btn-add').click(function(){
+			addNewLine()
 		});
-		$('.btn-sup').click(function() {
+		//supression ligne
+		$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .btn-sup').click(function(){
 			idLigne = $(this).parent().parent().index();
-			$('#corpsDevis>tbody').remove();
+			supLigne(idLigne);
+			majDevis();
+			addNewLine()
 		});
+
 
 		$('.quantiteProduit').change(function(){
 			idLigne = $(this).parent().parent().index();
@@ -275,5 +286,4 @@
 		});
 	});
 </script>
-
 </html>

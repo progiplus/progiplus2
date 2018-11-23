@@ -42,7 +42,7 @@
 					<tr>
 						<th>Référence</th>
 						<th>Désignation</th>
-						<th>Prix unitaire HT</th>
+				    <th>Prix unitaire</th>
 						<th>Marque</th>
 						<th>Gamme</th>
 						<th>Catégorie</th>
@@ -93,15 +93,16 @@
 					modaleGen.style.display = "block";
 				}
 
-				function hideModal(){
-					modaleGen.style.display = "none";
-				}
-
 				var closeModal = document.getElementsByClassName("close")[0];
 				var cancelModal = document.getElementById("btnAnnuler");
 
-				closeModal.onclick = hideModal;
-				cancelModal.onclick = hideModal;
+				closeModal.onclick = function() {
+				  modaleGen.style.display = "none";
+				}
+
+				cancelModal.onclick = function() {
+				  modaleGen.style.display = "none";
+				}
 
 				function verifEnvoi(data){
 					if (data=="true"){
@@ -113,9 +114,7 @@
 
 				$(".boutonAppel").on('click', function(){
 					$(".titreModale").text('Modifier la fiche Produit');
-					$("#referenceProduit").prop("readonly", true);
-					$('#btnAjouterProduit').hide();
-					$('#btnModifierProduit').show();
+					$(".")
 					$("#referenceProduit").val($(this).data("id"));
 					$("#designationProduit").val($(this).data("designation"));
 					$("#prixht_produit").val($(this).data("prix_unitaire_ht"));
@@ -160,9 +159,6 @@
 
 				$("#boutonNouveauP").on('click', function(){
 					$(".titreModale").text('Ajouter un Produit');
-					$("#referenceProduit").prop("readonly", false);
-					$('#btnAjouterProduit').show();
-					$('#btnModifierProduit').hide();
 					$("#referenceProduit").val("");
 					$("#designationProduit").val("");
 					$("#prixht_produit").val("");
@@ -199,14 +195,18 @@
 
 		        $.ajax({
 		            type: "POST",
-		            url: "ajaxProduit.php",
+		            url: "../includes/scripts/ajaxProduit.php",
 		            data: {
 		                reference: reference,
 		                val: val,
 		                apply: apply
 		            }
+
 		        });
+
 		    });
+
+
 
 				</script>
 

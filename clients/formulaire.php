@@ -26,11 +26,10 @@
                 <?php
           $nom = $prenom  = $codeClient = $raisonSocial = $service = $ligne1 = $ligne2 = $cPostale = $ville = $nomAdresse = "";
           $db = Database::connect();
-          
+
 
         ?>
                 <fieldset>
-
                     <h2>Ajouter un client</h2>
 
                     <div id="container">
@@ -84,6 +83,7 @@
 
 
                         
+
 
                     </div>
                 </fieldset>
@@ -185,7 +185,7 @@
                         nom: $('#nom').val(),
                         prenom: $('#prenom').val(),
                         service: $('#service').val(),
-                        ligne1: $('#ligne&').val(),
+                        ligne1: $('#ligne1').val(),
                         ligne2: $('#ligne2').val(),
                         nomAdresse: $('#nomAdresse').val(),
                         cPostale: $('#cPostale').val(),

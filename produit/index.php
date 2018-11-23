@@ -90,7 +90,7 @@
 				var modaleGen = document.getElementById("modaleProduit");
 
 				function displayModal(){
-					modaleGen.style.display = "block";
+					//modaleGen.style.display = "block";
 				}
 
 				var closeModal = document.getElementsByClassName("close")[0];

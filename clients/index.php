@@ -10,9 +10,14 @@ $db = Database::connect();
 $statement = $db->query(' SELECT client.id_client as id_client,
 			client.code_client as code,
             client.raison_sociale as raisonsoc,
-			CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom)as nom_cli, actif
+			civilite.libelle as civilite, contact.nom as nom_cli,contact.prenom as prenom_cli, client.actif,
+            contact.service as service, adresse.ligne1 as ligne1, adresse.ligne2 as ligne2,liste_adresse.libelle as libelle_adresse,
+            ville.cp_ville as code_postal, ville.nom_ville as nom_ville
             FROM contact
             inner JOIN client ON client.id_client = contact.id_client
+            inner join liste_adresse on liste_adresse.id_client = client.id_client
+            inner join adresse on adresse.id_adresse = liste_adresse.id_adresse
+            inner join ville on adresse.id_ville = ville.id_ville
 			inner join civilite ON contact.id_civilite = civilite.id_civilite order by actif desc ');
 Database::disconnect();
 
@@ -55,8 +60,10 @@ Database::disconnect();
 					while($client = $statement->fetchObject()){
                        // $script .= '<tr data-id="'.$client->id_client.'">';
                             print '<td>'.$client->code.'</td>';
-                            print '<td>'.identiteClient($client->raisonsoc,$client->nom_cli).'</td>';
-                            print '<td><img class="boutonAppel" <img class="boutonAppel" data-code="'.$client->code.'" data-raison_sociale="'.$client->raisonsoc.'" data-nom_client="'.$client->nom_cli.'"  src="../includes/assets/pencil.png" title="Modifier un Client" alt="bouton_modifier" height="20"></td>
+                            print '<td>'.identiteClient($client->raisonsoc,$client->civilite." ".$client->prenom_cli." ".$client->nom_cli).'</td>';
+                            print '<td><img class="boutonAppel" <img class="boutonAppel" data-code="'.$client->code.'" data-raison_sociale="'.$client->raisonsoc.'" data-nom_client="'.$client->nom_cli.'"data-prenom_client="'.$client->prenom_cli.'" data-civilite="'.$client->civilite.'" data-ligne1="'.$client->ligne1.'"data-service="'.$client->service.'" data-ligne1="'.$client->ligne1.'"
+     data-ligne2="'.$client->ligne2.'" data-libelle_adresse="'.$client->libelle_adresse.'" data-code_postal="'.$client->code_postal.'"
+     data-nom_ville="'.$client->nom_ville.'" src="../includes/assets/pencil.png" title="Modifier un Client" alt="bouton_modifier" height="20"></td>
 
 
                             <td class="action"><a href="detail.php?id='.$client->id_client.'">
@@ -105,8 +112,13 @@ Database::disconnect();
                 var closeModal = document.getElementsByClassName("close")[0];
                 var cancelModal = document.getElementById("btnAnnuler");
 
-                closeModal.onclick = closeModal;
-                cancelModal.onclick = closeModal;
+              closeModal.onclick = function() {
+				  modaleGen.style.display = "none";
+				}
+
+				cancelModal.onclick = function() {
+				  modaleGen.style.display = "none";
+				}
 
 
                 $("input:checkbox").on("change", function() {
@@ -152,14 +164,18 @@ Database::disconnect();
 
                 $(".boutonAppel").on('click', function() {
                     $(".titreModale").text('Modifier la fiche client');
-                    $(".")
-                    $("#code").val($(this).data("code_client"));
+                    $("#code_client").val($(this).data("code"));
                     $("#raison_sociale").val($(this).data("raison_sociale"));
+                    $("#service").val($(this).data("service"));
                     $("#civilite").val($(this).data("civilite"));
-                    $("#nom").val($(this).data("nom_contact"));
-                    $("#prenom").val($(this).data("prenom_contact"));
-                    $("#marqueProduit").val($(this).data("id_marque"));
-                    $("#produitActif").prop("checked", $(this).data("actif") > 0);
+                    $("#nom").val($(this).data("nom_client"));
+                    $("#prenom").val($(this).data("prenom_client"));
+                     $("#nomAdresse").val($(this).data("libelle_adresse"));
+                    $("#id_adresse_facturation").val($(this).data("ligne1"));
+
+                     $("#id_adresse_comp").val($(this).data("ligne2"));
+                    $("#postale").val($(this).data("code_postal"));
+                    $("#ville").val($(this).data("nom_ville"));
                     displayModal();
                 });
                 $("#bouton_ajouter").on('click', function() {

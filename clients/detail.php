@@ -71,11 +71,21 @@ $db = Database::connect();
 $id = isset($_GET['id'])?$_GET['id']:0;
 //print ($id);
 //  informations contacts
-$devis = $db->query(" select devis.id_devis as id, devis.date_devis as date, devis.duree_validite as dv, devis.actif as actif, ligne_devis_client.quantite as quantiteld, ligne_devis_client.prixU as prix, ligne_devis_client.reference as reference ,tva.taux as tva
- from devis
- inner join ligne_devis_client on devis.id_devis = ligne_devis_client.id_devis
- inner join tva on ligne_devis_client.id_tva = tva.id_tva
- inner join client on devis.id_client = client.id_client where client.id_client = $id");
+$devis = $db->prepare(" SELECT client.code_client AS code_cli,
+                client.id_client,
+                client.raison_sociale AS rs,
+                CONCAT(civilite.libelle,' ',contact.nom,' ',contact.prenom) AS nom_cli,
+                devis.date_devis AS date,
+                devis.id_devis AS numDevis,
+                SUM(ligne_devis_client.quantite * ligne_devis_client.prixU) AS montant
+        FROM contact
+        INNER JOIN client ON client.id_client = contact.id_client
+        INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite
+        INNER JOIN devis ON client.id_client = devis.id_client
+        INNER JOIN ligne_devis_client ON devis.id_devis = ligne_devis_client.id_devis
+         where client.id_client = $id
+        GROUP BY devis.id_devis,nom_cli
+        ");
 Database::disconnect();
 
 
@@ -101,7 +111,7 @@ Database::disconnect();
             <h1>Progiplus</h1>
             <br><input type="button" name="lienForm" value="revenir a la liste" onclick="self.location.href='index.php'" style="background-color:#3cb371" style="color:white; font-weight:bold" onclick>
 
-            </br>
+            <br>
             <h2>Informations Client:</h2>
             <div class="cadre">
 
@@ -121,7 +131,9 @@ Database::disconnect();
                 </p>
             </div>
 
-            </br>
+            <br>
+            <div class="contact">
+            <div class="gauche">
             <h2>Contact</h2>
             <table id="table_contact" class="display">
                 <thead>
@@ -152,7 +164,9 @@ Database::disconnect();
 					?>
                 </tbody>
             </table>
-            </br>
+            <br>
+            </div>
+            <div class = "droite">
             <h2>Adresse</h2>
             <table id="table_adresse" class="display">
                 <thead>
@@ -180,7 +194,11 @@ Database::disconnect();
 					?>
                 </tbody>
             </table>
-            </br>
+            </div>
+            </div>
+            <br>
+            <div class="contact">
+            <div class="gauche">
             <h2>Communication</h2>
             <table id="table_comm" class="display">
                 <thead>
@@ -203,8 +221,9 @@ Database::disconnect();
 					?>
                 </tbody>
             </table>
-
-            </br>
+            </div>
+            <div class = "droite">
+            <br>
             <h2>Devis</h2>
             <table id="table_devis" class="display">
                 <thead>
@@ -219,6 +238,7 @@ Database::disconnect();
 
                     </tr>
                 </thead>
+
                 <tbody>
                     <?php
                    //select devis.id_devis as id, devis.date_devis as date, devis.duree_validite as dv, devis.actif , ligne_devis_client.quantite, ligne_devis_client.prixU, ligne_devis_client.reference,tva.taux
@@ -240,6 +260,8 @@ Database::disconnect();
 					?>
                 </tbody>
             </table>
+                            </div>
+                </div>
             <br><input type="button" name="lienForm" value="Ajouter un Client" onclick="self.location.href='formulaire.php'" style="background-color:#3cb371" style="color:white; font-weight:bold" onclick>
             <br><input type="button" name="lienForm" value="revenir a la liste" onclick="self.location.href='index.php'" style="background-color:#3cb371" style="color:white; font-weight:bold" onclick>
 
@@ -253,7 +275,7 @@ Database::disconnect();
 <script type="text/javascript" src="../includes/scripts/datatables.js"></script>
 <script type="text/javascript">
     function init() {
-        $('#table_comm').DataTable({
+        /*$('#table_comm').DataTable({
             "language": getLangageDataTable("Moyens communication")
         });
         $('#table_adresse').DataTable({
@@ -264,7 +286,7 @@ Database::disconnect();
         });
         $('#table_devis').DataTable({
             "language": getLangageDataTable("devi")
-        });
+        });*/
     }
 
     window.onload = init;

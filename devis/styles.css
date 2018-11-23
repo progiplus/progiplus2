@@ -57,55 +57,7 @@
 #corpsDevis .quantiteProduit{
 	width: 50px;
 }
-.btn-l, .btn-xl{
-	border-radius: 5px;
-	color: white;
-	font-weight: bold;
-}
-.btn-l{
-	width: 80px;
-	height: 30px;
-	font-size: 16px;
-}
-.btn-xl{
-	width: 100px;
-	height: 40px;
-	font-size: 16px;
-}
-.btn-valide{
-	background-color: darkgreen;
-}
-.btn-warning{
-	background-color: darkred;
-}
-.btn {
-	border-radius: 90px;
-}
-.btn-add{
-	background-color: green;
-	font-weight: bold;
-	color: white;
-}
-.btn-sup{
-	background-color: red;
-	font-weight: bold;
-	color: white;
-}
-.btn-xs{
-	width: 20px;
-	height: 20px;
-	font-size: 10px;
-}
-.btn-sm{
-	width: 30px;
-	height: 30px;
-	font-size: 20px;
-}
-.btn-md{
-	width: 40px;
-	height: 40px;
-	font-size: 30px;
-}
+
 .designation, .prix{
 	border: none;
 }
@@ -129,43 +81,25 @@
 /* ================================ */
 /* ================================ */
 
+.btn-circle{
+	border-radius: 90px;
+}
+.btn-valide, .btn-add{
+	background-color: darkgreen;
+}
+.btn-warning, .btn-sup{
+	background-color: darkred;
+}
+.btn-add, .btn-sup {
+	font-weight: bold;
+	color: white;
+	border : none;
+	margin-left: 10px;
+}
 .btn-l, .btn-xl{
 	border-radius: 5px;
 	color: white;
 	font-weight: bold;
-}
-
-.btn-valide{
-	background-color: darkgreen;
-}
-.btn-warning{
-	background-color: darkred;
-}
-.btn-add, .btn-sup {
-	border-radius: 90px;
-	font-weight: bold;
-	color: white;
-}
-.btn-add{
-	background-color: green;
-}
-.btn-sup{
-	background-color: red;
-}
-.btn-xs{
-	width: 20px;
-	height: 20px;
-	font-size: 10px;
-}
-.btn-sm{
-	width: 30px;
-	height: 30px;
-	font-size: 20px;
-}
-.btn-md{
-	width: 40px;
-	height: 40px;
-	font-size: 30px;
 }
 .btn-l{
 	width: 80px;
@@ -177,3 +111,9 @@
 	height: 40px;
 	font-size: 16px;
 }
+.btn-circle-md{
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
+}
+

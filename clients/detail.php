@@ -132,17 +132,17 @@ Database::disconnect();
             </div>
 
             <br>
+            <div id="container">
             <div class="contact">
-            <div class="gauche">
             <h2>Contact</h2>
             <table id="table_contact" class="display">
                 <thead>
-                    <tr>
+                    <tr id="katya">
                         <th>Code client</th>
-                        <th>civilite</th>
-                        <th>nom</th>
-                        <th>prenom</th>
-                        <th>service</th>
+                        <th>Civilité</th>
+                        <th>Nom client</th>
+                        <th>Prenom client</th>
+                        <th>Service</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -166,14 +166,14 @@ Database::disconnect();
             </table>
             <br>
             </div>
-            <div class = "droite">
+            <div class = "contact">
             <h2>Adresse</h2>
             <table id="table_adresse" class="display">
                 <thead>
                     <tr>
-                        <th>Ligne1</th>
+                        <th>Ligne 1</th>
                         <th>Ligne 2</th>
-                        <th>Code Postal</th>
+                        <th>CP</th>
                         <th>Ville</th>
                     </tr>
                 </thead>
@@ -197,14 +197,14 @@ Database::disconnect();
             </div>
             </div>
             <br>
-            <div class="contact">
-            <div class="gauche">
+            <div id="communication">
             <h2>Communication</h2>
             <table id="table_comm" class="display">
                 <thead>
                     <tr>
                         <th>Type</th>
                         <th>Valeur</th>
+                        <th>Contact</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -222,22 +222,23 @@ Database::disconnect();
                 </tbody>
             </table>
             </div>
-            <div class = "droite">
+            <div class = "contact">
             <br>
             <h2>Devis</h2>
             <table id="table_devis" class="display">
                 <thead>
                     <tr>
-                        <th>date</th>
-                        <th>durée validité</th>
-                        <th>actif/inactif</th>
-                        <th>quantité ligne devis</th>
-                        <th>prix Unitaire</th>
-                        <th>reference</th>
-                        <th>taux TVA</th>
+                        <th>Date</th>
+                        <th>Durée</th>
+                        <th>Actif</th>
+                        <th>Quantité LD</th>
+                        <th>Prix</th>
+                        <th>Reference</th>
+                        <th>TVA</th>
 
                     </tr>
                 </thead>
+               
 
                 <tbody>
                     <?php
@@ -260,15 +261,16 @@ Database::disconnect();
 					?>
                 </tbody>
             </table>
-                            </div>
-                </div>
-            <br><input type="button" name="lienForm" value="Ajouter un Client" onclick="self.location.href='formulaire.php'" style="background-color:#3cb371" style="color:white; font-weight:bold" onclick>
-            <br><input type="button" name="lienForm" value="revenir a la liste" onclick="self.location.href='index.php'" style="background-color:#3cb371" style="color:white; font-weight:bold" onclick>
+                    </div>
+                          
+               
+            <br><input class="button" type="button" name="lienForm" value="Ajouter un Client" onclick="self.location.href='formulaire.php'" >
+            <br><input class="button" type="button" name="lienForm" value="Revenir" onclick="self.location.href='index.php'" >
 
         </section>
-
     </div>
 </body>
+   
 
 <script type="text/javascript" src="../includes/scripts/general.js"></script>
 <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>

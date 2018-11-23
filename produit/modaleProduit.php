@@ -20,12 +20,15 @@
   ');
 
 	$listeMarque = $db->query('
-	SELECT id_marque, libelle FROM marque
-	ORDER BY libelle;
+	SELECT id_marque, nom FROM marque
+	ORDER BY nom;
 	');
 
 	Database::disconnect();
+
 ?>
+
+
 
 <!--Ajouter / Modifier un produit-->
 
@@ -93,6 +96,15 @@
 				<p><label for="nomNewMGC">Nom :</label>
 	      <input type="text" id="nomNewMGC" name="nomNewMGC"></p>
 
+				<p><label for="nomNewM" class="nomNewM">Marque à modifier :</label>
+	      <select name="nomNewM" id="nomNewM">
+	        <option value="0">Sélectionnez</option>
+	        <?php
+					while ($NewM=$listeMarque->fetchObject()){
+	          print"<option value=\"$NewM->id_marque\">$NewM->nom</option>";
+	        }?>
+	        </select></p>
+
 				<button type="button" id="btnAjouterMarque">Ajouter marque</button>
 				<button type="button" id="btnAnnulerMarque">Annuler</button>
 
@@ -100,6 +112,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 <script type="text/javascript">
 

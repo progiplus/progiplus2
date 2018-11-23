@@ -1,4 +1,5 @@
 <?php
+
 	require_once('../config.php');
   require_once('modaleProduit.php');
 
@@ -233,8 +234,6 @@
 	          }
 	      	});
 	    	});
-
-
 
 				</script>
 

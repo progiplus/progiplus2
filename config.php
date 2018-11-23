@@ -2,11 +2,6 @@
 
 class Database
 {
-    private static $hote = 'localhost;port=3306' ;
-    private static $bdd = 'progiplus';
-    private static $dbUser = 'root';
-    private static $dbMdp = 'azertysio';
-
 
     private static $pdo = null;
 
@@ -14,7 +9,8 @@ class Database
     {
         try
         {
-            self::$pdo = new PDO('mysql:host=' . self::$hote. ';dbname=' . self::$bdd,self::$dbUser,self::$dbMdp);
+        	require_once('Bdd/mdp.php');
+            self::$pdo = new PDO(DSN_BDD,USER_BDD,MDP_BDD);
         }
         catch (PDOException $e)
         {

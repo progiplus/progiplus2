@@ -42,7 +42,7 @@
 					<tr>
 						<th>Référence</th>
 						<th>Désignation</th>
-				    <th>Prix unitaire HT</th>
+						<th>Prix unitaire HT</th>
 						<th>Marque</th>
 						<th>Gamme</th>
 						<th>Catégorie</th>

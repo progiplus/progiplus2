@@ -20,7 +20,7 @@ CREATE TABLE adresse(
 );
 CREATE TABLE client(
 	id_client INT(10) PRIMARY KEY AUTO_INCREMENT,
-	code_client VARCHAR(25) NOT NULL,
+	code_client VARCHAR(25) NOT NULL UNIQUE,
 	raison_sociale VARCHAR(150),
     actif BOOL NOT NULL,
     id_adresse_facturation INT(10),
@@ -93,8 +93,10 @@ CREATE TABLE produit(
 	actif BOOL NOT NULL,
 	id_gamme INT(10) NOT NULL,
 	id_categorie INT NOT NULL,
+    id_tva INT NOT NULL,
 	CONSTRAINT fk_id_gamme FOREIGN KEY(id_gamme) REFERENCES gamme(id_gamme),
 	CONSTRAINT fk_id_categorie_produit FOREIGN KEY(id_categorie) REFERENCES categorie(id_categorie),
+    CONSTRAINT fk_produit_tva FOREIGN KEY(id_tva) REFERENCES tva(id_tva),
 	CONSTRAINT chk_prixUHt CHECK (prix_unitaire_ht > 0 )
 );
 

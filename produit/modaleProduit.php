@@ -66,6 +66,7 @@
 	        </select></p>
 
 	     <button type="button" id="btnAjouterProduit">Ajouter produit</button>
+			 <button type="button" id="btnModifierProduit">Modifier produit</button>
 	     <button type="button" id="btnAnnuler">Annuler</button>
 
 		 </form>

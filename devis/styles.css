@@ -57,12 +57,50 @@
 #corpsDevis .quantiteProduit{
 	width: 50px;
 }
+
+.designation, .prix{
+	border: none;
+}
+
+.designation{
+	width: 250px;
+}
+.prix{
+	width:  60px;
+}
+.totalHTLigne, .totalTTC, .totalTva, .totalHT{
+	width: 80px;
+}
+.designation, .prix{
+	border: none;
+}
+
+/* ================================ */
+/* ================================ */
+/* ============ BOUTONS =========== */
+/* ================================ */
+/* ================================ */
+
+.btn-circle{
+	border-radius: 90px;
+}
+.btn-valide, .btn-add{
+	background-color: darkgreen;
+}
+.btn-warning, .btn-sup{
+	background-color: darkred;
+}
+.btn-add, .btn-sup {
+	font-weight: bold;
+	color: white;
+	border : none;
+	margin-left: 10px;
+}
 .btn-l, .btn-xl{
 	border-radius: 5px;
 	color: white;
 	font-weight: bold;
 }
-
 .btn-l{
 	width: 80px;
 	height: 30px;
@@ -73,11 +111,9 @@
 	height: 40px;
 	font-size: 16px;
 }
-
-.btn-valide{
-	background-color: darkgreen;
-}
-.btn-warning{
-	background-color: darkred;
+.btn-circle-md{
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
 }
 

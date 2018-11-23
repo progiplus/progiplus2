@@ -3,6 +3,11 @@
 
 	$db = Database::connect();
 
+	$listeTVA = $db->query('
+	SELECT id_tva, taux FROM tva
+	ORDER BY taux;
+	');
+
 	$listeCategorie = $db->query('
 	SELECT id_categorie, libelle FROM categorie
   ORDER BY libelle;
@@ -27,16 +32,24 @@
 	  </div>
 	  <div class="modal-body">
 	    <form method="post">
-	      <p><label for="referenceProduit">Référence :</label>
+	      <p><label for="referenceProduit" class="referenceProduit">Référence :</label>
 	      <input type="text" id="referenceProduit" name="referenceProduit"></p>
 
-	      <p><label for="designationProduit">Désignation :</label>
+	      <p><label for="designationProduit" class="designationProduit">Désignation :</label>
 	      <input type="text" id="designationProduit" name="designationProduit"></p>
 
-	      <p><label for="prixht_produit">Prix unitaire HT :</label>
+	      <p><label for="prixht_produit" class="prixht_produit">Prix unitaire HT :</label>
 	      <input type="text" id="prixht_produit" name="prixht_produit"></p>
 
-	      <p><label for="gammeProduit">Marque / Gamme :</label>
+				<p><label for="tva" class="tva">TVA :</label>
+	      <select name="tva" id="tva">
+	        <option value="0">Sélectionnez</option>
+	        <?php while ($TVA=$listeTVA->fetchObject()){
+	          print"<option value=\"$TVA->id_tva\">$TVA->taux</option>";
+	        }?>
+	        </select></p>
+
+	      <p><label for="gammeProduit" class="gammeProduit">Marque / Gamme :</label>
 	      <select name="gammeProduit" id="gammeProduit">
 	        <option value="0">Sélectionnez</option>
 	        <?php while ($gamme=$listeGamme->fetchObject()){
@@ -44,7 +57,7 @@
 	        }?>
 	        </select></p>
 
-	      <p><label for="catégorieProduit">Catégorie :</label>
+	      <p><label for="catégorieProduit" class="catégorieProduit">Catégorie :</label>
 	      <select name="catégorieProduit" id="catégorieProduit">
 	        <option value="0">Sélectionnez</option>
 	        <?php while ($categorie=$listeCategorie->fetchObject()){
@@ -53,21 +66,36 @@
 	        </select></p>
 
 	     <button type="button" id="btnAjouterProduit">Ajouter produit</button>
-			 <button type="button" id="btnModifierProduit">Modifier produit</button>
 	     <button type="button" id="btnAnnuler">Annuler</button>
+
 		 </form>
 		</div>
   </div>
 </div>
 
-<!--Ajouter une marque-->
+<!--Ajouter une marque / gamme / catégorie-->
 
+<!-- <div id="modaleMGC" class="modal">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <span class="close">&times;</span>
+	    <h2 class="titreModale"></h2>
+	  </div>
+	  <div class="modal-body">
+	    <form method="post">
 
-<!--Ajouter une gamme-->
+				<p><label for="nomNewMarque">Nom :</label>
+	      <input type="text" id="nomNewMarque" name="nomNewMarque"></p>
 
+				<button type="button" id="btnAjouterMarque">Ajouter marque</button>
+				<button type="button" id="btnAjouterGamme">Ajouter gamme</button>
+				<button type="button" id="btnAjouterCategorie">Ajouter categorie</button>
+				<button type="button" id="btnAnnuler2">Annuler</button>
 
-<!--Ajouter une catégorie-->
-
+			</form>
+		</div>
+	</div>
+</div> -->
 
 <script type="text/javascript">
 

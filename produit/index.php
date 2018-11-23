@@ -1,6 +1,6 @@
 <?php
 	require_once('../config.php');
-	require_once('modaleProduit.php');
+  require_once('modaleProduit.php');
 
 	$db = Database::connect();
 
@@ -114,8 +114,6 @@
 				$(".boutonAppel").on('click', function(){
 					$(".titreModale").text('Modifier la fiche Produit');
 					$("#referenceProduit").prop("readonly", true);
-					$('#btnAjouterProduit').hide();
-					$('#btnModifierProduit').show();
 					$("#referenceProduit").val($(this).data("id"));
 					$("#designationProduit").val($(this).data("designation"));
 					$("#prixht_produit").val($(this).data("prix_unitaire_ht"));
@@ -123,90 +121,178 @@
 					$("#gammeProduit").val($(this).data("id_gamme"));
 					$("#marqueProduit").val($(this).data("id_marque"));
 					$("#produitActif").prop("checked", $(this).data("actif") > 0);
+					$('#btnAjouterProduit').hide();
+					$('#btnModifierProduit').show();
+					$('#btnAjouterMarque').hide();
+					$('#btnAjouterGamme').hide();
+					$('#btnAjouterCategorie').hide();
+					$('#nouveauNomMGC').hide();
 					displayModal();
 				});
 
 				$("#btnModifierProduit").on('click', function(){
 					$.ajax({
-					        type: "POST",
-					        url: "ajaxProduit.php",
-									data:{
-										referenceProduit: $("#referenceProduit").val(),
-							    	designationProduit: $("#designationProduit").val(),
-							    	prixht_produit: $("#prixht_produit").val(),
-							    	gammeProduit: $("#gammeProduit").val(),
-							    	catégorieProduit: $("#catégorieProduit").val(),
-										action: "modifierProduit"
-									},
-									success: verifEnvoi
-					    })
-				});
+					 type: "POST",
+					 url: "ajaxProduit.php",
+					 data:{
+						referenceProduit: $("#referenceProduit").val(),
+			    	designationProduit: $("#designationProduit").val(),
+			    	prixht_produit: $("#prixht_produit").val(),
+			    	gammeProduit: $("#gammeProduit").val(),
+			    	catégorieProduit: $("#catégorieProduit").val(),
+						action: "modifierProduit"
+					},
+					success: verifEnvoi
+	    	})
+			});
 
-				$("#btnAjouterProduit").on('click', function(){
-					$.ajax({
-									type: "POST",
-									url: "ajaxProduit.php",
-									data:{
-										referenceProduit: $("#referenceProduit").val(),
-										designationProduit: $("#designationProduit").val(),
-										prixht_produit: $("#prixht_produit").val(),
-										gammeProduit: $("#gammeProduit").val(),
-										catégorieProduit: $("#catégorieProduit").val(),
-										action: "ajouterProduit"
-									},
-									success: verifEnvoi
-							})
-				});
+			$("#btnAjouterProduit").on('click', function(){
+				$.ajax({
+								type: "POST",
+								url: "ajaxProduit.php",
+								data:{
+									referenceProduit: $("#referenceProduit").val(),
+									designationProduit: $("#designationProduit").val(),
+									prixht_produit: $("#prixht_produit").val(),
+									gammeProduit: $("#gammeProduit").val(),
+									catégorieProduit: $("#catégorieProduit").val(),
+									action: "ajouterProduit"
+								},
+								success: verifEnvoi
+						})
+			});
 
-				$("#boutonNouveauP").on('click', function(){
-					$(".titreModale").text('Ajouter un Produit');
-					$("#referenceProduit").prop("readonly", false);
-					$('#btnAjouterProduit').show();
-					$('#btnModifierProduit').hide();
-					$("#referenceProduit").val("");
-					$("#designationProduit").val("");
-					$("#prixht_produit").val("");
-					$("#catégorieProduit").val(0);
-					$("#gammeProduit").val(0);
-					$("#marqueProduit").val(0);
-					$("#produitActif").prop("checked", true);
-					displayModal();
-				});
+			$("#boutonNouveauP").on('click', function(){
+				$(".titreModale").text('Ajouter un Produit');
+				$("#referenceProduit").prop("readonly", false);
+				$('#nouveauNomMGC').hide();
+				$("#referenceProduit").val("");
+				$("#designationProduit").val("");
+				$("#prixht_produit").val("");
+				$("#catégorieProduit").val(0);
+				$("#gammeProduit").val(0);
+				$("#marqueProduit").val(0);
+				$("#produitActif").prop("checked", true);
+				$('#btnAjouterProduit').show();
+				$('#btnModifierProduit').hide();
+				$('#btnAjouterMarque').hide();
+				$('#btnAjouterGamme').hide();
+				$('#btnAjouterCategorie').hide();
+				displayModal();
+			});
 
-				$("input:checkbox").on("change", function() {
-		        var xhr;
-		        if (window.XMLHttpRequest)
-		            xhr = new XMLHttpRequest();
-		        else
-		            xhr = new ActiveXObject("microsoft.Xmlhttp");
-		        xhr.onreadystatechange = function() {
-		            if (xhr.readyState == 4) {
-		                var retourAjax = xhr.responseText;
-		                console.log(retourAjax);
-		            }
-		        }
-		        alert("Vous allez modifier le statut de ce produit.");
-		        var reference = $(this).data("id");
-		        console.log(reference);
-		        var val = $(this).val();
-		        console.log(val);
-		        var apply = $(this).is(':checked') ? true : false;
-		        console.log(apply);
-		        var data = "action=changerActif&reference=" + reference + "&apply=" + apply;
-		        xhr.open('post', 'ajaxProduit.php', true);
-		        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=utf-8');
-		        xhr.send(data);
+			$("#boutonNouvelleM").on('click', function(){
+				$(".titreModale").text('Ajouter une Marque');
+				$(".nouveauNomMGC").text('Nom :');
+				$(".referenceProduit").hide();
+				$("#referenceProduit").hide();
+				$(".designationProduit").hide();
+				$("#designationProduit").hide();
+				$(".prixht_produit").hide();
+				$("#prixht_produit").hide();
+				$(".catégorieProduit").hide();
+				$("#catégorieProduit").hide();
+				$(".gammeProduit").hide();
+				$("#gammeProduit").hide();
+				$(".marqueProduit").hide();
+				$("#marqueProduit").hide();
+				$("#produitActif").hide();
+				$('.nouveauNomMGC').show();
+				$('#nouveauNomMGC').show();
+				$('#btnAjouterProduit').hide();
+				$('#btnModifierProduit').hide();
+				$('#btnAjouterMarque').show();
+				$('#btnAjouterGamme').hide();
+				$('#btnAjouterCategorie').hide();
+				displayModal();
+			});
 
-		        $.ajax({
-		            type: "POST",
-		            url: "ajaxProduit.php",
-		            data: {
-		                reference: reference,
-		                val: val,
-		                apply: apply
-		            }
-		        });
-		    });
+			$("#boutonNouvelleG").on('click', function(){
+				$(".titreModale").text('Ajouter une Gamme');
+				$(".nouveauNomMGC").text('Nom :');
+				$(".referenceProduit").hide();
+				$("#referenceProduit").hide();
+				$(".designationProduit").hide();
+				$("#designationProduit").hide();
+				$(".prixht_produit").hide();
+				$("#prixht_produit").hide();
+				$(".catégorieProduit").hide();
+				$("#catégorieProduit").hide();
+				$(".gammeProduit").hide();
+				$("#gammeProduit").hide();
+				$(".marqueProduit").hide();
+				$("#marqueProduit").hide();
+				$("#produitActif").hide();
+				$('.nouveauNomMGC').show();
+				$('#nouveauNomMGC').show();
+				$('#btnAjouterProduit').hide();
+				$('#btnModifierProduit').hide();
+				$('#btnAjouterMarque').hide();
+				$('#btnAjouterGamme').show();
+				$('#btnAjouterCategorie').hide();
+				displayModal();
+			});
+
+			$("#boutonNouvelleC").on('click', function(){
+				$(".titreModale").text('Ajouter une Catégorie');
+				$(".nouveauNomMGC").text('Nom :');
+				$(".referenceProduit").hide();
+				$("#referenceProduit").hide();
+				$(".designationProduit").hide();
+				$("#designationProduit").hide();
+				$(".prixht_produit").hide();
+				$("#prixht_produit").hide();
+				$(".catégorieProduit").hide();
+				$("#catégorieProduit").hide();
+				$(".gammeProduit").hide();
+				$("#gammeProduit").hide();
+				$(".marqueProduit").hide();
+				$("#marqueProduit").hide();
+				$("#produitActif").hide();
+				$('.nouveauNomMGC').show();
+				$('#nouveauNomMGC').show();
+				$('#btnAjouterProduit').hide();
+				$('#btnModifierProduit').hide();
+				$('#btnAjouterMarque').hide();
+				$('#btnAjouterGamme').hide();
+				$('#btnAjouterCategorie').show();
+				displayModal();
+			});
+
+			$("input:checkbox").on("change", function() {
+	        var xhr;
+	        if (window.XMLHttpRequest)
+	            xhr = new XMLHttpRequest();
+	        else
+	            xhr = new ActiveXObject("microsoft.Xmlhttp");
+	        xhr.onreadystatechange = function() {
+	            if (xhr.readyState == 4) {
+	                var retourAjax = xhr.responseText;
+	                console.log(retourAjax);
+	            }
+	        }
+	        alert("Vous allez modifier le statut de ce produit.");
+	        var reference = $(this).data("id");
+	        console.log(reference);
+	        var val = $(this).val();
+	        console.log(val);
+	        var apply = $(this).is(':checked') ? true : false;
+	        console.log(apply);
+	        var data = "action=changerActif&reference=" + reference + "&apply=" + apply;
+	        xhr.open('post', 'ajaxProduit.php', true);
+	        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+	        xhr.send(data);
+
+	        $.ajax({
+	            type: "POST",
+	            url: "ajaxProduit.php",
+	            data: {
+	                reference: reference,
+	                val: val,
+	                apply: apply
+	            }
+	        });
+	    });
 
 				</script>
 

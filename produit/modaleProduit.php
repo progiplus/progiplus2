@@ -19,6 +19,11 @@
   ORDER BY libelle;
   ');
 
+	$listeMarque = $db->query('
+	SELECT id_marque, libelle FROM marque
+	ORDER BY libelle;
+	');
+
 	Database::disconnect();
 ?>
 
@@ -74,29 +79,27 @@
   </div>
 </div>
 
-<!--Ajouter une marque / gamme / catégorie-->
+<!--Ajouter / modifier une marque, gamme, catégorie-->
 
-<!-- <div id="modaleMGC" class="modal">
+<div id="modaleMarque" class="modal">
 	<div class="modal-content">
 	  <div class="modal-header">
 	    <span class="close">&times;</span>
-	    <h2 class="titreModale"></h2>
+	    <h2 class="titreModale">Ajouter une Marque</h2>
 	  </div>
 	  <div class="modal-body">
 	    <form method="post">
 
-				<p><label for="nomNewMarque">Nom :</label>
-	      <input type="text" id="nomNewMarque" name="nomNewMarque"></p>
+				<p><label for="nomNewMGC">Nom :</label>
+	      <input type="text" id="nomNewMGC" name="nomNewMGC"></p>
 
 				<button type="button" id="btnAjouterMarque">Ajouter marque</button>
-				<button type="button" id="btnAjouterGamme">Ajouter gamme</button>
-				<button type="button" id="btnAjouterCategorie">Ajouter categorie</button>
-				<button type="button" id="btnAnnuler2">Annuler</button>
+				<button type="button" id="btnAnnulerMarque">Annuler</button>
 
 			</form>
 		</div>
 	</div>
-</div> -->
+</div>
 
 <script type="text/javascript">
 

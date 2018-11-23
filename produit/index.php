@@ -95,20 +95,30 @@
 				});
 
 				var modaleGen = document.getElementById("modaleProduit");
+				var modaleMGC = document.getElementById("modaleMGC");
 
-				function displayModal(){
+				function displayProduitModal(){
 					modaleGen.style.display = "block";
+				}
+
+				function displayMarqueModal(){
+					modaleMarque.style.display = "block";
 				}
 
 				function hideModal(){
 					modaleGen.style.display = "none";
+					modaleMarque.style.display = "none";
 				}
 
-				var closeModal = document.getElementsByClassName("close")[0];
+				var closeModalGen = document.getElementsByClassName("close")[0];
+				var closeModalMarque = document.getElementsByClassName("close")[1];
 				var cancelModal = document.getElementById("btnAnnuler");
+				var cancelModalM = document.getElementById("btnAnnulerMarque");
 
-				closeModal.onclick = hideModal;
+				closeModalGen.onclick = hideModal;
+				closeModalMarque.onclick = hideModal;
 				cancelModal.onclick = hideModal;
+				cancelModalM.onclick = hideModal;
 
 				function verifEnvoi(data){
 					if (data=="true"){
@@ -120,7 +130,7 @@
 
 				$(".boutonAppel").on('click', function(){
 					$(".titreModale").text('Modifier la fiche Produit');
-					$("#referenceProduit").prop("readonly", true);
+					$("#referenceProduit").prop("disabled", true);
 					$("#referenceProduit").val($(this).data("id"));
 					$("#designationProduit").val($(this).data("designation"));
 					$("#prixht_produit").val($(this).data("prix_unitaire_ht"));
@@ -131,7 +141,7 @@
 					$("#produitActif").prop("checked", $(this).data("actif") > 0);
 					$('#btnAjouterProduit').hide();
 					$('#btnModifierProduit').show();
-					displayModal();
+					displayProduitModal();
 				});
 
 				$("#btnModifierProduit").on('click', function(){
@@ -170,7 +180,7 @@
 
 			$("#boutonNouveauP").on('click', function(){
 				$(".titreModale").text('Ajouter un Produit');
-				$("#referenceProduit").prop("readonly", false);
+				$("#referenceProduit").prop("disabled", false);
 				$("#referenceProduit").val("");
 				$("#designationProduit").val("");
 				$("#prixht_produit").val("");
@@ -181,7 +191,12 @@
 				$("#produitActif").prop("checked", true);
 				$('#btnAjouterProduit').show();
 				$('#btnModifierProduit').hide();
-				displayModal();
+				displayProduitModal();
+			});
+
+			$("#boutonNouvelleM").on('click', function(){
+				$(".titreModale").text('Ajouter une Marque');
+				displayMarqueModal();
 			});
 
 			$("input:checkbox").on("change", function() {

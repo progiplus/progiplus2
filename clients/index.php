@@ -135,6 +135,10 @@ Database::disconnect();
 
                 $("#table_client input:checkbox").on("change", function()
                 {
+                    let confirm = confirm("êtes vous sur");
+
+                        alert( checkbox );
+                    if (prompt = true){
                     alert("Vous changez le statut de ce client");
                     var id_client = $(this).data("id");
                     console.log(id_client);
@@ -153,6 +157,9 @@ Database::disconnect();
                         }
 
                     });
+                    }else{
+                        
+                    }
 
                 });
 
@@ -198,11 +205,6 @@ Database::disconnect();
                     $("#ville").val(0);
                     displayModal();
                 });
-
-
-
-
-
 
                 window.onload = init;
 

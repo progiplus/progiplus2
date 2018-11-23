@@ -1,0 +1,34 @@
+#container{
+ 
+}
+
+
+table{
+    background-color:white;
+}
+
+h2{
+    color: white;
+}
+.display{
+}
+
+    input.button:hover{
+    color:dimgrey;
+    font-weight:bold;
+    margin: 5px 0 5px 0;
+    width:150px;
+    height:25px;
+    display:inline;
+    background-image:background-image: linear-gradient(to right, #ECE9E6 0%, #FFFFFF 51%, #ECE9E6 100%)
+    }
+    input.button{  
+    color:dimgrey;
+    font-weight: bold;
+    background-position: right center;
+    margin: 5px 0 5px 0;
+    width:150px;
+    height:25px;
+    display:inline;
+   
+}

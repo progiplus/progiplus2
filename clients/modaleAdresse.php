@@ -1,4 +1,4 @@
-<div id="modaleClient" class="modal">
+<div id="modaleAdresse" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <span class="close">&times;</span>
@@ -34,8 +34,8 @@
 
 
                         <div class="element">
-                            <input class="button" type="button" value="Valider" id="">
-                            <input class="button" type="reset" value="Annuler"></div><br>
+                            <input class="button" type="button" value="Valider" id="btnGererAdresse">
+                            <input class="button" type="reset" value="Annuler" id="btnAnnulerAdresse"></div><br>
             </div>
     </div>
  </div>

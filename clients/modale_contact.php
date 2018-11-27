@@ -38,12 +38,11 @@
                     <input type="int" id="service_contact" name="service_contact" required value=""></div><br>
 
                 <input id="id_client" type="hidden" value="">
-                <input class="button" type="reset" value="Ajouter" id="btnAjouterContact">
-                <input class="button" type="reset" value="Annuler" id="btnAnnulerContact">
-
                 <div id="listeMoyenComm">
 
                 </div>
+                <input class="button" type="reset" value="Ajouter" id="btnAjouterContact">
+                <input class="button" type="reset" value="Annuler" id="btnAnnulerContact">
             </div>
             <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
             <script>
@@ -83,7 +82,7 @@
         </div>
     </div>
 </div>
-    <!--
+<!--
                                     <div class="element"><label for="code">Prenom :</label>
                     <input type="int" id="prenom_contact" name="prenom_contact" required value=""></div><br>
 -->

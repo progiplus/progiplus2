@@ -241,7 +241,7 @@ tr:nth-child(even)
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 }
-#modaleClient,#modaleContact
+#modaleClient, #modaleContact, #modaleAdresse
 {
     display: none;
     position: fixed;

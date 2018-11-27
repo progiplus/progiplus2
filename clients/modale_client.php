@@ -71,8 +71,10 @@
                     <input class="button" type="button" value="Ajouter" id="btnAjouterClient">
                     <input class="button" type="button" value="Modifier" id="btnModifierClient">
                     <input class="button" type="reset" value="Annuler" id="btnAnnulerClient">
+                    <br>
                     <input class="button" type="button" value="Ajouter un contact" id="btnModaleAjouterContact">
-                    <input class="button" type="button" value="Modifier un contact" id="btnModaleModifierContact"></div>
+                    <input class="button" type="button" value="Gérer adresse" id="btnModaleAdresse">
+                </div>
 
 
 
@@ -165,6 +167,10 @@
                     $(this).parent().parent().parent().hide();
                 }
             
+            function cancelModal(idModal) {
+                    $('#' + idModal).hide();
+                }
+
             //pour faire ajout et modif de client dans le modal (модальное окно)
 
             function ajouterClient() {
@@ -221,14 +227,6 @@
                     });
                 }
             }
-            
-            function ajouterContact(){
-
-            }
-            
-            function modifierContact(){
-
-            }
 
             function verifierReponse(reponse) {
                 if (reponse == "true") {
@@ -241,12 +239,10 @@
             function init() {
                 $('#btnAjouterClient').click(ajouterClient);
                 $('#btnModifierClient').click(modifierClient);
-//                $('#btnAjouterContact').click(ajouterContact);
-//                $('#btnModifierContact').click(modifierContact);
                 $('.close').click(closeModal);
-                $('#btnAnnulerClient').click(closeModal);
-                $('#btnAnnulerContact').click(closeModal);
-                $('#btnAnnulerAdresse').click(closeModal);
+                $('#btnAnnulerClient').click(function(){cancelModal('modaleClient')});
+                $('#btnAnnulerContact').click(function(){cancelModal('modaleContact')});
+                $('#btnAnnulerAdresse').click(function(){cancelModal('modaleAdresse')});
             }
             
             $('#btnModaleAjouterContact').click(function(){
@@ -258,6 +254,10 @@
                 $('#modaleClient').hide();
                 displayModal("modaleContact");
             });
+            $('#btnModaleAdresse').click(function(){
+                $('#modaleClient').hide();
+                displayModal("modaleAdresse");
+            })
 
             $(document).ready(init);
 

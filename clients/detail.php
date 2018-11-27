@@ -251,6 +251,30 @@ Database::disconnect();
 
         <tbody>
             <?php
+                </tbody>
+            </table>
+            </div>
+            <div class = "contact">
+            <br>
+            <h2>Devis</h2>
+            <table id="table_devis" class="display">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Durée</th>
+                        <th>Actif</th>
+                        <th>Quantité LD</th>
+                        <th>Prix</th>
+                        <th>Reference</th>
+                        <th>TVA</th>
+
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                    <?php
+
                    //select devis.id_devis as id, devis.date_devis as date, devis.duree_validite as dv, devis.actif , ligne_devis_client.quantite, ligne_devis_client.prixU, ligne_devis_client.reference,tva.taux
 					while($client = $devis->fetchObject()){
                         print '<tr>';
@@ -268,6 +292,7 @@ Database::disconnect();
 
 
 					?>
+
         </tbody>
     </table>
 </div>
@@ -281,8 +306,9 @@ Database::disconnect();
 </div>
 </section>
 </div>
+
 </body>
-   
+
 
 <script type="text/javascript" src="../includes/scripts/general.js"></script>
 <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>

@@ -1,34 +1,97 @@
+#info {
+    margin-top: 150px;
+}
+
 #container{
 
 }
 
+#cadre {
+/*background: rgb(255,225,149);
+background: radial-gradient(circle, rgba(255,225,149,1) 0%, rgba(38,64,64,1) 100%);*/
+    background-color: rgba(67, 112, 112, 0.2) ;
+    color:white;
+    box-shadow: 6px 6px 0px #aaa; 
+    height: 200px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 40px;
+    padding: 1em;
+    width: 350px;
+    max-width: 620px;
+    border: 1px solid grey;
+    border-bottom-style: none;
+    border-right-style: none;
+    margin-bottom: 20px;
 
-table{
-    background-color:white;
 }
 
-h2{
+#cadre p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+h2 {
+    
+    margin: 30px;
     color: white;
 }
-.display{
+
+h3{
+    box-shadow: 8px 8px 0px #aaa; 
+    text-align: center;  
+  
+    
+}
+thead{
+     padding:15px;
+}
+th
+{
+      
+    background-color: rgba(67, 112, 112, 0.2) ;
+    color:white;
+}
+tr:nth-child(even)
+{
+color: #262626;
+  background-color: #f2f2f2;
+}
+table{
+    max-width: 100%;
+    margin: 0 auto;
+}
+.table-responsive{
+    max-width: 630px;
+      margin: 0 auto;
+    margin-left: 20px;
+    color: white;
 }
 
-    input.button:hover{
-    color:dimgrey;
-    font-weight:bold;
-    margin: 5px 0 5px 0;
-    width:150px;
-    height:25px;
-    display:inline;
-    background-image:background-image: linear-gradient(to right, #ECE9E6 0%, #FFFFFF 51%, #ECE9E6 100%)
-    }
-    input.button{
-    color:dimgrey;
-    font-weight: bold;
-    background-position: right center;
-    margin: 5px 0 5px 0;
-    width:150px;
-    height:25px;
-    display:inline;
+#inputs{
+max-width:750px;
+margin: 0 auto;
+margin-top: 20px;
+display: flex;
+text-align: center;
+}
 
+input.button:hover {
+   background: rgb(255,225,149);
+   background: radial-gradient(circle, rgba(255,225,149,1) 0%, rgba(38,64,64,1) 100%);
+    color:#262626;
+    font-weight: bold;
+    margin: 5px;
+    width: 130px;
+    height: 30px;
+}
+
+input.button {
+    justify-content: space-between;
+    background-color: white;
+    color: #262626;;
+    font-weight: bold;
+    margin:5px;
+    width: 130px;
+    height: 30px;
 }

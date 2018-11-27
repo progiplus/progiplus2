@@ -36,7 +36,7 @@ $svgLogin = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.
 
 <nav>
     <div>
-        <img id="logo" src="/progiplus2/includes/assets/logo.png">
+        <img id="logo" src="/progiplus2/includes/assets/logoPP.png">
     </div>
     <div id="menu">
 		<form id="formMenu">

@@ -118,7 +118,7 @@
 						alert("L'envoi a échoué.");
 					}
 				}
-
+//bouton pour moi//
 				$(".boutonAppel").on('click', function(){
 					$(".titreModale").text('Modifier la fiche Produit');
 					$("#referenceProduit").prop("readonly", true);

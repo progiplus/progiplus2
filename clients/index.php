@@ -53,6 +53,8 @@ Database::disconnect();
         <?php include('../nav.php');
         require_once('modale_client.php');
          require_once('modale_contact.php');
+        require_once('modaleAdresse.php');
+
         ?>
 
         <section>

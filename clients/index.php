@@ -155,7 +155,7 @@ Database::disconnect();
                 $(".boutonAppel").on('click', function() {
                     $("#btnAjouterClient").hide();
                     $("#btnModifierClient").show();
-                    $(".titreModale").text('Modifier la fiche client');
+                    $("#modaleClient .titreModale").text('Modifier la fiche client');
                     $("#id_client").val($(this).data("id_client"));
                     $("#code_client").val($(this).data("code"));
                     $("#code_client").prop("disabled", true);
@@ -179,7 +179,7 @@ Database::disconnect();
                 $("#bouton_ajouter").on('click', function() {
                     $("#btnAjouterClient").show();
                     $("#btnModifierClient").hide();
-                    $(".titreModale").text('Ajouter un Client');
+                    $("#modaleClient .titreModale").text('Ajouter un Client');
                     $("#code_client").val("");
                     $("#code_client").prop("disabled", false);
                     $("#raison_sociale").val("");

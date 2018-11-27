@@ -153,6 +153,16 @@ function modifierClient()
     }
 }
 
+function getAdresseClient($idClient)
+{
+    $SQL = "select  liste_adresse.libelle, adresse.ligne1, adresse.ligne2, ville.cp_ville, ville.nom_ville
+    from liste_adresse
+    inner join client on client.id_client = liste_adresse.id_client
+    inner join adresse on adresse.id_adresse = liste_adresse.id_adresse
+    inner join ville on ville.id_ville = adresse.id_ville
+    where client.id_client = $idClient;";
+}
+
 Database::disconnect();
 
 ?>

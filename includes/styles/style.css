@@ -49,9 +49,11 @@ section{
     width: 200px;
 }
 #menu{
+    margin-top: 20px;
     width: 200px;
     height: 600px;
-    background-color: rgb(67, 112, 112);
+    background-color: rgba(67, 112, 112, 0.2) ;
+    
 }
 #menu ul {
     list-style-type: none;
@@ -59,6 +61,7 @@ section{
     z-index: 10;
  }
 #menu ul li{
+    font-size: 16px;
     text-align:center;
     height:40px;
     line-height: 40px;
@@ -69,8 +72,9 @@ section{
     line-height: 40px;
 }
 #menu ul li a:hover {
-    background-color: #555;
-    color: white;
+  background: rgb(255,225,149);
+  background: radial-gradient(circle, rgba(255,225,149,1) 0%, rgba(38,64,64,1) 100%);
+  color: white;
 }
 #menu ul li a {
     display:block;

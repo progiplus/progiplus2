@@ -111,12 +111,13 @@
 					</div>
 				<div class="partieModif">
 					<p><label for="nomNewM" class="nomNewM">Marque à modifier :</label>
-		      <select name="nomNewM">
+		      <select onchange="modifyNameM()" name="nomNewM" id="selectM">
 		        <option value="0">Sélectionnez</option>
 		        <?php
 						while ($NewM=$listeMarque->fetchObject()){
 		          print"<option value=\"$NewM->id_marque\">$NewM->nom</option>";
 		        }?>
+						<input type="text" id="newMarque" name="newMarque">
 		        </select></p>
 
 					<button type="button" id="btnModifierMarque">Modifier</button>
@@ -150,12 +151,13 @@
 					</div>
 				<div class="partieModif">
 					<p><label for="nomNewC" class="nomNewC">Gamme à modifier :</label>
-		      <select name="nomNewG">
+		      <select onchange="modifyNameG()" name="nomNewG" id="selectG">
 		        <option value="0">Sélectionnez</option>
 						<?php
 						while ($NewG=$listeGammeOnly->fetchObject()){
 		          print"<option value=\"$NewG->id_gamme\">$NewG->libelle</option>";
 		        }?>
+						<input type="text" id="newGamme" name="newGamme">
 		        </select></p>
 
 					<button type="button" id="btnModifierGamme">Modifier</button>
@@ -189,12 +191,13 @@
 					</div>
 				<div class="partieModif">
 					<p><label for="nomNewC" class="nomNewC">Catégorie à modifier :</label>
-		      <select name="nomNewC">
+		      <select onchange="modifyNameC()" name="nomNewC" id="selectC">
 		        <option value="0">Sélectionnez</option>
 		        <?php
 						while ($NewC=$listeCategorie2->fetchObject()){
 		          print"<option value=\"$NewC->id_categorie\">$NewC->libelle</option>";
 		        }?>
+						<input type="text" id="newCategorie" name="newCategorie">
 		        </select></p>
 
 					<button type="button" id="btnModifierCategorie">Modifier</button>
@@ -218,6 +221,21 @@ function checkGenerique(that, idNew, valueNew) {
   } else {
       newElem.style.display = 'none';
   }
+}
+
+function modifyNameM() {
+    var valueModifM = document.getElementById("selectM");
+    document.getElementById("newMarque").value = selectM.options[selectM.selectedIndex].text;
+}
+
+function modifyNameG() {
+    var valueModifG = document.getElementById("selectG");
+    document.getElementById("newGamme").value = selectG.options[selectG.selectedIndex].text;
+}
+
+function modifyNameC() {
+    var valueModifC = document.getElementById("selectC");
+    document.getElementById("newCategorie").value = selectC.options[selectC.selectedIndex].text;
 }
 
 </script>

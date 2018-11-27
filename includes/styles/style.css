@@ -287,6 +287,30 @@ tr:nth-child(even)
 	background-color: #5cb85c;
 	color: white;
 }
+.partie{
+  width:100%;
+  display:inline-block;
+}
+.partieAjout {
+  display:inline-block;
+  float: left;
+  width: 50%;
+  margin-top: 10px;
+}
+.partieModif {
+  display:inline-block;
+  float: right;
+  width: 50%;
+  margin-top: 10px;
+}
+.boutonAnnuler {
+  /* width: 100%; */
+  float: right;
+  margin-top: 10px;
+}
+#btnAjouterCategorie,#btnModifierCategorie,#btnAjouterGamme,#btnModifierGamme,#btnAjouterMarque,#btnModifierMarque {
+  margin-top: 5px;
+}
 .imageTableau{
 	height: 20px;
 }

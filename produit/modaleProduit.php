@@ -13,6 +13,11 @@
   ORDER BY libelle;
 	');
 
+	$listeCategorie2 = $db->query('
+	SELECT id_categorie, libelle FROM categorie
+	ORDER BY libelle;
+	');
+
 	$listeGammeOnly = $db->query('
 	SELECT id_gamme, libelle FROM gamme
 	ORDER BY libelle;
@@ -96,24 +101,31 @@
 	    <h2 class="titreModale">Ajouter ou Modifier une Marque</h2>
 	  </div>
 	  <div class="modal-body">
-	    <form method="post">
+			<form method="post">
+				<div class="partie">
+					<div class="partieAjout">
+						<p><label for="nomNewM">Nom :</label>
+			      <input type="text" name="nomNewM"></p>
 
-				<p><label for="nomNewM">Nom :</label>
-	      <input type="text" name="nomNewM"></p>
+						<button type="button" id="btnAjouterMarque">Ajouter</button>
+					</div>
+				<div class="partieModif">
+					<p><label for="nomNewM" class="nomNewM">Marque à modifier :</label>
+		      <select name="nomNewM">
+		        <option value="0">Sélectionnez</option>
+		        <?php
+						while ($NewM=$listeMarque->fetchObject()){
+		          print"<option value=\"$NewM->id_marque\">$NewM->nom</option>";
+		        }?>
+		        </select></p>
 
-				<p><label for="nomNewM" class="nomNewM">Marque à modifier :</label>
-	      <select name="nomNewM">
-	        <option value="0">Sélectionnez</option>
-	        <?php
-					while ($NewM=$listeMarque->fetchObject()){
-	          print"<option value=\"$NewM->id_marque\">$NewM->nom</option>";
-	        }?>
-	        </select></p>
+					<button type="button" id="btnModifierMarque">Modifier</button>
+				</div>
 
-				<button type="button" id="btnAjouterMarque">Ajouter</button>
-				<button type="button" id="btnModifierMarque">Modifier</button>
-				<button type="button" id="btnAnnulerMarque">Annuler</button>
-
+					<div class="boutonAnnuler">
+						<button type="button" id="btnAnnulerMarque">Annuler</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -128,24 +140,31 @@
 	    <h2 class="titreModale">Ajouter ou Modifier une Gamme</h2>
 	  </div>
 	  <div class="modal-body">
-	    <form method="post">
+			<form method="post">
+				<div class="partie">
+					<div class="partieAjout">
+						<p><label for="nomNewG">Nom :</label>
+			      <input type="text" name="nomNewG"></p>
 
-				<p><label for="nomNewG">Nom :</label>
-	      <input type="text" name="nomNewG"></p>
+						<button type="button" id="btnAjouterGamme">Ajouter</button>
+					</div>
+				<div class="partieModif">
+					<p><label for="nomNewC" class="nomNewC">Gamme à modifier :</label>
+		      <select name="nomNewG">
+		        <option value="0">Sélectionnez</option>
+						<?php
+						while ($NewG=$listeGammeOnly->fetchObject()){
+		          print"<option value=\"$NewG->id_gamme\">$NewG->libelle</option>";
+		        }?>
+		        </select></p>
 
-				<p><label for="nomNewG" class="nomNewG">Gamme à modifier :</label>
-	      <select name="nomNewG">
-	        <option value="0">Sélectionnez</option>
-	        <?php
-					while ($NewG=$listeGammeOnly->fetchObject()){
-	          print"<option value=\"$NewG->id_gamme\">$NewG->libelle</option>";
-	        }?>
-	        </select></p>
+					<button type="button" id="btnModifierGamme">Modifier</button>
+				</div>
 
-				<button type="button" id="btnAjouterGamme">Ajouter</button>
-				<button type="button" id="btnModifierGamme">Modifier</button>
-				<button type="button" id="btnAnnulerGamme">Annuler</button>
-
+					<div class="boutonAnnuler">
+						<button type="button" id="btnAnnulerGamme">Annuler</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -161,23 +180,30 @@
 	  </div>
 	  <div class="modal-body">
 	    <form method="post">
+				<div class="partie">
+					<div class="partieAjout">
+						<p><label for="nomNewC">Nom :</label>
+			      <input type="text" name="nomNewC"></p>
 
-				<p><label for="nomNewC">Nom :</label>
-	      <input type="text" name="nomNewC"></p>
+						<button type="button" id="btnAjouterCategorie">Ajouter</button>
+					</div>
+				<div class="partieModif">
+					<p><label for="nomNewC" class="nomNewC">Catégorie à modifier :</label>
+		      <select name="nomNewC">
+		        <option value="0">Sélectionnez</option>
+		        <?php
+						while ($NewC=$listeCategorie2->fetchObject()){
+		          print"<option value=\"$NewC->id_categorie\">$NewC->libelle</option>";
+		        }?>
+		        </select></p>
 
-				<p><label for="nomNewC" class="nomNewC">Catégorie à modifier :</label>
-	      <select name="nomNewC">
-	        <option value="0">Sélectionnez</option>
-	        <?php
-					while ($NewC=$listeCategorie->fetchObject()){
-	          print"<option value=\"$NewC->id_categorie\">$NewC->libelle</option>";
-	        }?>
-	        </select></p>
+					<button type="button" id="btnModifierCategorie">Modifier</button>
+				</div>
 
-				<button type="button" id="btnAjouterCategorie">Ajouter</button>
-				<button type="button" id="btnModifierCategorie">Modifier</button>
-				<button type="button" id="btnAnnulerCategorie">Annuler</button>
-
+					<div class="boutonAnnuler">
+						<button type="button" id="btnAnnulerCategorie">Annuler</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>

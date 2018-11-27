@@ -234,7 +234,6 @@ Database::disconnect();
 <div class="table-responsive">
     <br>
     <h3>Devis</h3>
-
             <table id="table_devis" class="display">
                 <thead>
                     <tr>

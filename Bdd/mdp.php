@@ -6,8 +6,8 @@ function creerIdentifiant()
 	$bdd = 'progiplus';
 	$dbUser = 'root';
 
-	$dbMdp = 'azertysio';
-	$port = "3306";
+	$dbMdp = 'root';
+	$port = "8889";
 	
 	define("DSN_BDD", 'mysql:host='.$hote.';port='.$port.';dbname='.$bdd);
 	define("USER_BDD", $dbUser);

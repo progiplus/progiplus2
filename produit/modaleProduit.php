@@ -105,7 +105,7 @@
 				<div class="partie">
 					<div class="partieAjout">
 						<p><label for="nomNewM">Nom :</label>
-			      <input type="text" name="nomNewM"></p>
+			      <input id="nomNewM" type="text" name="nomNewM"></p>
 
 						<button type="button" id="btnAjouterMarque">Ajouter</button>
 					</div>
@@ -145,12 +145,12 @@
 				<div class="partie">
 					<div class="partieAjout">
 						<p><label for="nomNewG">Nom :</label>
-			      <input type="text" name="nomNewG"></p>
+			      <input id="nomNewG" type="text" name="nomNewG"></p>
 
 						<button type="button" id="btnAjouterGamme">Ajouter</button>
 					</div>
 				<div class="partieModif">
-					<p><label for="nomNewC" class="nomNewC">Gamme à modifier :</label>
+					<p><label for="nomNewG" class="nomNewG">Gamme à modifier :</label>
 		      <select onchange="modifyNameG()" name="nomNewG" id="selectG">
 		        <option value="0">Sélectionnez</option>
 						<?php
@@ -185,7 +185,7 @@
 				<div class="partie">
 					<div class="partieAjout">
 						<p><label for="nomNewC">Nom :</label>
-			      <input type="text" name="nomNewC"></p>
+			      <input id="nomNewC" type="text" name="nomNewC"></p>
 
 						<button type="button" id="btnAjouterCategorie">Ajouter</button>
 					</div>
@@ -245,9 +245,33 @@ $("#btnAjouterMarque").on('click', function(){
 	 data:{
 		nomNewM: $("#nomNewM").val(),
 		action: "ajouterMarque"
-	},
+		},
 	success: verifEnvoi
-})
+	})
+});
+
+$("#btnAjouterGamme").on('click', function(){
+	$.ajax({
+	 type: "POST",
+	 url: "ajaxProduit.php",
+	 data:{
+		nomNewG: $("#nomNewG").val(),
+		action: "ajouterGamme"
+		},
+	success: verifEnvoi
+	})
+});
+
+$("#btnAjouterCategorie").on('click', function(){
+	$.ajax({
+	 type: "POST",
+	 url: "ajaxProduit.php",
+	 data:{
+		nomNewC: $("#nomNewC").val(),
+		action: "ajouterCategorie"
+		},
+	success: verifEnvoi
+	})
 });
 
 function verifEnvoi(data){

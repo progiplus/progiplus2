@@ -17,6 +17,40 @@ switch($action){
 	case "ajouterMarque";
 		ajouterMarque();
 	break;
+	case "ajouterGamme";
+		ajouterGamme();
+	break;
+	case "ajouterCategorie";
+		ajouterCategorie();
+	break;
+}
+
+function ajouterCategorie(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$libelle = $_POST['nomNewC'];
+		$Query = 'INSERT INTO categorie(libelle, actif) VALUES ("'.$libelle.'", 1)';
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
+}
+
+function ajouterGamme(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$libelle = $_POST['nomNewG'];
+		$Query = 'INSERT INTO gamme(libelle, actif, id_marque) VALUES ("'.$libelle.'", 1, //TODO//)';
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
 }
 
 function ajouterMarque(){

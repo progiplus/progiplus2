@@ -71,8 +71,8 @@
                     <input class="button" type="button" value="Ajouter" id="btnAjouterClient">
                     <input class="button" type="button" value="Modifier" id="btnModifierClient">
                     <input class="button" type="reset" value="Annuler" id="btnAnnulerClient">
-                    <input class="button" type="button" value="Ajouter un contact" id="btnAjouterContact">
-                    <input class="button" type="button" value="Modifier un contact" id="btnModifierContact"></div>
+                    <input class="button" type="button" value="Ajouter un contact" id="btnModaleAjouterContact">
+                    <input class="button" type="button" value="Modifier un contact" id="btnModaleModifierContact"></div>
 
 
 
@@ -97,7 +97,6 @@
                     return true;
                 }
             }
-
 
 
             function verifSaisie() {
@@ -157,8 +156,16 @@
 
                 return true;
             }
+            
+            function displayModal(idModal) {
+               $('#' + idModal).show();
+            }
 
-            //pour faire ajout et modif de clien dans le modal (модальное окно)
+            function closeModal() {
+                    $(this).parent().parent().parent().hide();
+                }
+            
+            //pour faire ajout et modif de client dans le modal (модальное окно)
 
             function ajouterClient() {
                 if (verifSaisie()) {
@@ -214,7 +221,11 @@
                     });
                 }
             }
+            
+            function ajouterContact(){
 
+            }
+            
             function modifierContact(){
 
             }
@@ -226,14 +237,27 @@
                     alert("Erreur d'enregistrement");
                 }
             }
-
+            
             function init() {
                 $('#btnAjouterClient').click(ajouterClient);
                 $('#btnModifierClient').click(modifierClient);
-                $('#btnAjouterContact').click(ajouterContact);
-                $('#btnModifierContact').click(modifierContact);
+//                $('#btnAjouterContact').click(ajouterContact);
+//                $('#btnModifierContact').click(modifierContact);
+                $('.close').click(closeModal);
+                $('#btnAnnulerClient').click(closeModal);
+                $('#btnAnnulerContact').click(closeModal);
+                $('#btnAnnulerAdresse').click(closeModal);
             }
-
+            
+            $('#btnModaleAjouterContact').click(function(){
+                $('#modaleClient').hide();
+                displayModal("modaleContact");
+            });
+            
+            $('#btnModaleModifierContact').click(function(){
+                $('#modaleClient').hide();
+                displayModal("modaleContact");
+            });
 
             $(document).ready(init);
 

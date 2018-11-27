@@ -249,29 +249,6 @@ Database::disconnect();
         </thead>
 
 
-        <tbody>
-            <?php
-                </tbody>
-            </table>
-            </div>
-            <div class = "contact">
-            <br>
-            <h2>Devis</h2>
-            <table id="table_devis" class="display">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Durée</th>
-                        <th>Actif</th>
-                        <th>Quantité LD</th>
-                        <th>Prix</th>
-                        <th>Reference</th>
-                        <th>TVA</th>
-
-                    </tr>
-                </thead>
-
-
                 <tbody>
                     <?php
 

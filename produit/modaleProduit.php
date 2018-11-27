@@ -82,22 +82,22 @@
   </div>
 </div>
 
-<!--Ajouter / modifier une marque, gamme, catégorie-->
+<!--Ajouter / modifier une marque-->
 
 <div id="modaleMarque" class="modal">
 	<div class="modal-content">
 	  <div class="modal-header">
 	    <span class="close">&times;</span>
-	    <h2 class="titreModale">Ajouter une Marque</h2>
+	    <h2 class="titreModale">Ajouter ou Modifier une Marque</h2>
 	  </div>
 	  <div class="modal-body">
 	    <form method="post">
 
-				<p><label for="nomNewMGC">Nom :</label>
-	      <input type="text" id="nomNewMGC" name="nomNewMGC"></p>
+				<p><label for="nomNewM">Nom :</label>
+	      <input type="text" name="nomNewM"></p>
 
 				<p><label for="nomNewM" class="nomNewM">Marque à modifier :</label>
-	      <select name="nomNewM" id="nomNewM">
+	      <select name="nomNewM">
 	        <option value="0">Sélectionnez</option>
 	        <?php
 					while ($NewM=$listeMarque->fetchObject()){
@@ -105,7 +105,8 @@
 	        }?>
 	        </select></p>
 
-				<button type="button" id="btnAjouterMarque">Ajouter marque</button>
+				<button type="button" id="btnAjouterMarque">Ajouter</button>
+				<button type="button" id="btnModifierMarque">Modifier</button>
 				<button type="button" id="btnAnnulerMarque">Annuler</button>
 
 			</form>
@@ -113,7 +114,37 @@
 	</div>
 </div>
 
+<!--Ajouter / modifier une gamme-->
 
+<div id="modaleGamme" class="modal">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <span class="close">&times;</span>
+	    <h2 class="titreModale">Ajouter ou Modifier une Gamme</h2>
+	  </div>
+	  <div class="modal-body">
+	    <form method="post">
+
+				<p><label for="nomNewG">Nom :</label>
+	      <input type="text" name="nomNewG"></p>
+
+				<p><label for="nomNewG" class="nomNewG">Gamme à modifier :</label>
+	      <select name="nomNewG">
+	        <option value="0">Sélectionnez</option>
+	        <?php
+					while ($NewM=$listeGamme->fetchObject()){
+	          print"<option value=\"$NewG->id_gamme\">$NewG->libelle</option>";
+	        }?>
+	        </select></p>
+
+				<button type="button" id="btnAjouterGamme">Ajouter</button>
+				<button type="button" id="btnModifierGamme">Modifier</button>
+				<button type="button" id="btnAnnulerGamme">Annuler</button>
+
+			</form>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 

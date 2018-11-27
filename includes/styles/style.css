@@ -223,7 +223,7 @@ tr:nth-child(even)
 /* ========== MODALES ========== */
 /* ================================ */
 /* ================================ */
-#modaleProduit,#modaleMarque
+#modaleProduit,#modaleMarque,#modaleGamme
 {
     display: none;
     position: fixed;

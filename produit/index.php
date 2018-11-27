@@ -96,7 +96,8 @@
 				});
 
 				var modaleGen = document.getElementById("modaleProduit");
-				var modaleMGC = document.getElementById("modaleMGC");
+				var modaleMarque = document.getElementById("modaleMarque");
+				var modaleGamme = document.getElementById("modaleGamme");
 
 				function displayProduitModal(){
 					modaleGen.style.display = "block";
@@ -106,20 +107,29 @@
 					modaleMarque.style.display = "block";
 				}
 
+				function displayGammeModal(){
+					modaleGamme.style.display = "block";
+				}
+
 				function hideModal(){
 					modaleGen.style.display = "none";
 					modaleMarque.style.display = "none";
+					modaleGamme.style.display = "none";
 				}
 
 				var closeModalGen = document.getElementsByClassName("close")[0];
 				var closeModalMarque = document.getElementsByClassName("close")[1];
+				var closeModalGamme = document.getElementsByClassName("close")[2];
 				var cancelModal = document.getElementById("btnAnnuler");
 				var cancelModalM = document.getElementById("btnAnnulerMarque");
+				var cancelModalG = document.getElementById("btnAnnulerGamme");
 
 				closeModalGen.onclick = hideModal;
 				closeModalMarque.onclick = hideModal;
+				closeModalGamme.onclick = hideModal;
 				cancelModal.onclick = hideModal;
 				cancelModalM.onclick = hideModal;
+				cancelModalG.onclick = hideModal;
 
 				function verifEnvoi(data){
 					if (data=="true"){
@@ -196,8 +206,13 @@
 			});
 
 			$("#boutonNouvelleM").on('click', function(){
-				$(".titreModale").text('Ajouter une Marque');
+				$(".titreModale").text('Ajouter ou Modifier une Marque');
 				displayMarqueModal();
+			});
+
+			$("#boutonNouvelleG").on('click', function(){
+				$(".titreModale").text('Ajouter ou Modifier une Gamme');
+				displayGammeModal();
 			});
 
 			$("input:checkbox").on("change", function() {

@@ -98,6 +98,7 @@
 				var modaleGen = document.getElementById("modaleProduit");
 				var modaleMarque = document.getElementById("modaleMarque");
 				var modaleGamme = document.getElementById("modaleGamme");
+				var modaleCategorie = document.getElementById("modaleCategorie");
 
 				function displayProduitModal(){
 					modaleGen.style.display = "block";
@@ -111,25 +112,34 @@
 					modaleGamme.style.display = "block";
 				}
 
+				function displayCategorieModal(){
+					modaleCategorie.style.display = "block";
+				}
+
 				function hideModal(){
 					modaleGen.style.display = "none";
 					modaleMarque.style.display = "none";
 					modaleGamme.style.display = "none";
+					modaleCategorie.style.display = "none";
 				}
 
 				var closeModalGen = document.getElementsByClassName("close")[0];
 				var closeModalMarque = document.getElementsByClassName("close")[1];
 				var closeModalGamme = document.getElementsByClassName("close")[2];
+				var closeModalCategorie = document.getElementsByClassName("close")[3];
 				var cancelModal = document.getElementById("btnAnnuler");
 				var cancelModalM = document.getElementById("btnAnnulerMarque");
 				var cancelModalG = document.getElementById("btnAnnulerGamme");
+				var cancelModalC = document.getElementById("btnAnnulerCategorie");
 
 				closeModalGen.onclick = hideModal;
 				closeModalMarque.onclick = hideModal;
 				closeModalGamme.onclick = hideModal;
+				closeModalCategorie.onclick = hideModal;
 				cancelModal.onclick = hideModal;
 				cancelModalM.onclick = hideModal;
 				cancelModalG.onclick = hideModal;
+				cancelModalC.onclick = hideModal;
 
 				function verifEnvoi(data){
 					if (data=="true"){
@@ -213,6 +223,11 @@
 			$("#boutonNouvelleG").on('click', function(){
 				$(".titreModale").text('Ajouter ou Modifier une Gamme');
 				displayGammeModal();
+			});
+
+			$("#boutonNouvelleC").on('click', function(){
+				$(".titreModale").text('Ajouter ou Modifier une Catégorie');
+				displayCategorieModal();
 			});
 
 			$("input:checkbox").on("change", function() {

@@ -13,6 +13,11 @@
   ORDER BY libelle;
 	');
 
+	$listeGammeOnly = $db->query('
+	SELECT id_gamme, libelle FROM gamme
+	ORDER BY libelle;
+	');
+
 	$listeGamme = $db->query('
   SELECT id_gamme, concat(nom,\'/\',libelle) as libelle FROM gamme
 	INNER JOIN marque ON marque.id_marque=gamme.id_marque
@@ -132,7 +137,7 @@
 	      <select name="nomNewG">
 	        <option value="0">Sélectionnez</option>
 	        <?php
-					while ($NewM=$listeGamme->fetchObject()){
+					while ($NewG=$listeGammeOnly->fetchObject()){
 	          print"<option value=\"$NewG->id_gamme\">$NewG->libelle</option>";
 	        }?>
 	        </select></p>
@@ -140,6 +145,38 @@
 				<button type="button" id="btnAjouterGamme">Ajouter</button>
 				<button type="button" id="btnModifierGamme">Modifier</button>
 				<button type="button" id="btnAnnulerGamme">Annuler</button>
+
+			</form>
+		</div>
+	</div>
+</div>
+
+<!--Ajouter / modifier une catégorie-->
+
+<div id="modaleCategorie" class="modal">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <span class="close">&times;</span>
+	    <h2 class="titreModale">Ajouter ou Modifier une Catégorie</h2>
+	  </div>
+	  <div class="modal-body">
+	    <form method="post">
+
+				<p><label for="nomNewC">Nom :</label>
+	      <input type="text" name="nomNewC"></p>
+
+				<p><label for="nomNewC" class="nomNewC">Catégorie à modifier :</label>
+	      <select name="nomNewC">
+	        <option value="0">Sélectionnez</option>
+	        <?php
+					while ($NewC=$listeCategorie->fetchObject()){
+	          print"<option value=\"$NewC->id_categorie\">$NewC->libelle</option>";
+	        }?>
+	        </select></p>
+
+				<button type="button" id="btnAjouterCategorie">Ajouter</button>
+				<button type="button" id="btnModifierCategorie">Modifier</button>
+				<button type="button" id="btnAnnulerCategorie">Annuler</button>
 
 			</form>
 		</div>

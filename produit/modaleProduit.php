@@ -238,4 +238,24 @@ function modifyNameC() {
     document.getElementById("newCategorie").value = selectC.options[selectC.selectedIndex].text;
 }
 
+$("#btnAjouterMarque").on('click', function(){
+	$.ajax({
+	 type: "POST",
+	 url: "ajaxProduit.php",
+	 data:{
+		nomNewM: $("#nomNewM").val(),
+		action: "ajouterMarque"
+	},
+	success: verifEnvoi
+})
+});
+
+function verifEnvoi(data){
+	if (data=="true"){
+		document.location.href='index.php';
+	}else{
+		alert("L'envoi a échoué.");
+	}
+}
+
 </script>

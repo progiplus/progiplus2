@@ -11,9 +11,26 @@ switch($action){
 	case "modifierProduit":
 		modifierProduit();
 	break;
-	case"ajouterProduit";
+	case "ajouterProduit";
 		ajouterProduit();
 	break;
+	case "ajouterMarque";
+		ajouterMarque();
+	break;
+}
+
+function ajouterMarque(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$nom = $_POST['nomNewM'];
+		$Query = 'INSERT INTO marque(nom) VALUES ("'.$nom.'")';
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
 }
 
 function modifierProduit(){

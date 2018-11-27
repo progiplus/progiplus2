@@ -51,8 +51,8 @@ Database::disconnect();
 <body>
     <div class="wrapper">
         <?php include('../nav.php');
+        require_once('modale_contact.php');
         require_once('modale_client.php');
-         require_once('modale_contact.php');
         require_once('modaleAdresse.php');
 
         ?>
@@ -104,52 +104,12 @@ Database::disconnect();
             <script type="text/javascript" src="../includes/scripts/datatables.js"></script>
             <script type="text/javascript" src="../includes/scripts/general.js"></script>
             <script type="text/javascript">
-                var modaleGen = document.getElementById("modaleClient");
-                var modaleContact = document.getElementById("modaleContact");
-
-                function init() {
+                
+                function initClient() {
                     $('#table_client').DataTable({
                         "language": getLangageDataTable("client", false)
                     });
                 }
-
-                function displayModal() {
-                    modaleGen.style.display = "block";
-                }
-
-                function displayModalContact() {
-                      modaleContact.style.display = "block";
-                }
-
-
-
-                function closeModal() {
-                    modaleGen.style.display = "none";
-                }
-                                function closeModalContact() {
-                    modaleContact.style.display = "none";
-                }
-
-                var closeModal = document.getElementsByClassName("close")[0];
-                var cancelModal = document.getElementById("btnAnnulerClient");
-                   var closeModalContact = document.getElementsByClassName("close")[0];
-                var cancelModalContact = document.getElementById("btnAnnulerContact");
-
-              closeModal.onclick = function() {
-				  modaleGen.style.display = "none";
-				}
-                     closeModalContact.onclick = function() {
-				  modaleContact.style.display = "none";
-				}
-
-				cancelModal.onclick = function() {
-				  modaleGen.style.display = "none";
-				}
-                cancelModalContact.onclick = function() {
-				  modaleContact.style.display = "none";
-				}
-
-
 
                 $("#table_client input:checkbox").on("change", function()
                 {
@@ -213,8 +173,9 @@ Database::disconnect();
                     $("#ville").val($(this).data("nom_ville"));
                     $("#id_ville").val($(this).data("id_ville"));
                     $('#clientActif').prop('checked', $(this).data("clientActif") == 1);
-                    displayModal();
+                    displayModal("modaleClient");
                 });
+                
                 $("#bouton_ajouter").on('click', function() {
                     $("#btnAjouterClient").show();
                     $("#btnModifierClient").hide();
@@ -231,10 +192,10 @@ Database::disconnect();
                     $("#nomAdresse").val(0);
                     $("#postale").val(0);
                     $("#ville").val(0);
-                    displayModal();
+                    displayModal("modaleClient");
                 });
 
-                window.onload = init;
+                window.onload = initClient;
 
             </script>
         </section>

@@ -91,7 +91,7 @@
         </section>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
+
     
     // faire la verification de toute ma forme en JavaScript
 
@@ -165,16 +165,16 @@
                 alert('vous devez saisir votre complement d\'adresse');
                 return false;
             }
-            
+
             return true;
         }
 
         //pour faire ajout et modif de clien dans le modal (модальное окно)
-        
-        function ajouterClient() { 
+
+        function ajouterClient() {
             if (verifSaisie()) {
                 $.ajax({
-                    
+
                     type: "POST",
                     url: "ajax.php",
                     data:{
@@ -195,7 +195,7 @@
                 });
             }
         }
-        
+
         function verifierReponse(reponse)
         {
             if(reponse == "true")

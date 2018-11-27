@@ -96,7 +96,6 @@ CREATE TABLE produit(
     id_tva INT NOT NULL,
 	CONSTRAINT fk_id_gamme FOREIGN KEY(id_gamme) REFERENCES gamme(id_gamme),
 	CONSTRAINT fk_id_categorie_produit FOREIGN KEY(id_categorie) REFERENCES categorie(id_categorie),
-    CONSTRAINT fk_produit_tva FOREIGN KEY(id_tva) REFERENCES tva(id_tva),
 	CONSTRAINT chk_prixUHt CHECK (prix_unitaire_ht > 0 )
 );
 

@@ -8,11 +8,11 @@ switch($action)
 {
 	case "changerActif":
 		changerActifProduit();
-	break;  
+	break;
     case"ajouterClient":
         ajouterClient();
     break;
-        
+
     case"modifierClient":
         modifierClient();
     break;
@@ -37,7 +37,7 @@ function ajouterClient()
         if(!empty($_POST))
         {
             $db = Database::connect();
-            
+
             $codeClient=$_POST['code_client'];
             $raisonSociale=$_POST['raison_sociale'];
             $civilite=$_POST['civilite'];
@@ -97,7 +97,7 @@ function modifierClient()
         if(!empty($_POST))
         {
             $db = Database::connect();
-            
+
             $codeClient=$_POST['code_client'];
             $raisonSociale=$_POST['raison_sociale'];
             $civilite=$_POST['civilite'];

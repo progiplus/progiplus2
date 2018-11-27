@@ -44,14 +44,13 @@
 						<div id="infoClient">
 							<label>Code client : </label>
 							<select type="text" name="codeClient" id="codeClient">
-							<option value="0">---</option>
-							<?php
+								<option value="0">---</option>
+								<?php
 								while($clients = $statement->fetchObject()){
 									print ('<option class="data" value="'.$clients->code_client.'">'.$clients->code_client.'</option>');
 								}
 							?>
 							</select>
-
 							<div class="clientinfo"></div>
 
 						</div>
@@ -65,39 +64,37 @@
 					<table id="corpsDevis">
 						<thead>
 							<th class="codeProduit">Code</th>
-							<th style="width:300px">Designation</th>
+							<th class="designation"> Designation</th>
 							<th class="quantiteProduit">quantite</th>
 							<th style="width:70px">prixU</th>
-							<th style="width:100px">Total</th>
+							<th>Total</th>
+							<th></th>
 						</thead>
 						<tbody>
-							<?php
-								for($i=0; $i<10; $i++){
-									print 	'<tr>
-												<td><input class="codeProduit" type="text" name="codeProduit" id="codeProduit"/></td>
-												<td></td>
-												<td><input class="quantiteProduit" type="number"/></td>
-												<td></td>
-												<td></td>
-											</tr>';
-								}
-							?>
+						 	<tr>
+								<td><input class="codeProduit" type="text" name="codeProduit" /></td>
+								<td><input class="designation" type="text" readonly/> </td>
+								<td><input class="quantiteProduit" type="number"/></td>
+								<td><input class="prix" type="text" readonly/></td>
+								<td><input class="totalHTLigne" type="text" readonly/></td>
+								<td><button class="btn-circle btn-add btn-circle-md" type="button">+</button><button class="btn-circle btn-sup btn-circle-md" type="button">-</button></td>
+							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<td colspan="3"></td>
 								<td>Total HT</td>
-								<td></td>
+								<td ><input class="totalHT" type="text" readonly/></td>
 							</tr>
 							<tr>
 								<td colspan="3"></td>
 								<td>TVA</td>
-								<td></td>
+								<td><input class="totalTva" type="text" readonly/></td>
 							</tr>
 							<tr>
 								<td colspan="3"></td>
 								<td>Total TTC</td>
-								<td></td>
+								<td><input class="totalTTC" type="text" readonly/></td>
 							</tr>
 							<tr>
 								<td colspan="3"></td>
@@ -113,60 +110,142 @@
 <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../includes/scripts/datatables.js"></script>
 
-<script type="text/javascript" >
-	$(document).ready(function (){
+<script type="text/javascript">
+	$(document).ready(function() {
 		var client = false;
 		var clientEnCours = 0;
+		var idLigne = 0;
+		var qt=0;
+		var px=0;
+		var tva=0;
+		var tvaLigne=0;
+		var totalHTLigne = 0;
+		var totalHT = 0;
+		var totalTva =0;
+		var totalTTC = 0;
 
-		function getXhrReq(){
+		function getXhrReq() {
 			var xhr;
-			if(window.XMLHttpRequest){
-				xhr = new  XMLHttpRequest();
-			}else{
+			if (window.XMLHttpRequest) {
+				xhr = new XMLHttpRequest();
+			} else {
 				xhr = new ActiveXObject("Microsoft.XMLHTTP");
 			}
 			return xhr;
 		}
-
-		$('#codeClient').change(function(){
+		function updateContent(idLigne, chRefProduit){
 			xhr = getXhrReq();
-			xhr.onreadystatechange = function(){
-				if(xhr.readyState == 4){
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
 					var obj = JSON.parse(xhr.responseText);
 					console.log(obj);
+					$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .designation').val(obj.designation);
+					$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .prix').val(obj.prix_unitaire_ht);
+					$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .quantiteProduit').focus();
+					tva = obj.taux;
+				}
+			}
+			var data = "ref=" + chRefProduit;
+			xhr.open('POST', '../includes/scripts/json/produitClient.php', true);
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+			xhr.send(data);
+		}
+		function majDevis(){
+			// calcul HT par ligne
+				qt = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .quantiteProduit').val();
+				px = $('#corpsDevis>tbody>tr:eq(' + idLigne + ') .prix').val();
+				totalHTLigne = qt*px;
+				$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .totalHTLigne').val(totalHTLigne);
+
+				//calul HT total
+				totalHT=0;
+				$(".totalHTLigne").each(function(index) {
+					totalHTLigne = parseFloat($(this).val());
+					totalHT += totalHTLigne;
+					$('#corpsDevis>tfoot>tr .totalHT').val(totalHT);
+				});
+
+				//Calcul de la tva total
+				totalTva=0;
+				$(".totalHTLigne").each(function( index) {
+					tvaLigne = parseFloat($( this ).val()) * tva/100;
+					totalTva += tvaLigne;
+					$('#corpsDevis>tfoot>tr .totalTva').val(totalTva);
+				});
+
+				//calcul total TTC => totalHT + totalTva
+				totalTTC = totalHT + totalTva;
+				$('#corpsDevis>tfoot>tr .totalTTC').val(totalTTC);
+		}
+		function addNewLine(){
+			$('#corpsDevis>tbody').append('<tr><td><input class="codeProduit" type="text" name="codeProduit" class="codeProduit" autofocus/></td><td><input class="designation" type="text" readonly/> </td><td><input class="quantiteProduit" type="number"/></td><td><input class="prix" type="text" readonly/></td><td><input class="totalHTLigne" type="text" readonly/></td><td><button class="btn-circle btn-add btn-circle-md" type="button">+</button><button class="btn-circle btn-sup btn-circle-md" type="button">-</button></td></tr>');
+
+			$('input.codeProduit:last').change(function (){
+				idLigne = $(this).parent().parent().index();
+				valCodePdt = $(this).val();
+				updateContent(idLigne, valCodePdt);
+			});
+
+			$('input.quantiteProduit:last').change(function (){
+				idLigne = $(this).parent().parent().index();
+				if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
+					majDevis();
+					addNewLine();
+				}else{
+					majDevis();
+				}
+			});
+			$('input.codeProduit:last').focus();
+
+			$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .btn-sup').click(function(){
+				idLigne = $(this).parent().parent().index();
+				supLigne(idLigne);
+				majDevis();
+			});
+		}
+
+		function supLigne(idLIgne){
+				$('#corpsDevis>tbody>tr:eq(' + idLigne + ')').remove();
+				majDevis();
+		}
+
+		$('#codeClient').change(function() {
+			xhr = getXhrReq();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					var obj = JSON.parse(xhr.responseText);
+					console.log(obj);
+
 					var codeClient = $('#codeClient').val();
 
-					if(clientEnCours != codeClient){
-						var adresse ="";
-						if(obj.ligne2){
+					if (clientEnCours != codeClient) {
+						var adresse = "";
+						if (obj.ligne2) {
 							adresse = obj.ligne1 + '<br>' + obj.ligne2;
-						}else{
+						} else {
 							adresse = obj.ligne1;
 						}
 
-						if(!client){
+						if (!client) {
 							clientEnCours = codeClient;
 
-							if(obj.rs){
-								$('.clientinfo').append('<p>'  + obj.rs + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
+							if (obj.rs) {
+								$('.clientinfo').append('<p>' + obj.rs + '<br>' + adresse + '<br>' + obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
 
+							} else {
+								$('.clientinfo').append('<p>' + obj.nom_cli + '<br>' + adresse + '<br>' + obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
 							}
-							else{
-								$('.clientinfo').append('<p>'  + obj.nom_cli + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
-							}
-							return client=true;
-						}
-						else{
+							return client = true;
+						} else {
 							$('.clientinfo').empty();
 							clientEnCours = codeClient;
-								if(obj.rs){
-									$('.clientinfo').append('<p>'  + obj.rs + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
-								}
-								else{
-									$('.clientinfo').append('<p>'  + obj.nom_cli + '<br>' + adresse +'<br>'+ obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
+							if (obj.rs) {
+								$('.clientinfo').append('<p>' + obj.rs + '<br>' + adresse + '<br>' + obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
+							} else {
+								$('.clientinfo').append('<p>' + obj.nom_cli + '<br>' + adresse + '<br>' + obj.ville + '<br> Tel : ' + obj.valeur + '</p>');
 
-								}
-							return client=true;
+							}
+							return client = true;
 						}
 					}
 				}
@@ -174,10 +253,37 @@
 
 			var data = "code=" + $(this).val();
 			xhr.open('POST', '../includes/scripts/json/devisClient.php', true);
-			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
 			xhr.send(data);
+		});
+
+		$('.codeProduit').change(function() {
+			idLigne = $(this).parent().parent().index();
+			valCodePdt = $(this).val();
+			updateContent(idLigne, valCodePdt);
+		});
+
+		$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .btn-add').click(function(){
+			addNewLine()
+		});
+		//supression ligne
+		$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .btn-sup').click(function(){
+			idLigne = $(this).parent().parent().index();
+			supLigne(idLigne);
+			majDevis();
+			addNewLine()
+		});
+
+
+		$('.quantiteProduit').change(function(){
+			idLigne = $(this).parent().parent().index();
+			if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
+				majDevis();
+				addNewLine();
+			}else{
+				majDevis();
+			}
 		});
 	});
 </script>
-
 </html>

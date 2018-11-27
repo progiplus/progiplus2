@@ -29,9 +29,9 @@
 
 			<?php include('../nav.php'); ?>
 
-	<section>
+		<section>
 
-		<h1>Liste des Produits</h1>
+			<h1>Liste des Produits</h1>
 
 			<div class="boutonsP">
 				<div class="boutonNouveauP">

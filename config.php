@@ -2,6 +2,7 @@
 
 class Database
 {
+
     private static $pdo = null;
 
     public static function connect()

@@ -82,7 +82,8 @@ function ajouterGamme(){
 	if (!empty($_POST)){
 		$db = Database::connect();
 		$libelle = $_POST['nomNewG'];
-		$Query = 'INSERT INTO gamme(libelle, actif, id_marque) VALUES ("'.$libelle.'", 1, //TODO//)';
+		$id_marque = $_POST['selectBindM'];
+		$Query = 'INSERT INTO gamme(libelle, actif, id_marque) VALUES ("'.$libelle.'", 1, '.$id_marque.')';
     $Statement=$db->query($Query);
     $Statement->fetchObject();
     $Statement->closeCursor();

@@ -34,6 +34,11 @@
 	ORDER BY nom;
 	');
 
+	$listeMarque2 = $db->query('
+	SELECT id_marque, nom FROM marque
+	ORDER BY nom;
+	');
+
 	Database::disconnect();
 
 ?>
@@ -145,7 +150,16 @@
 				<div class="partie">
 					<div class="partieAjout">
 						<p><label for="nomNewG">Nom :</label>
-			      <input id="nomNewG" type="text" name="nomNewG"></p>
+			      <input id="nomNewG" type="text" name="nomNewG"></br>
+						<label for="nomNewG">Lier une marque :</label>
+						<select id="selectBindM">
+							<option value="0">Sélectionnez</option>
+							<?php
+							while ($NewM=$listeMarque2->fetchObject()){
+			          print"<option value=\"$NewM->id_marque\">$NewM->nom</option>";
+			        }?>
+						</select>
+					</p>
 
 						<button type="button" id="btnAjouterGamme">Ajouter</button>
 					</div>
@@ -269,6 +283,7 @@ $("#btnAjouterGamme").on('click', function(){
 	 url: "ajaxProduit.php",
 	 data:{
 		nomNewG: $("#nomNewG").val(),
+		selectBindM: document.getElementById('selectBindM').value,
 		action: "ajouterGamme"
 		},
 	success: verifEnvoi

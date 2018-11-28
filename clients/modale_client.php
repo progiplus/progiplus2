@@ -229,7 +229,8 @@
             }
 
             function verifierReponse(reponse) {
-                if (reponse == "true") {
+                console.log(reponse);
+                if (reponse  == "true") {
                     window.location.href = '';
                 } else {
                     alert("Erreur d'enregistrement");
@@ -246,10 +247,6 @@
                 $('#btnAnnulerContact').click(function () {
                     cancelModal('modaleContact')
                 });
-                $('#btnAnnulerAdresse').click(function () {
-                    cancelModal('modaleAdresse')
-                });
-
 
                 $('#btnModaleAjouterContact').click(function () {
                     $('#modaleClient').hide();
@@ -260,42 +257,16 @@
                     $('#modaleClient').hide();
                     displayModal("modaleContact");
                 });
-                $('#btnModaleAdresse').click(function () {
-                    $('#modaleClient').hide();
-                    displayModal("modaleAdresse");
-                })
-            }
-            
-            $('#btnModaleAjouterContact').click(function(){
-                $('#modaleClient').hide();
-                displayModal("modaleContact");
-            });
-            
-            $('#btnModaleModifierContact').click(function(){
-                $('#modaleClient').hide();
-                displayModal("modaleContact");
-            });
-            $('#btnModaleAdresse').click(function(){
-                $('#modaleClient').hide();
-                displayModal("modaleAdresse");
-                $('#modaleAdresse #idClient').val($('#modaleClient #idClient').val());
-                $.ajax({
 
-                        type: "POST",
-                        url: "ajax.php",
-                        data: {
-                            action: "getAdresseClient",
-                            idClient: $('#id_client').val()
-                        },
-                        success: listeAdresseClient
+                $('#btnModaleAdresse').click(function(){
+                    $('#modaleClient').hide();
+                    $('#idClient_MA').val($('#id_client_MC').val());
+                    $('#idAdresseFacAvant_MA').val($('#id_adresse_facturation_MC').val());
+                    init_MA();
+                    displayModal("modaleAdresse");
                 });
-            });
-            
-            function listeAdresseClient(liste)
-            {
-                $('#adresseFac').html(liste);
             }
-            
+
             $(document).ready(init_MC);
 
 

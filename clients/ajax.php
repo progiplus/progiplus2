@@ -71,7 +71,7 @@ function ajouterClient()
             $result->fetchObject();
             $result->closeCursor();
 
-            $SQLclient = 'INSERT INTO client (code_client, raison_sociale, actif, id_adresse_facturation) VALUE("'.$codeClient.'","'.$raisonSociale.'",1,'.$idAdresse.');';
+            $SQLclient = 'INSERT INTO client (code_client, raison_sociale, actif, id_adresse_facturation) VALUE ("'.$codeClient.'","'.$raisonSociale.'",1,'.$idAdresse.');';
             $result = $db->query($SQLclient);
             $idClient = $db->lastInsertId();
             $result->fetchObject();
@@ -98,6 +98,7 @@ function ajouterClient()
         print("false");
     }
 }
+
 function modifierContact()
 {
      try
@@ -154,7 +155,6 @@ function modifierContact()
         print("false");
     }
 }
-
 
 function modifierClient()
 {
@@ -234,7 +234,6 @@ function getAdresseClient()
     $result = $db->query($SQL);
     while($r = $result->fetchObject())
     {
-        var_dump($result);
         echo '<option value="'.$r->id_adresse.'">'.
             $r->libelle." : ".$r->ligne1." ".$r->ligne2." ".$r->cp_ville." ".$r->nom_ville
             .'</option>';
@@ -243,19 +242,15 @@ function getAdresseClient()
     $result->closeCursor();
 }
 
-
 function gererAdresse(){
-    
+            $db = Database::connect();
             $ligne1=$_POST['ligne1'];
             $ligne2=$_POST['ligne2'];
             $nomAdresse=$_POST['nomAdresse'];
             $cPostale=$_POST['cPostale'];
             $ville = $_POST['ville'];
             $idAdresseFacturation = $_POST['id_adresse_facturation'];
-            $actif_client =$_POST['clientActif'];
             $idClient=$_POST['id_client'];
-            $idAdresse = $_POST['id_adresse'];
-
 
             $SQLclient = "update client 
             set id_adresse_facturation = $idAdresseFacturation
@@ -263,10 +258,9 @@ function gererAdresse(){
             $result = $db->query($SQLclient);
             $result->fetchObject();
             $result->closeCursor();
-    
-    
+
             //Verification: On ne fait pas le insert si il y a un de 3 n'est pas remplis
-            if($ville != "" && $cPostale != "" && $ligne1 != "")
+            if($ville != "" && $cPostale != "" && $ligne1 != "" && $nomAdresse != "")
             {
                 $SQLville = 'INSERT INTO ville(nom_ville, cp_ville) VALUE ("'.$ville.'","'.$cPostale.'");';
                 $result = $db->query($SQLville);
@@ -285,12 +279,7 @@ function gererAdresse(){
                 $result->fetchObject();
                 $result->closeCursor();
             }
-
-    
+            print("true");
 }
     
 Database::disconnect();
-
-?>
-
-

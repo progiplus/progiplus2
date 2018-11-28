@@ -7,7 +7,7 @@ require_once('../includes/Models/moyenComm.php');
 //require_once('../includes/Models/client.php');
 
 $db = Database::connect();
-$statement = $db->query(' SELECT client.id_client as id_client,
+$statement = $db->query('SELECT client.id_client as id_client,
 			client.code_client as code,
             client.raison_sociale as raisonsoc,
             client.actif,
@@ -27,12 +27,12 @@ $statement = $db->query(' SELECT client.id_client as id_client,
             ville.nom_ville as nom_ville
             FROM contact
             INNER JOIN client ON client.id_client = contact.id_client
-            INNER JOIN liste_adresse ON liste_adresse.id_client = client.id_client
-            INNER JOIN adresse ON adresse.id_adresse = liste_adresse.id_adresse
+            INNER JOIN adresse ON adresse.id_adresse = client.id_adresse_facturation
+            INNER JOIN liste_adresse ON liste_adresse.id_adresse = client.id_adresse_facturation
             INNER JOIN ville ON adresse.id_ville = ville.id_ville
 			INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite 
             GROUP BY client.code_client
-            ORDER BY client.actif DESC, client.code_client ASC');
+            ORDER BY client.actif DESC, client.code_client ASC;');
 Database::disconnect();
 
 

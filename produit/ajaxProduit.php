@@ -14,15 +14,39 @@ switch($action){
 	case "ajouterProduit";
 		ajouterProduit();
 	break;
+	case "modifierMarque";
+		modifierMarque();
+	break;
 	case "ajouterMarque";
 		ajouterMarque();
+	break;
+	case "modifierGamme";
+		modifierGamme();
 	break;
 	case "ajouterGamme";
 		ajouterGamme();
 	break;
+	case "modifierCategorie";
+		modifierCategorie();
+	break;
 	case "ajouterCategorie";
 		ajouterCategorie();
 	break;
+}
+
+function modifierCategorie(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$id_categorie = $_POST['selectC'];
+		$libelle = $_POST['newCategorie'];
+		$Query = "UPDATE categorie SET libelle = \"$libelle\" WHERE id_categorie = \"$id_categorie\"";
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
 }
 
 function ajouterCategorie(){
@@ -39,11 +63,41 @@ function ajouterCategorie(){
 	}
 }
 
+function modifierGamme(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$id_gamme = $_POST['selectG'];
+		$libelle = $_POST['newGamme'];
+		$Query = "UPDATE gamme SET libelle = \"$libelle\" WHERE id_gamme = \"$id_gamme\"";
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
+}
+
 function ajouterGamme(){
 	if (!empty($_POST)){
 		$db = Database::connect();
 		$libelle = $_POST['nomNewG'];
 		$Query = 'INSERT INTO gamme(libelle, actif, id_marque) VALUES ("'.$libelle.'", 1, //TODO//)';
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
+}
+
+function modifierMarque(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$id_marque = $_POST['selectM'];
+		$nom = $_POST['newMarque'];
+		$Query = "UPDATE marque SET nom = \"$nom\" WHERE id_marque = \"$id_marque\"";
     $Statement=$db->query($Query);
     $Statement->fetchObject();
     $Statement->closeCursor();

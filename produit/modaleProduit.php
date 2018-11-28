@@ -250,6 +250,19 @@ $("#btnAjouterMarque").on('click', function(){
 	})
 });
 
+$("#btnModifierMarque").on('click', function(){
+	$.ajax({
+	 type: "POST",
+	 url: "ajaxProduit.php",
+	 data:{
+		selectM: $("#selectM").val(),
+		newMarque: $("#newMarque").val(),
+		action: "modifierMarque"
+		},
+	success: verifEnvoi
+	})
+});
+
 $("#btnAjouterGamme").on('click', function(){
 	$.ajax({
 	 type: "POST",
@@ -262,6 +275,19 @@ $("#btnAjouterGamme").on('click', function(){
 	})
 });
 
+$("#btnModifierGamme").on('click', function(){
+	$.ajax({
+	 type: "POST",
+	 url: "ajaxProduit.php",
+	 data:{
+		selectG: $("#selectG").val(),
+		newGamme: $("#newGamme").val(),
+		action: "modifierGamme"
+		},
+	success: verifEnvoi
+	})
+});
+
 $("#btnAjouterCategorie").on('click', function(){
 	$.ajax({
 	 type: "POST",
@@ -269,6 +295,19 @@ $("#btnAjouterCategorie").on('click', function(){
 	 data:{
 		nomNewC: $("#nomNewC").val(),
 		action: "ajouterCategorie"
+		},
+	success: verifEnvoi
+	})
+});
+
+$("#btnModifierCategorie").on('click', function(){
+	$.ajax({
+	 type: "POST",
+	 url: "ajaxProduit.php",
+	 data:{
+		selectC: $("#selectC").val(),
+		newCategorie: $("#newCategorie").val(),
+		action: "modifierCategorie"
 		},
 	success: verifEnvoi
 	})

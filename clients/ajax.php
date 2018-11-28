@@ -19,6 +19,12 @@ switch($action)
     case"modifierContact":
         modifierContact();
     break;
+    case"getAdresseClient":
+        getAdresseClient();
+    break;
+    case"gererAdresse":
+        gererAdresse();
+    break;
 }
 
 function changerActifProduit()
@@ -149,9 +155,6 @@ function modifierContact()
     }
 }
 
-Database::disconnect();
-
-
 
 function modifierClient()
 {
@@ -177,6 +180,7 @@ function modifierClient()
             $actif_client =$_POST['clientActif'];
             $idContact =$_POST['id_contact'];
             $idClient=$_POST['id_client'];
+
 
             $SQLville = "UPDATE ville SET nom_ville = '$ville', cp_ville='$cPostale'  WHERE id_ville = $idVille;";
             $result = $db->query($SQLville);
@@ -216,16 +220,75 @@ function modifierClient()
     }
 }
 
-function getAdresseClient($idClient)
+function getAdresseClient()
 {
-    $SQL = "select  liste_adresse.libelle, adresse.ligne1, adresse.ligne2, ville.cp_ville, ville.nom_ville
+    $db = Database::connect();
+    $idClient = $_POST['idClient'];
+    $SQL = "select  liste_adresse.libelle, adresse.id_adresse, adresse.ligne1, adresse.ligne2, ville.cp_ville, ville.nom_ville
     from liste_adresse
     inner join client on client.id_client = liste_adresse.id_client
     inner join adresse on adresse.id_adresse = liste_adresse.id_adresse
     inner join ville on ville.id_ville = adresse.id_ville
     where client.id_client = $idClient;";
+    
+    $result = $db->query($SQL);
+    while($r = $result->fetchObject())
+    {
+        var_dump($result);
+        echo '<option value="'.$r->id_adresse.'">'.
+            $r->libelle." : ".$r->ligne1." ".$r->ligne2." ".$r->cp_ville." ".$r->nom_ville
+            .'</option>';
+    }
+    
+    $result->closeCursor();
 }
 
+
+function gererAdresse(){
+    
+            $ligne1=$_POST['ligne1'];
+            $ligne2=$_POST['ligne2'];
+            $nomAdresse=$_POST['nomAdresse'];
+            $cPostale=$_POST['cPostale'];
+            $ville = $_POST['ville'];
+            $idAdresseFacturation = $_POST['id_adresse_facturation'];
+            $actif_client =$_POST['clientActif'];
+            $idClient=$_POST['id_client'];
+            $idAdresse = $_POST['id_adresse'];
+
+
+            $SQLclient = "update client 
+            set id_adresse_facturation = $idAdresseFacturation
+            where  id_client= $idClient;";
+            $result = $db->query($SQLclient);
+            $result->fetchObject();
+            $result->closeCursor();
+    
+    
+            //Verification: On ne fait pas le insert si il y a un de 3 n'est pas remplis
+            if($ville != "" && $cPostale != "" && $ligne1 != "")
+            {
+                $SQLville = 'INSERT INTO ville(nom_ville, cp_ville) VALUE ("'.$ville.'","'.$cPostale.'");';
+                $result = $db->query($SQLville);
+                $idVille = $db->lastInsertId();
+                $result->fetchObject();
+                $result->closeCursor();
+
+                $SQLadresse = 'INSERT INTO adresse(ligne1, ligne2, id_ville) VALUE("'.$ligne1.'","'.$ligne2.'",'.$idVille.');';
+                $result = $db->query($SQLadresse);
+                $idAdresse = $db->lastInsertId();
+                $result->fetchObject();
+                $result->closeCursor();
+
+                $SQLlisteadresse = 'INSERT INTO liste_adresse (libelle, actif, id_client, id_adresse) VALUE ("'.$nomAdresse.'",1, '.$idClient.', '.$idAdresse.');';
+                $result = $db->query($SQLlisteadresse);
+                $result->fetchObject();
+                $result->closeCursor();
+            }
+
+    
+}
+    
 Database::disconnect();
 
 ?>

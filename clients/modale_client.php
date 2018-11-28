@@ -18,53 +18,53 @@
             <div id="container">
 
                 <div class="element"><label for="code">Code client :</label>
-                    <input type="int" id="code_client" name="code_client" required value=""></div><br>
+                    <input type="int" id="code_client_MC" name="code_client" required value=""></div><br>
 
 
                 <div class="element"><label for="raison_social">Raison sociale :</label>
-                    <input type="text" id="raison_sociale" name="raison_sociale" required value=""></div><br>
+                    <input type="text" id="raison_sociale_MC" name="raison_sociale" required value=""></div><br>
 
-                <div class="element"><label for="clientActif">Actif :</label>
-                    <input type="checkbox" id="clientActif" name="clientActif" required value=""></div><br>
+                <div class="element" id="conteneurClientActif_MC"><label for="clientActif">Actif :</label>
+                    <input type="checkbox" id="clientActif_MC" name="clientActif" required value=""><br><br></div>
 
-                <div class="element" id="civilite"><span style="margin-left:20px;">Civilité : </span>
-                    <label for="mme">Mme</label><input type="radio" name="gender" value="2" class="civilite" required />
+                <div class="element" id="civilite_MC"><span style="margin-left:20px;">Civilité : </span>
+                    <label for="mme">Mme</label><input type="radio" name="gender_MC" value="2" class="civilite" required />
 
 
-                    <label for="mr">M.</label> <input type="radio" name="gender" value="1" class="civilite" required /></div><br>
+                    <label for="mr">M.</label> <input type="radio" name="gender_MC" value="1" class="civilite" required /></div><br>
 
 
                 <div class="element"> <label for="nom">Nom :</label>
-                    <input type="text" id="nom" name="nom" value=""></div><br>
+                    <input type="text" id="nom_MC" name="nom" value=""></div><br>
 
 
                 <div class="element"> <label for="prenom">Prénom :</label>
-                    <input type="text" id="prenom" name="prenom" value=""></div><br><br>
+                    <input type="text" id="prenom_MC" name="prenom" value=""></div><br><br>
 
 
                 <div class="element"> <label for="service">Service :</label>
-                    <input type="text" id="service" name="service" value=""></div><br>
+                    <input type="text" id="service_MC" name="service" value=""></div><br>
 
 
                 <div class="element"> <label style="width:170px;" for="ligne2">Adresse de facturation :</label>
-                    <input type="text" style="margin-right:34px;" id="ligne1" name="id_adresse_facturation" value=""></div><br>
+                    <input type="text" style="margin-right:34px;" id="ligne1_MC" name="id_adresse_facturation" value=""></div><br>
                 <div class="element"> <label style="width:170px;" for="ligne2">Complément d'adresse :</label>
-                    <input type="text" style="margin-right:34px;" id="ligne2" name="id_adresse_comp" value=""></div><br>
+                    <input type="text" style="margin-right:34px;" id="ligne2_MC" name="id_adresse_comp" value=""></div><br>
 
                 <div class="element"> <label for="nomAdresse">Nom d'adresse :</label>
-                    <input type="text" id="nomAdresse" name="nomAdresse" value=""></div> <br>
+                    <input type="text" id="nomAdresse_MC" name="nomAdresse" value=""></div> <br>
 
 
                 <div class="element"> <label for="cPostale">Code Postale :</label>
-                    <input type="text" id="cPostale" name="postale" value=""></div> <br>
+                    <input type="text" id="cPostale_MC" name="postale" value=""></div> <br>
 
                 <div class="element"><label for="ville">Ville:</label>
-                    <input type="text" id="ville" name="ville" value=""></div> <br><br>
+                    <input type="text" id="ville_MC" name="ville" value=""></div> <br><br>
 
-                <input id="id_client" type="hidden" value="">
-                <input id="id_adresse_facturation" type="hidden" value="">
-                <input id="id_contact" type="hidden" value="">
-                <input id="id_ville" type="hidden" value="">
+                <input id="id_client_MC" type="hidden" value="">
+                <input id="id_adresse_facturation_MC" type="hidden" value="">
+                <input id="id_contact_MC" type="hidden" value="">
+                <input id="id_ville_MC" type="hidden" value="">
 
 
                 <div class="element centrer">
@@ -103,7 +103,7 @@
 
             function verifSaisie() {
 
-                var radioCiv = document.getElementsByName("gender");
+                var radioCiv = document.getElementsByName("gender_MC");
                 if (!radioCiv[0].checked && !radioCiv[1].checked) {
                     alert('vous devez choisir la civilité');
                     radioCiv[0].focus();
@@ -111,16 +111,16 @@
                 }
 
 
-                var codeClient = document.getElementById('code_client');
-                var raisonSocial = document.getElementById('raison_sociale');
-                var Hnom = document.getElementById('nom');
-                var Hprenom = document.getElementById('prenom');
-                var service = document.getElementById('service');
-                var ligne1 = document.getElementById('ligne1');
-                var ligne2 = document.getElementById('ligne2');
-                var ville = document.getElementById('ville');
-                var cPostale = document.getElementById('postale');
-                var nomAdresse = document.getElementById('nomAdresse');
+                var codeClient = document.getElementById('code_client_MC');
+                var raisonSocial = document.getElementById('raison_sociale_MC');
+                var Hnom = document.getElementById('nom_MC');
+                var Hprenom = document.getElementById('prenom_MC');
+                var service = document.getElementById('service_MC');
+                var ligne1 = document.getElementById('ligne1_MC');
+                var ligne2 = document.getElementById('ligne2_MC');
+                var ville = document.getElementById('ville_MC');
+                var cPostale = document.getElementById('cPostale_MC');
+                var nomAdresse = document.getElementById('nomAdresse_MC');
 
 
                 if (!isValid(codeClient)) {
@@ -181,17 +181,17 @@
                         url: "ajax.php",
                         data: {
                             action: "ajouterClient",
-                            code_client: $('#code_client').val(),
-                            raison_sociale: $('#raison_sociale').val(),
-                            civilite: $('input[name="gender"]:checked').val(),
-                            nom: $('#nom').val(),
-                            prenom: $('#prenom').val(),
-                            service: $('#service').val(),
-                            ligne1: $('#ligne1').val(),
-                            ligne2: $('#ligne2').val(),
-                            nomAdresse: $('#nomAdresse').val(),
-                            cPostale: $('#cPostale').val(),
-                            ville: $('#ville').val()
+                            code_client: $('#code_client_MC').val(),
+                            raison_sociale: $('#raison_sociale_MC').val(),
+                            civilite: $('input[name="gender_MC"]:checked').val(),
+                            nom: $('#nom_MC').val(),
+                            prenom: $('#prenom_MC').val(),
+                            service: $('#service_MC').val(),
+                            ligne1: $('#ligne1_MC').val(),
+                            ligne2: $('#ligne2_MC').val(),
+                            nomAdresse: $('#nomAdresse_MC').val(),
+                            cPostale: $('#cPostale_MC').val(),
+                            ville: $('#ville_MC').val()
                         },
                         success: verifierReponse
                     });
@@ -206,22 +206,22 @@
                         url: "ajax.php",
                         data: {
                             action: "modifierClient",
-                            id_client: $('#id_client').val(),
-                            code_client: $('#code_client').val(),
-                            raison_sociale: $('#raison_sociale').val(),
-                            civilite: $('input[name="gender"]:checked').val(),
-                            id_contact: $('#id_contact').val(),
-                            nom: $('#nom').val(),
-                            prenom: $('#prenom').val(),
-                            service: $('#service').val(),
-                            id_adresse_facturation: $('#id_adresse_facturation').val(),
-                            nomAdresse: $('#nomAdresse').val(),
-                            ligne1: $('#ligne1').val(),
-                            ligne2: $('#ligne2').val(),
-                            clientActif: $('#clientActif').is(":checked") ? 1 : 0,
-                            cPostale: $('#cPostale').val(),
-                            id_ville: $('#id_ville').val(),
-                            ville: $('#ville').val()
+                            id_client: $('#id_client_MC').val(),
+                            code_client: $('#code_client_MC').val(),
+                            raison_sociale: $('#raison_sociale_MC').val(),
+                            civilite: $('input[name="gender_MC"]:checked').val(),
+                            id_contact: $('#id_contact_MC').val(),
+                            nom: $('#nom_MC').val(),
+                            prenom: $('#prenom_MC').val(),
+                            service: $('#service_MC').val(),
+                            id_adresse_facturation: $('#id_adresse_facturation_MC').val(),
+                            nomAdresse: $('#nomAdresse_MC').val(),
+                            ligne1: $('#ligne1_MC').val(),
+                            ligne2: $('#ligne2_MC').val(),
+                            clientActif: $('#clientActif_MC').is(":checked") ? 1 : 0,
+                            cPostale: $('#cPostale_MC').val(),
+                            id_ville: $('#id_ville_MC').val(),
+                            ville: $('#ville_MC').val()
                         },
                         success: verifierReponse
                     });
@@ -236,30 +236,37 @@
                 }
             }
             
-            function init() {
+            function init_MC() {
                 $('#btnAjouterClient').click(ajouterClient);
                 $('#btnModifierClient').click(modifierClient);
                 $('.close').click(closeModal);
-                $('#btnAnnulerClient').click(function(){cancelModal('modaleClient')});
-                $('#btnAnnulerContact').click(function(){cancelModal('modaleContact')});
-                $('#btnAnnulerAdresse').click(function(){cancelModal('modaleAdresse')});
-            }
-            
-            $('#btnModaleAjouterContact').click(function(){
-                $('#modaleClient').hide();
-                displayModal("modaleContact");
-            });
-            
-            $('#btnModaleModifierContact').click(function(){
-                $('#modaleClient').hide();
-                displayModal("modaleContact");
-            });
-            $('#btnModaleAdresse').click(function(){
-                $('#modaleClient').hide();
-                displayModal("modaleAdresse");
-            })
+                $('#btnAnnulerClient').click(function () {
+                    cancelModal('modaleClient')
+                });
+                $('#btnAnnulerContact').click(function () {
+                    cancelModal('modaleContact')
+                });
+                $('#btnAnnulerAdresse').click(function () {
+                    cancelModal('modaleAdresse')
+                });
 
-            $(document).ready(init);
+
+                $('#btnModaleAjouterContact').click(function () {
+                    $('#modaleClient').hide();
+                    displayModal("modaleContact");
+                });
+
+                $('#btnModaleModifierContact').click(function () {
+                    $('#modaleClient').hide();
+                    displayModal("modaleContact");
+                });
+                $('#btnModaleAdresse').click(function () {
+                    $('#modaleClient').hide();
+                    displayModal("modaleAdresse");
+                })
+            }
+
+            $(document).ready(init_MC);
 
         </script>
     </div>

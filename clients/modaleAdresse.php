@@ -32,7 +32,7 @@
                         <div class="element"><label for="ville">Ville:</label>
                             <input id="ville" name="ville" value=""></div> <br>
 
-
+                        <input id="idClient" type="hidden" name="idClient" value="">
                         <div class="element">
                             <input class="button" type="button" value="Valider" id="btnGererAdresse">
                             <input class="button" type="reset" value="Annuler" id="btnAnnulerAdresse"></div><br>

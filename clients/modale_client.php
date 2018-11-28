@@ -257,8 +257,24 @@
             $('#btnModaleAdresse').click(function(){
                 $('#modaleClient').hide();
                 displayModal("modaleAdresse");
-            })
+                $('#modaleAdresse #idClient').val($('#modaleClient #idClient').val());
+                $.ajax({
 
+                        type: "POST",
+                        url: "ajax.php",
+                        data: {
+                            action: "getAdresseClient",
+                            idClient: $('#id_client').val()
+                        },
+                        success: listeAdresseClient
+                });
+            });
+            
+            function listeAdresseClient(liste)
+            {
+                $('#adresseFac').html(liste);
+            }
+            
             $(document).ready(init);
 
         </script>

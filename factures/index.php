@@ -62,7 +62,7 @@ Database::disconnect();
 				print '<td>' . dateFr($factures->date) . '</td>';
 				print '<td>' . $factures->montant . '</td>';
 				print '<td>
-                            <a href="view.php?id='.$factures->numDevis.'">
+                            <a href="detailFacture.php?id='.$factures->numDevis.'">
                                 <img src="../includes/assets/zoom.png" class="imageTableau" title="Afficher Facture" alt="afficher facture"/>
                             </a>
 							</td>';

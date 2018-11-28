@@ -26,11 +26,13 @@ $statement = $db->query(' SELECT client.id_client as id_client,
             ville.cp_ville as code_postal,
             ville.nom_ville as nom_ville
             FROM contact
-            inner JOIN client ON client.id_client = contact.id_client
-            inner join liste_adresse on liste_adresse.id_client = client.id_client
-            inner join adresse on adresse.id_adresse = liste_adresse.id_adresse
-            inner join ville on adresse.id_ville = ville.id_ville
-			inner join civilite ON contact.id_civilite = civilite.id_civilite order by actif desc ');
+            INNER JOIN client ON client.id_client = contact.id_client
+            INNER JOIN liste_adresse ON liste_adresse.id_client = client.id_client
+            INNER JOIN adresse ON adresse.id_adresse = liste_adresse.id_adresse
+            INNER JOIN ville ON adresse.id_ville = ville.id_ville
+			INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite 
+            GROUP BY client.code_client
+            ORDER BY client.actif DESC, client.code_client ASC');
 Database::disconnect();
 
 
@@ -155,43 +157,49 @@ Database::disconnect();
                 $(".boutonAppel").on('click', function() {
                     $("#btnAjouterClient").hide();
                     $("#btnModifierClient").show();
+                    $("#btnModaleAjouterContact").show();
+                    $("#btnModaleAdresse").show();
+                    $('#conteneurClientActif_MC').show();
                     $("#modaleClient .titreModale").text('Modifier la fiche client');
-                    $("#id_client").val($(this).data("id_client"));
-                    $("#code_client").val($(this).data("code"));
-                    $("#code_client").prop("disabled", true);
-                    $("#raison_sociale").val($(this).data("raison_sociale"));
-                    $("#service").val($(this).data("service"));
-                    $('input[name=gender][value='+ $(this).data("civilite") +']').prop('checked', 'checked');
-                    $("#id_contact").val($(this).data("id_contact"));
-                    $("#nom").val($(this).data("nom_client"));
-                    $("#prenom").val($(this).data("prenom_client"));
-                    $("#id_adresse_facturation").val($(this).data("id_adresse_facturation"));
-                    $("#nomAdresse").val($(this).data("libelle_adresse"));
-                    $("#ligne1").val($(this).data("ligne1"));
-                    $("#ligne2").val($(this).data("ligne2"));
-                    $("#cPostale").val($(this).data("code_postal"));
-                    $("#ville").val($(this).data("nom_ville"));
-                    $("#id_ville").val($(this).data("id_ville"));
-                    $('#clientActif').prop('checked', $(this).data("clientActif") == 1);
+                    $("#id_client_MC").val($(this).data("id_client"));
+                    $("#code_client_MC").val($(this).data("code"));
+                    $("#code_client_MC").prop("disabled", true);
+                    $("#raison_sociale_MC").val($(this).data("raison_sociale"));
+                    $("#service_MC").val($(this).data("service"));
+                    $('input[name=gender_MC][value='+ $(this).data("civilite") +']').prop('checked', 'checked');
+                    $("#id_contact_MC").val($(this).data("id_contact"));
+                    $("#nom_MC").val($(this).data("nom_client"));
+                    $("#prenom_MC").val($(this).data("prenom_client"));
+                    $("#id_adresse_facturation_MC").val($(this).data("id_adresse_facturation"));
+                    $("#nomAdresse_MC").val($(this).data("libelle_adresse"));
+                    $("#ligne1_MC").val($(this).data("ligne1"));
+                    $("#ligne2_MC").val($(this).data("ligne2"));
+                    $("#cPostale_MC").val($(this).data("code_postal"));
+                    $("#ville_MC").val($(this).data("nom_ville"));
+                    $("#id_ville_MC").val($(this).data("id_ville"));
+                    $('#clientActif_MC').prop('checked', $(this).data("clientactif") == 1);
                     displayModal("modaleClient");
                 });
                 
                 $("#bouton_ajouter").on('click', function() {
                     $("#btnAjouterClient").show();
                     $("#btnModifierClient").hide();
+                    $("#btnModaleAjouterContact").hide();
+                    $("#btnModaleAdresse").hide();
+                    $('#conteneurClientActif_MC').hide();
                     $("#modaleClient .titreModale").text('Ajouter un Client');
-                    $("#code_client").val("");
-                    $("#code_client").prop("disabled", false);
-                    $("#raison_sociale").val("");
-                    $("#civilite").val("");
-                    $("#nom").val("");
-                    $("#prenom").val("");
-                    $("#service").val(0);
-                    $("#id_adresse_facturation").val(0);
-                    $("#id_adresse_comp").val(0);
-                    $("#nomAdresse").val(0);
-                    $("#postale").val(0);
-                    $("#ville").val(0);
+                    $("#code_client_MC").val("");
+                    $("#code_client_MC").prop("disabled", false);
+                    $("#raison_sociale_MC").val("");
+                    $('input[name=gender_MC]').prop('checked', '');
+                    $("#nom_MC").val("");
+                    $("#prenom_MC").val("");
+                    $("#service_MC").val("");
+                    $("#nomAdresse_MC").val("");
+                    $("#ligne1_MC").val("");
+                    $("#ligne2_MC").val("");
+                    $("#cPostale_MC").val("");
+                    $("#ville_MC").val("");
                     displayModal("modaleClient");
                 });
 

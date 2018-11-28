@@ -11,9 +11,115 @@ switch($action){
 	case "modifierProduit":
 		modifierProduit();
 	break;
-	case"ajouterProduit";
+	case "ajouterProduit";
 		ajouterProduit();
 	break;
+	case "modifierMarque";
+		modifierMarque();
+	break;
+	case "ajouterMarque";
+		ajouterMarque();
+	break;
+	case "modifierGamme";
+		modifierGamme();
+	break;
+	case "ajouterGamme";
+		ajouterGamme();
+	break;
+	case "modifierCategorie";
+		modifierCategorie();
+	break;
+	case "ajouterCategorie";
+		ajouterCategorie();
+	break;
+}
+
+function modifierCategorie(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$id_categorie = $_POST['selectC'];
+		$libelle = $_POST['newCategorie'];
+		$Query = "UPDATE categorie SET libelle = \"$libelle\" WHERE id_categorie = \"$id_categorie\"";
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
+}
+
+function ajouterCategorie(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$libelle = $_POST['nomNewC'];
+		$Query = 'INSERT INTO categorie(libelle, actif) VALUES ("'.$libelle.'", 1)';
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
+}
+
+function modifierGamme(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$id_gamme = $_POST['selectG'];
+		$libelle = $_POST['newGamme'];
+		$Query = "UPDATE gamme SET libelle = \"$libelle\" WHERE id_gamme = \"$id_gamme\"";
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
+}
+
+function ajouterGamme(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$libelle = $_POST['nomNewG'];
+		$id_marque = $_POST['selectBindM'];
+		$Query = 'INSERT INTO gamme(libelle, actif, id_marque) VALUES ("'.$libelle.'", 1, '.$id_marque.')';
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
+}
+
+function modifierMarque(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$id_marque = $_POST['selectM'];
+		$nom = $_POST['newMarque'];
+		$Query = "UPDATE marque SET nom = \"$nom\" WHERE id_marque = \"$id_marque\"";
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
+}
+
+function ajouterMarque(){
+	if (!empty($_POST)){
+		$db = Database::connect();
+		$nom = $_POST['nomNewM'];
+		$Query = 'INSERT INTO marque(nom) VALUES ("'.$nom.'")';
+    $Statement=$db->query($Query);
+    $Statement->fetchObject();
+    $Statement->closeCursor();
+		print "true";
+	}else{
+		print "false";
+	}
 }
 
 function modifierProduit(){

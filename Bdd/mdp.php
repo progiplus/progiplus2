@@ -7,7 +7,7 @@ function creerIdentifiant()
 	$dbUser = 'root';
 
 	$dbMdp = 'root';
-	$port = "8889";
+	$port = "3306";
 	
 	define("DSN_BDD", 'mysql:host='.$hote.';port='.$port.';dbname='.$bdd);
 	define("USER_BDD", $dbUser);

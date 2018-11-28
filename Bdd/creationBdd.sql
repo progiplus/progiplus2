@@ -165,3 +165,23 @@ CREATE TABLE ligne_bl(
 	CONSTRAINT fk_bl FOREIGN KEY(id_bl) REFERENCES bl(id_bl),
 	CONSTRAINT fk_ligne_bl_ligne_facture FOREIGN KEY(id_ligne_facture) REFERENCES ligne_facture_client(id_ligne_facture)
 );
+
+DELIMITER //
+create procedure proc_devistofacture(var_id_devis INT)
+begin
+	DECLARE var_id_facture INT DEFAULT -1;
+    
+    INSERT INTO facture (date_facture, actif, id_client, id_adresse, id_devis)
+	SELECT current_date(), d.actif, d.id_client, d.id_adresse, d.id_devis 
+	FROM devis d
+	WHERE d.id_devis = var_id_devis;
+    
+    SET var_id_facture = last_insert_id();
+
+	INSERT INTO ligne_facture_client (quantite, prixU, reference, id_tva, id_facture)
+	SELECT l.quantite, l.prixU, l.reference, l.id_tva, var_id_facture
+	FROM ligne_devis_client l
+	WHERE l.id_devis = var_id_devis;
+
+end //
+DELIMITER ;

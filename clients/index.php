@@ -30,7 +30,8 @@ $statement = $db->query(' SELECT client.id_client as id_client,
             inner join liste_adresse on liste_adresse.id_client = client.id_client
             inner join adresse on adresse.id_adresse = liste_adresse.id_adresse
             inner join ville on adresse.id_ville = ville.id_ville
-			inner join civilite ON contact.id_civilite = civilite.id_civilite order by actif desc ');
+			inner join civilite ON contact.id_civilite = civilite.id_civilite group by client.code_client order by actif desc
+            ');
 Database::disconnect();
 
 

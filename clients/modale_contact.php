@@ -20,8 +20,10 @@
                 <div class="element"><label for="code">code client :</label>
                     <input type="int" id="code_client" name="code_client" required value=""></div><br>
 
+<!--
                 <div class="element"><label for="code">code contact :</label>
                     <input type="int" id="code_contact" name="code_contact" required value=""></div><br>
+-->
 
                 <div class="element" id="civilite"><span style="margin-left:20px;">Civilité : </span>
                     <label for="mme">Mme</label><input type="radio" name="gender" value="2" class="civilite" required />
@@ -46,6 +48,11 @@
             </div>
             <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
             <script>
+
+                function init(){
+                    $('#btnAjouterContact').click(ajouterContact);
+                }
+
                 function getOptionTypeMoyenComm() {
                     return ''; //écrire en PHP les <option value="id">libellé</option>
                 }
@@ -65,6 +72,58 @@
                     $('#listeMoyenComm .ajoutMoyenComm').last().click(ajouterMoyenComm);
                     $('#listeMoyenComm .supprimerMoyenComm').last().click(supprimerMoyenComm);
                 }
+
+                            function ajouterContact() {
+                if (verifSaisie()) {
+                    $.ajax({
+
+                        type: "POST",
+                        url: "ajax.php",
+                        data: {
+                            action: "ajouterContact",
+                            code_client: $('#code_client').val(),
+                            nom_contact: $('#nom-contact').val(),
+                            prenom_contact: $('#prenom_contact').val(),
+                            raison_sociale: $('#raison_sociale').val(),
+                            civilite: $('input[name="gender"]:checked').val(),
+
+                            service: $('#service_contact').val()
+                        },
+                        success: verifierReponse
+                    });
+                }
+            }
+        /*        function modifierContact() {
+                if (verifSaisie()) {
+                    $.ajax({
+
+                        type: "POST",
+                        url: "ajax.php",
+                        data: {
+                            action: "modifierContact",
+                            id_client: $('#id_client').val(),
+                            code_client: $('#code_client').val(),
+                            raison_sociale: $('#raison_sociale').val(),
+                            civilite: $('input[name="gender"]:checked').val(),
+                            id_contact: $('#id_contact').val(),
+                            nom: $('#nom').val(),
+                            prenom: $('#prenom').val(),
+                            service: $('#service').val(),
+
+                        },
+                        success: verifierReponse
+                    });
+                }
+            }*/
+
+                      function verifierReponse(reponse) {
+                if (reponse == "true") {
+                    window.location.href = '';
+                } else {
+                    alert("Erreur d'enregistrement");
+                }
+            }
+
 
                 function supprimerMoyenComm(event) {
                     if ($(event.target).parent().data('idMoyenComm') != "null") {

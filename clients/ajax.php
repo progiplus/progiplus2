@@ -2,7 +2,7 @@
 require_once('../config.php');
 require_once('../functions.php');
 
-$action = $_POST['action'];
+$action = checkInput($_POST['action']);
 
 switch($action)
 {
@@ -35,10 +35,12 @@ function changerActifClient()
 	$val = checkInput($_POST['val']);
 	$apply = checkInput($_POST['apply']);
 
-	$actif = Database::connect();
-	$state = $actif->query("UPDATE client
+	$db = Database::connect();
+	$state = $db->query("UPDATE client
 	SET actif = $apply
 	where id_client =$id");
+	$state->fetchObject();
+	$state->closeCursor();
 }
 
 function ajouterClient()

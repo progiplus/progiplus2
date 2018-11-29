@@ -33,7 +33,7 @@
 			<h1>Nouveau devis Devis</h1>
 
 			<section id="devis">
-				<form method="post" action="devis.php">
+				<form method="post" >
 					<div id="info">
 						<div id="infoEnt">
 							<?php
@@ -71,7 +71,7 @@
 						</thead>
 						<tbody>
 						 	<tr>
-								<td><input class="codeProduit" type="text" name="codeProduit" /></td>
+								<td><input class="codeProduit" type="text" name="codeProduit" value=""/></td>
 								<td><input class="designation" type="text" readonly/> </td>
 								<td><input class="quantiteProduit" type="number" name="quantiteProduit"/></td>
 								<td><input class="prix" type="text" readonly/></td>
@@ -197,7 +197,16 @@
 				idLigne = $(this).parent().parent().index();
 				supLigne(idLigne);
 			});
+			$('.quantiteProduit').change(function(){
+				idLigne = $(this).parent().parent().index();
+				if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
+					addNewLine();
+				}
+			});
 			majDevis();
+
+			test = $('.codeProduit:eq(' + idLigne + ').value');
+			console.log(test);
 		}
 
 		function supLigne(idLIgne){
@@ -205,6 +214,31 @@
 			majDevis();
 		}
 
+		function ajouterDevis() {
+
+			var tabLigne = new Array();
+			var lignesDevis = $('#corpsDevis>tbody>tr');
+			for(var i = 0; i < lignesDevis.length - 1; i++)
+			{
+				tabLigne.push(
+					{'ref' : $('.codeProduit', lignesDevis[i]).val(),
+					'quantite' : $('.quantiteProduit', lignesDevis[i]).val()}
+				);
+			}
+			var codeClient = $('#codeClient').val();
+
+			$.ajax({
+				type: "POST",
+				url: "ajaxDevis.php",
+				data: {
+					codeClient: codeClient,
+					lignes: tabLigne
+            	},
+				success: function(data){
+					console.log(data);
+				}
+			});
+		}
 		$('#codeClient').change(function() {
 			xhr = getXhrReq();
 			xhr.onreadystatechange = function() {
@@ -260,14 +294,17 @@
 			updateContent(idLigne, valCodePdt);
 		});
 
-		//supression ligne
-		$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .btn-sup').click(function(){
+		$('.btn-valide').click(function(){
+			ajouterDevis();
+		});
+
+		$('.btn-sup').click(function() {
 			idLigne = $(this).parent().parent().index();
 			supLigne(idLigne);
 			addNewLine();
 			majDevis();
-		});
 
+		});
 
 		$('.quantiteProduit').change(function(){
 			idLigne = $(this).parent().parent().index();
@@ -276,6 +313,8 @@
 			}
 			majDevis();
 		});
+
 	});
 </script>
+
 </html>

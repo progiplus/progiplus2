@@ -72,8 +72,8 @@ Database::disconnect();
 						'    </select>' +
 						'    <label>Valeur :</label>' +
 						'    <input class="valeur" required value="">' +
-						'   <span class="ajoutMoyenComm">PLUS</span> ' +
-						'   <span class="supprimerMoyenComm">MOINS</span>' +
+						'   <img src="../includes/assets/more.png" class="ajoutMoyenComm petit_logo"/>' +
+						'   <img src="../includes/assets/less.png" class="supprimerMoyenComm petit_logo"/>' +
 						'</div>'
 					);
 					$('#listeMoyenComm .ajoutMoyenComm').last().click(ajouterMoyenComm);

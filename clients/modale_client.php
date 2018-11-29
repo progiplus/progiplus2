@@ -44,6 +44,10 @@
 
                 <div class="element"> <label for="service">Service :</label>
                     <input type="text" id="service_MC" name="service" value=""></div><br>
+                                   
+                                   
+                                    <div class="element"> <label for="nomAdresse">Nom d'adresse :</label>
+                    <input type="text" id="nomAdresse_MC" name="nomAdresse" value=""></div> <br>
 
 
                 <div class="element"> <label style="width:170px;" for="ligne2">Adresse de facturation :</label>
@@ -51,8 +55,7 @@
                 <div class="element"> <label style="width:170px;" for="ligne2">Complément d'adresse :</label>
                     <input type="text" style="margin-right:34px;" id="ligne2_MC" name="id_adresse_comp" value=""></div><br>
 
-                <div class="element"> <label for="nomAdresse">Nom d'adresse :</label>
-                    <input type="text" id="nomAdresse_MC" name="nomAdresse" value=""></div> <br>
+
 
 
                 <div class="element"> <label for="cPostale">Code Postal :</label>

@@ -250,11 +250,13 @@
 
                 $('#btnModaleAjouterContact').click(function () {
                     $('#modaleClient').hide();
+					$('#id_client_MCo').val($('#id_client_MC').val());
                     displayModal("modaleContact");
                 });
 
                 $('#btnModaleModifierContact').click(function () {
                     $('#modaleClient').hide();
+                    $('#id_client_MCo').val($('#id_client_MC').val());
                     displayModal("modaleContact");
                 });
 

@@ -122,7 +122,7 @@ Database::disconnect();
                     console.log(id_client);
                     var val = $(this).val();
                     console.log(val);
-                    var apply = $(this).is(':checked') ? true : false;
+                    var apply = $(this).is(':checked');
                     console.log(apply);
                     $.ajax({
                         type: "POST",
@@ -135,20 +135,11 @@ Database::disconnect();
                         }
 
                     });
-                    }/*else{
-                       <?php
-                        if($client->actif== 1){
-                       ?>
-                        $("#table_client input:checkbox").prop('checked', true);
-                  <?php
-                        }else{
-                   ?>
-                        $("#table_client input:checkbox").prop('checked', false);
-                 <?php
-                        }
-                        ?>
-
-                    }*/
+                    }
+                    else
+                    {
+                    	$(this).prop("checked", !$(this).is(':checked'));
+                    }
 
 
 

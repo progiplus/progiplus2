@@ -127,7 +127,7 @@ Database::disconnect();
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Code client</th>
+<!--                                <th>Code client</th>-->
                                 <th>Civilité</th>
                                 <th>Nom client</th>
                                 <th>Prenom client</th>
@@ -139,7 +139,7 @@ Database::disconnect();
 
 					while($client = $contact->fetchObject()){
                         print '<tr>';
-                            print '<td class="col-xs-2">'.$client->code_cli.'</td>';
+                            //print '<td class="col-xs-2">'.$client->code_cli.'</td>';
                             print '<td class="col-xs-2">'.$client->civilite.'</td>';
                             print '<td class="col-xs-2">'.$client->nom.'</td>';
                             print '<td class="col-xs-2">'.$client->prenom.'</td>';

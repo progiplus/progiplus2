@@ -33,6 +33,7 @@ $statement = $db->query('SELECT client.id_client as id_client,
 			INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite 
             GROUP BY client.code_client
             ORDER BY client.actif DESC, client.code_client ASC;');
+
 Database::disconnect();
 
 

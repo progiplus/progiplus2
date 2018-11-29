@@ -46,6 +46,7 @@ $date = new DateTime($donneeFacture->date,$timeZone)
 	<title>Produit</title>
 	<link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/style.css">
 	<link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/datatables.css">
+	<link rel="stylesheet" type="text/css" href="/progiplus2/factures/detailFacture.css">
 	<meta charset="UTF-8">
 </head>
 
@@ -54,14 +55,15 @@ $date = new DateTime($donneeFacture->date,$timeZone)
 
 <?php include('../nav.php'); ?>
 <section>
-<p class="enTete">
-<h1>Facture n°<?php echo $donneeFacture->id_facture; ?></h1>
-<span class="tiers"><strong>Compte client : </strong><?php echo $donneeFacture->code_client; ?></span>
-<span class="tiers"><strong>Client : </strong><?php echo $donneeFacture->raison_sociale; ?></span>
-<span class="tiers"><strong>Date : </strong><?php echo $date->format("d/m/Y") ?></span>
-</p>
 
+<h1>Facture n°<?php echo $donneeFacture->id_facture; ?></h1>
+<div id="cadre"><span class="tiers"><strong>Compte client : </strong><?php echo $donneeFacture->code_client; ?></span>
+<span class="tiers"><strong>Client : </strong><?php echo $donneeFacture->raison_sociale; ?></span>
+<span class="tiers"><strong>Date : </strong><?php echo $date->format("d/m/Y") ?></span></div> 
+
+<h3></h3>
 <table>
+    <thead>
 	<tr>
 		<th>Réf</th>
 		<th>Désignation</th>
@@ -69,6 +71,7 @@ $date = new DateTime($donneeFacture->date,$timeZone)
 		<th>Prix unitaire</th>
 		<th>Montant HT</th>
 	</tr>
+	</thead>
 	<?php
 	$html = "";
 	for($i = 0; $i < count($donneeLigneFacture) - 1; $i++)
@@ -84,10 +87,9 @@ $date = new DateTime($donneeFacture->date,$timeZone)
 	?>
 </table>
 <br>
-<div class="centre">
+<div id="centre">
 	<strong>TOTAL HT : <?php echo $donneeFacture->montant."€" ?></strong><br>
 </div>
 </section>
-</div>
 </body>
 </html>

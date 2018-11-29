@@ -2,10 +2,12 @@
 	require_once('../config.php');
 
           $nom = $prenom  = $codeClient = $raisonSocial = $service = $ligne1 = $ligne2 = $cPostale = $ville = $nomAdresse = "";
-          $db = Database::connect();
-
-          //je recois quelque chose dans l'adresse
-
+        
+$db = Database::connect();
+$listeTypeMcomm = $db->query('
+select id_type_moyen_comm, libelle
+from type_moyen_comm');
+Database::disconnect();
 ?>
 
 <div id="modaleContact" class="modal">
@@ -25,38 +27,43 @@
                     <input type="int" id="code_contact" name="code_contact" required value=""></div><br>
 -->
 
-                <div class="element" id="civilite"><span style="margin-left:20px;">Civilité : </span>
+                <div class="element" id="civilite_contact"><span style="margin-left:20px;">Civilité : </span>
                     <label for="mme">Mme</label><input type="radio" name="gender" value="2" class="civilite" required />
-                    <label for="mr">M.</label> <input type="radio" name="gender" value="1" class="civilite" required /></div><br>
+                    <label for="mr">M.</label> <input type="radio" name="genderC" value="1" class="civilite" required /></div><br>
 
-                <div class="element"><label for="code">Nom :</label>
+                <div class="element"><label for="nom_contact">Nom :</label>
                     <input type="int" id="nom_contact" name="nom_contact" required value=""></div><br>
 
 
-                <div class="element"><label for="code">Prenom :</label>
+                <div class="element"><label for="prenom">Prenom :</label>
                     <input type="int" id="prenom_contact" name="prenom_contact" required value=""></div><br>
 
-                <div class="element"><label for="code">Service :</label>
+                <div class="element"><label for="service">Service :</label>
                     <input type="int" id="service_contact" name="service_contact" required value=""></div><br>
 
                 <input id="id_client" type="hidden" value="">
                 <div id="listeMoyenComm">
 
                 </div>
-                <input class="button" type="reset" value="Ajouter" id="btnAjouterContact">
+                <input class="button" type="button" value="Ajouter" id="btnAjouterContact">
                 <input class="button" type="reset" value="Annuler" id="btnAnnulerContact">
             </div>
             <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
             <script>
 
-                function init(){
+                function initModaleContact(){
                     $('#btnAjouterContact').click(ajouterContact);
                 }
 
                 function getOptionTypeMoyenComm() {
-                    return ''; //écrire en PHP les <option value="id">libellé</option>
+                    return '<?php 
+                
+               
+               while ($comm=$listeTypeMcomm->fetchObject()){
+               print "<option value=\"$comm->id_type_moyen_comm\">$comm->libelle</option>";
+                
+               }  ?> ';
                 }
-
                 function ajouterMoyenComm() {
                     $('#listeMoyenComm').append(
                         '<div class="moyenComm" data-idMoyenComm="null">' +
@@ -64,7 +71,7 @@
                         '        ' + getOptionTypeMoyenComm() +
                         '    </select>' +
                         '    <label>Valeur :</label>' +
-                        '    <input class="valeurMoyenComm" required value="">' +
+                        '    <input class="valeur" required value="">' +
                         '   <span class="ajoutMoyenComm">PLUS</span> ' +
                         '   <span class="supprimerMoyenComm">MOINS</span>' +
                         '</div>'
@@ -74,25 +81,58 @@
                 }
 
                             function ajouterContact() {
-                if (verifSaisie()) {
+               if (verifSaisieContact()) {
                     $.ajax({
 
                         type: "POST",
                         url: "ajax.php",
                         data: {
                             action: "ajouterContact",
-                            code_client: $('#code_client').val(),
-                            nom_contact: $('#nom-contact').val(),
-                            prenom_contact: $('#prenom_contact').val(),
-                            raison_sociale: $('#raison_sociale').val(),
-                            civilite: $('input[name="gender"]:checked').val(),
-
-                            service: $('#service_contact').val()
-                        },
-                        success: verifierReponse
+                            codeClient: $('#code_client').val(),
+                            nom_contact: $('#nom_contact').val("nom"),
+                            prenom_contact: $('#prenom_contact').val("pren"),
+                            raisonSociale_contact: $('#raison_sociale').val("rs"),
+                            civilite_contact: $('input[name="gender"]:checked').val(),
+                            service_contact: $('#service_contact').val("s")
+                        }
+                            ,
+                        //success: verifierReponse
                     });
                 }
             }
+                
+                                function verifSaisieContact() {
+
+                var radioCivC = document.getElementsByName("genderC");
+                if (!radioCivC[0].checked && !radioCivC[1].checked) {
+                    alert('vous devez choisir la civilité');
+                    radioCiv[0].focus();
+                    return false;
+                }
+
+
+                var codeClient = document.getElementById('code_client');
+                var raisonSocial = document.getElementById('raison_sociale');
+                var Hnom = document.getElementById('nom_contact');
+                var Hprenom = document.getElementById('prenom_contact');
+                var service = document.getElementById('service_contact');
+
+                if (!isValid(Hnom)) {
+                    alert('vous devez saisir un nom');
+                    return false;
+                }
+                if (!isValid(Hprenom)) {
+                    alert('vous devez saisir un prenom!');
+                    return false;
+                }
+                if (!isValid(service)) {
+                    alert('vous devez saisir le service');
+                    return false;
+                }
+
+                return true;
+            }
+            
         /*        function modifierContact() {
                 if (verifSaisie()) {
                     $.ajax({
@@ -115,14 +155,7 @@
                     });
                 }
             }*/
-
-                      function verifierReponse(reponse) {
-                if (reponse == "true") {
-                    window.location.href = '';
-                } else {
-                    alert("Erreur d'enregistrement");
-                }
-            }
+                
 
 
                 function supprimerMoyenComm(event) {
@@ -135,7 +168,8 @@
                 }
 
                 ajouterMoyenComm();
-
+  $(document).ready(initModaleContact);
+                               // window.onload = initModaleContact;
             </script>
 
         </div>

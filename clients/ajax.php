@@ -101,23 +101,21 @@ function ajouterContact()
         {
             $db = Database::connect();
 
-            $codeClient=$_POST['code_client'];
+            $id_client=$_POST['id_client'];
             $raisonSociale=$_POST['raison_sociale'];
-            $civilite=$_POST['civilite'];
+            $civilite=$_POST['civilite_contact'];
             $nom=$_POST['nom_contact'];
             $prenom=$_POST['prenom_contact'];
             $service=$_POST['service_contact'];
+             $id_type_moyen_comm=$_POST['id_type_moyen_comm'];
+             $valeur=$_POST['valeur'];
+             $id_contact=$_POST['id_contact'];
+             $id_moyen_comm=$_POST['id_moyen_comm'];
+            
 
-            $SQLclient = 'INSERT INTO client (code_client, raison_sociale, actif, id_adresse_facturation) VALUE("'.$codeClient.'","'.$raisonSociale.'",1,'.$idAdresse.');';
-            $result = $db->query($SQLclient);
-            $idClient = $db->lastInsertId();
-            $result->fetchObject();
-            $result->closeCursor();
-
-            $SQLlisteadresse = 'INSERT INTO liste_adresse (libelle, actif, id_client, id_adresse) VALUE ("'.$nomAdresse.'",1, '.$idClient.', '.$idAdresse.');';
-            $result = $db->query($SQLlisteadresse);
-            $result->fetchObject();
-            $result->closeCursor();
+            $SQLmoyenComm= 'INSERT INTO moyen_comm(valeur,id_type_moyen_comm) VALUE("'.$valeur.'","'.$id_type_moyen_comm.'")';
+            
+            $SQLmcomm='INSERT INTO contact_comm(id_contact, id_mcomm) VALUE("'.$id_contact.'","'.$id_moyen_comm.'" )'
 
             $SQLcontact = 'INSERT INTO contact (nom, prenom, service,id_civilite, id_client) VALUE ("'.$nom.'","'.$prenom.'","'.$service.'",'.$civilite.','.$idClient.');';
             $result = $db->query($SQLcontact);

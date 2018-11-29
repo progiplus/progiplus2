@@ -1,0 +1,75 @@
+
+h2 {
+    font-style:normal;
+    color:white;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+ 
+fieldset {
+ margin: 0 auto;
+  width: 450px;
+  padding: 1em;
+  border: 1px solid #CCC;
+  color: white;
+
+  width: 80%;
+  max-width: 550px;
+  margin: 10px auto;
+  padding: 1em;
+  box-shadow:
+   0 1px 4px rgba(0, 0, 0, .3),
+   -23px 0 20px -23px rgba(0, 0, 0, .8),
+   23px 0 20px -23px rgba(0, 0, 0, .8),
+   0 0 40px rgba(0, 0, 0, .1) inset;
+}
+
+
+form div + div {
+  margin-top: 1em;
+}
+
+label {
+  
+  display: inline-block;
+  width: 140px;
+  text-align: right;
+}
+
+input, textarea {
+  
+  font: 1em sans-serif;
+  width: 200px;
+  box-sizing: border-box;
+  border: 1px solid #999;
+}
+
+input:focus, textarea:focus {
+  border-color: #000;
+}
+
+textarea {
+  vertical-align: top;
+  height: 5em;
+}
+
+.button {
+width:100px;
+display: inline-block;
+margin-top: 10px;
+margin-left: 100px;background-color:white;
+color: grey;
+font-weight: bold;
+font-weight: bold;
+}
+ 
+#civilite label{
+    width: 47px;
+}
+
+#civilite input{
+    width: 20px;
+}
+
+
+

@@ -40,12 +40,11 @@ VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(2,4),(3,1),(3,2),(3,3),(3,4),(
 
 INSERT INTO liste_adresse(libelle,actif,id_client,id_adresse)
 VALUES
-("facturation",1,1,1),
-("facturation",1,2,2),
-("livraison",1,2,2),
-("facturation",1,3,3),
-("livraison",1,4,4),
-("facturation",1,4,4);
+("siège social",1,1,1),
+("siège social",1,2,2),
+("siège social",1,3,3),
+("siège social",1,4,4),
+("usine",1,4,3);
 
 INSERT INTO marque (nom)
 VALUES ("Samsumg"),("Apple"),("Sony"),("LG"),("Huawei"),("Audi"),("Renault");

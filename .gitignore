@@ -1,4 +1,6 @@
-/produit/*
-/Bdd/*
-/clients/*
-/factures/*
+# Ignore le dossier .idea
+.idea/
+
+.buildpath
+.project
+Bdd/mdp.php

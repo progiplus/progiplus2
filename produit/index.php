@@ -1,13 +1,15 @@
 <?php
+
 	require_once('../config.php');
 
 	$db = Database::connect();
 
 	$statement = $db->query('
-	SELECT reference, designation, prix_unitaire_ht, produit.actif, marque.id_marque, gamme.id_gamme, categorie.id_categorie, categorie.libelle as libelleC, marque.nom as nomM, gamme.libelle as libelleG FROM produit
+	SELECT reference, designation, prix_unitaire_ht, produit.actif, marque.id_marque, gamme.id_gamme, categorie.id_categorie, categorie.libelle as libelleC, marque.nom as nomM, gamme.libelle as libelleG, tva.id_tva, tva.taux as taux FROM produit
 	INNER JOIN categorie ON categorie.id_categorie=produit.id_categorie
 	INNER JOIN gamme ON gamme.id_gamme=produit.id_gamme
 	INNER JOIN marque ON marque.id_marque=gamme.id_marque
+	INNER JOIN tva on tva.id_tva=produit.id_tva
 	ORDER BY produit.reference
 	');
 
@@ -25,28 +27,34 @@
 	<body>
   	<div class="wrapper">
 
-			<?php
-			include('../nav.php');
-			require_once('../modales.php');
-			?>
+			<?php include('../nav.php'); ?>
 
 		<section>
 
 			<h1>Liste des Produits</h1>
 
-			<button id="bouton_ajouter" type="button">Ajouter un nouveau produit</button>
+			<div class="boutonsP">
+				<div class="boutonNouveauP">
+				<button id="boutonNouveauP" type="button">Produit</button>
+			</div>
+			<div class="boutonNouveauMGC">
+				<button id="boutonNouvelleM" type="button">Marque</button>
+				<button id="boutonNouvelleG" type="button">Gamme</button> <!--associer une marque-->
+				<button id="boutonNouvelleC" type="button">Catégorie</button>
+			</div>
+			</div>
 
 			<table id="table_produits" class="display">
 				<thead>
 					<tr>
 						<th>Référence</th>
 						<th>Désignation</th>
-						<th>Prix unitaire HT</th>
+				    <th>Prix unitaire</th>
 						<th>Marque</th>
 						<th>Gamme</th>
 						<th>Catégorie</th>
-						<th>Statut</th>
-				    <th>Actions</th>
+						<th></th>
+				    <th></th>
 				  </tr>
 				</thead>
 				<tbody>
@@ -64,7 +72,7 @@
 									if($produit->actif==1){
 									print ("checked='checked'");
 									}print '/></td>';
-								print '<td><img class="boutonAppel" data-id="'.$produit->reference.'" data-designation="'.$produit->designation.'" data-prix_unitaire_ht="'.$produit->prix_unitaire_ht.'" data-id_marque="'.$produit->id_marque.'" data-id_gamme="'.$produit->id_gamme.'" data-id_categorie="'.$produit->id_categorie.'" data-actif="'.$produit->actif.'" src="../includes/assets/pencil.png" title="Modifier un Produit" alt="bouton_modifier" height="20"></td>';
+								print '<td><img class="boutonAppel" data-id="'.$produit->reference.'" data-designation="'.$produit->designation.'" data-prix_unitaire_ht="'.$produit->prix_unitaire_ht.'" data-id_tva="'.$produit->id_tva.'" data-id_marque="'.$produit->id_marque.'" data-id_gamme="'.$produit->id_gamme.'" data-id_categorie="'.$produit->id_categorie.'" data-actif="'.$produit->actif.'" src="../includes/assets/pencil.png" title="Modifier un Produit" alt="bouton_modifier" height="20"></td>';
 							print '</tr>';
 						}
 							Database::disconnect();
@@ -74,102 +82,190 @@
 				</tbody>
 			</table>
 
-				<script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
-				<script type="text/javascript" src="../includes/scripts/datatables.js"></script>
-				<script type="text/javascript" src="../includes/scripts/general.js"></script>
-
-				<script type="text/javascript">
-
-				$(document).ready(function(){
-					$('#table_produits').DataTable({
-						"language": getLangageDataTable("produit", false)
-					});
-				});
-
-				var modaleGen = document.getElementById("modaleProduit");
-
-				function displayModal(){
-					modaleGen.style.display = "block";
-				}
-
-				function hideModal(){
-					modaleGen.style.display = "none";
-				}
-
-				var closeModal = document.getElementsByClassName("close")[0];
-				var cancelModal = document.getElementById("btnAnnuler");
-
-				closeModal.onclick = hideModal;
-				cancelModal.onclick = hideModal;
-
-				$(".boutonAppel").on('click', function(){
-					$(".titreModale").text('Modifier la fiche Produit');
-					$("#referenceProduit").prop("readonly", true);
-					$('#btnAjouterProduit').hide();
-					$('#btnModifierProduit').show();
-					$("#referenceProduit").val($(this).data("id"));
-					$("#designationProduit").val($(this).data("designation"));
-					$("#prixht_produit").val($(this).data("prix_unitaire_ht"));
-					$("#catégorieProduit").val($(this).data("id_categorie"));
-					$("#gammeProduit").val($(this).data("id_gamme"));
-					$("#marqueProduit").val($(this).data("id_marque"));
-					$("#produitActif").prop("checked", $(this).data("actif") > 0);
-					displayModal();
-				});
-
-				$("#bouton_ajouter").on('click', function(){
-					$(".titreModale").text('Ajouter un Produit');
-					$("#referenceProduit").prop("readonly", false);
-					$('#btnAjouterProduit').show();
-					$('#btnModifierProduit').hide();
-					$("#referenceProduit").val("");
-					$("#designationProduit").val("");
-					$("#prixht_produit").val("");
-					$("#catégorieProduit").val(0);
-					$("#gammeProduit").val(0);
-					$("#marqueProduit").val(0);
-					$("#produitActif").prop("checked", true);
-					displayModal();
-				});
-
-				$("input:checkbox").on("change", function() {
-		        var xhr;
-		        if (window.XMLHttpRequest)
-		            xhr = new XMLHttpRequest();
-		        else
-		            xhr = new ActiveXObject("microsoft.Xmlhttp");
-		        xhr.onreadystatechange = function() {
-		            if (xhr.readyState == 4) {
-		                var retourAjax = xhr.responseText;
-		                console.log(retourAjax);
-		            }
-		        }
-		        alert("Vous allez modifier le statut de ce produit.");
-		        var reference = $(this).data("id");
-		        console.log(reference);
-		        var val = $(this).val();
-		        console.log(val);
-		        var apply = $(this).is(':checked') ? true : false;
-		        console.log(apply);
-		        var data = "reference=" + reference + "&apply=" + apply;
-		        xhr.open('post', 'ajaxProduit.php', true);
-		        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=utf-8');
-		        xhr.send(data);
-
-		        $.ajax({
-		            type: "POST",
-		            url: "ajaxProduit.php",
-		            data: {
-		                reference: reference,
-		                val: val,
-		                apply: apply
-		            }
-		        });
-		    });
-
-				</script>
-
 			</section>
+			<script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
+			<script type="text/javascript" src="../includes/scripts/datatables.js"></script>
+			<script type="text/javascript" src="../includes/scripts/general.js"></script>
+			<?php require_once('modaleProduit.php'); ?>
+			<script type="text/javascript">
+
+			$(document).ready(function(){
+				$('#table_produits').DataTable({
+					"language": getLangageDataTable("produit", false)
+				});
+			});
+
+			var modaleGen = document.getElementById("modaleProduit");
+			var modaleMarque = document.getElementById("modaleMarque");
+			var modaleGamme = document.getElementById("modaleGamme");
+			var modaleCategorie = document.getElementById("modaleCategorie");
+
+			function displayProduitModal(){
+				modaleGen.style.display = "block";
+			}
+
+			function displayMarqueModal(){
+				modaleMarque.style.display = "block";
+			}
+
+			function displayGammeModal(){
+				modaleGamme.style.display = "block";
+			}
+
+			function displayCategorieModal(){
+				modaleCategorie.style.display = "block";
+			}
+
+			function hideModal(){
+				modaleGen.style.display = "none";
+				modaleMarque.style.display = "none";
+				modaleGamme.style.display = "none";
+				modaleCategorie.style.display = "none";
+			}
+
+			var closeModalGen = document.getElementsByClassName("close")[0];
+			var closeModalMarque = document.getElementsByClassName("close")[1];
+			var closeModalGamme = document.getElementsByClassName("close")[2];
+			var closeModalCategorie = document.getElementsByClassName("close")[3];
+			var cancelModal = document.getElementById("btnAnnuler");
+			var cancelModalM = document.getElementById("btnAnnulerMarque");
+			var cancelModalG = document.getElementById("btnAnnulerGamme");
+			var cancelModalC = document.getElementById("btnAnnulerCategorie");
+
+			closeModalGen.onclick = hideModal;
+			closeModalMarque.onclick = hideModal;
+			closeModalGamme.onclick = hideModal;
+			closeModalCategorie.onclick = hideModal;
+			cancelModal.onclick = hideModal;
+			cancelModalM.onclick = hideModal;
+			cancelModalG.onclick = hideModal;
+			cancelModalC.onclick = hideModal;
+
+			function verifEnvoi(data){
+				if (data=="true"){
+					document.location.href='index.php';
+				}else{
+					alert("L'envoi a échoué.");
+				}
+			}
+
+			$(".boutonAppel").on('click', function(){
+				$(".titreModale").text('Modifier la fiche Produit');
+				$("#referenceProduit").prop("disabled", true);
+				$("#referenceProduit").val($(this).data("id"));
+				$("#designationProduit").val($(this).data("designation"));
+				$("#prixht_produit").val($(this).data("prix_unitaire_ht"));
+				$("#tva").val($(this).data("id_tva"));
+				$("#catégorieProduit").val($(this).data("id_categorie"));
+				$("#gammeProduit").val($(this).data("id_gamme"));
+				$("#marqueProduit").val($(this).data("id_marque"));
+				$("#produitActif").prop("checked", $(this).data("actif") > 0);
+				$('#btnAjouterProduit').hide();
+				$('#btnModifierProduit').show();
+				displayProduitModal();
+			});
+
+			$("#btnModifierProduit").on('click', function(){
+				$.ajax({
+				 type: "POST",
+				 url: "ajaxProduit.php",
+				 data:{
+					referenceProduit: $("#referenceProduit").val(),
+					designationProduit: $("#designationProduit").val(),
+					prixht_produit: $("#prixht_produit").val(),
+					tva: $('#tva').val(),
+					gammeProduit: $("#gammeProduit").val(),
+					catégorieProduit: $("#catégorieProduit").val(),
+					action: "modifierProduit"
+				},
+				success: verifEnvoi
+			})
+		});
+
+		$("#btnAjouterProduit").on('click', function(){
+			$.ajax({
+					type: "POST",
+					url: "ajaxProduit.php",
+					data:{
+						referenceProduit: $("#referenceProduit").val(),
+						designationProduit: $("#designationProduit").val(),
+						prixht_produit: $("#prixht_produit").val(),
+						tva: $('#tva').val(),
+						gammeProduit: $("#gammeProduit").val(),
+						catégorieProduit: $("#catégorieProduit").val(),
+						action: "ajouterProduit"
+					},
+					success: verifEnvoi
+			})
+		});
+
+		$("#boutonNouveauP").on('click', function(){
+			$(".titreModale").text('Ajouter un Produit');
+			$("#referenceProduit").prop("disabled", false);
+			$("#referenceProduit").val("");
+			$("#designationProduit").val("");
+			$("#prixht_produit").val("");
+			$("#tva").val(0);
+			$("#catégorieProduit").val(0);
+			$("#gammeProduit").val(0);
+			$("#marqueProduit").val(0);
+			$("#produitActif").prop("checked", true);
+			$('#btnAjouterProduit').show();
+			$('#btnModifierProduit').hide();
+			displayProduitModal();
+		});
+
+		$("#boutonNouvelleM").on('click', function(){
+			$(".titreModale").text('Ajouter ou Modifier une Marque');
+			displayMarqueModal();
+		});
+
+		$("#boutonNouvelleG").on('click', function(){
+			$(".titreModale").text('Ajouter ou Modifier une Gamme');
+			displayGammeModal();
+		});
+
+		$("#boutonNouvelleC").on('click', function(){
+			$(".titreModale").text('Ajouter ou Modifier une Catégorie');
+			displayCategorieModal();
+		});
+
+		$("input:checkbox").on("change", function() {
+				var xhr;
+				if (window.XMLHttpRequest)
+						xhr = new XMLHttpRequest();
+				else
+						xhr = new ActiveXObject("microsoft.Xmlhttp");
+				xhr.onreadystatechange = function() {
+						if (xhr.readyState == 4) {
+								var retourAjax = xhr.responseText;
+								console.log(retourAjax);
+						}
+				}
+				alert("Vous allez modifier le statut de ce produit.");
+				var reference = $(this).data("id");
+				console.log(reference);
+				var val = $(this).val();
+				console.log(val);
+				var apply = $(this).is(':checked') ? true : false;
+				console.log(apply);
+				var data = "action=changerActif&reference=" + reference + "&apply=" + apply;
+				xhr.open('post', 'ajaxProduit.php', true);
+				xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+				xhr.send(data);
+
+				$.ajax({
+					type: "POST",
+					url: "ajaxProduit.php",
+					data: {
+						reference: reference,
+						val: val,
+						apply: apply
+					}
+				});
+			});
+
+			</script>
 		</div>
-    </body>
+  </body>
 </html>

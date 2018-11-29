@@ -3,13 +3,11 @@ require_once('../config.php');
 require_once('../functions.php');
 require_once('../includes/Models/client.php');
 require_once('../includes/Models/moyenComm.php');
-//require_once('../includes/Models/client.php');
 
 
 $db = Database::connect();
 $id = isset($_GET['id'])?$_GET['id']:0;
-//print ($id);
-//  informations clients
+
 $sclient = $db->query("  select code_client as code, raison_sociale as rs , actif, adresse.ligne1, adresse.ligne2, ville.cp_ville as cp, ville.nom_ville as ville
  from client
  inner join adresse on client.id_adresse_facturation = adresse.id_adresse
@@ -20,8 +18,7 @@ Database::disconnect();
 
 $db = Database::connect();
 $id = isset($_GET['id'])?$_GET['id']:0;
-//print ($id);
-//  informations client
+
 $contact = $db->query("select client.code_client as code_cli , civilite.libelle as civilite, contact.nom as nom, contact.prenom as prenom, contact.service as service
 from contact
 right outer JOIN client ON client.id_client = contact.id_client
@@ -31,20 +28,20 @@ Database::disconnect();
 
 $db = Database::connect();
 $id = isset($_GET['id'])?$_GET['id']:0;
-//print ($id);
-//  informations adresses
-$adresse = $db->query("select adresse.ligne1 as ligne1, adresse.ligne2 as ligne2,ville.cp_ville as cp,  ville.nom_ville as ville
+
+$adresse = $db->query("select adresse.ligne1 as ligne1, adresse.ligne2 as ligne2,ville.cp_ville as cp,  ville.nom_ville as ville 
 from adresse
 inner join liste_adresse on adresse.id_adresse = liste_adresse.id_adresse
 inner join ville on ville.id_ville = adresse.id_ville
 inner join client on liste_adresse.id_client = client.id_client
-where client.id_client = $id");
+inner join contact on client.id_client = contact.id_client
+
+where client.id_client =$id");
 Database::disconnect();
 
 $db = Database::connect();
 $id = isset($_GET['id'])?$_GET['id']:0;
-//print ($id);
-//  informations contacts
+
 $comm = $db->query("select type_moyen_comm.libelle as type, moyen_comm.valeur as valeur
 from type_moyen_comm
 inner join moyen_comm on moyen_comm.id_type_moyen_comm = type_moyen_comm.id_type_moyen_comm
@@ -56,26 +53,24 @@ Database::disconnect();
 
 $db = Database::connect();
 $id = isset($_GET['id'])?$_GET['id']:0;
-//print ($id);
-//  informations contacts
-$comm = $db->query("select type_moyen_comm.libelle as type, moyen_comm.valeur as valeur
+
+$comm = $db->query("select type_moyen_comm.libelle as type, moyen_comm.valeur as valeur ,CONCAT(civilite.libelle,' ',contact.nom ,' ', contact.prenom) as contact
 from type_moyen_comm
 inner join moyen_comm on moyen_comm.id_type_moyen_comm = type_moyen_comm.id_type_moyen_comm
 inner join contact_comm on contact_comm.id_mcomm = moyen_comm.id_mcomm
 inner join contact on contact.id_contact = contact_comm.id_contact
 inner join client on client.id_client = contact.id_client
+inner join civilite on civilite.id_civilite = contact.id_civilite
  where client.id_client= $id");
 Database::disconnect();
 
 $db = Database::connect();
 $id = isset($_GET['id'])?$_GET['id']:0;
-//print ($id);
-//  informations contacts
-$devis = $db->query(" select devis.id_devis as id, devis.date_devis as date, devis.duree_validite as dv, devis.actif as actif, ligne_devis_client.quantite as quantiteld, ligne_devis_client.prixU as prix, ligne_devis_client.reference as reference ,tva.taux as tva
- from devis
- inner join ligne_devis_client on devis.id_devis = ligne_devis_client.id_devis
- inner join tva on ligne_devis_client.id_tva = tva.id_tva
- inner join client on devis.id_client = client.id_client where client.id_client = $id");
+$deviss = $db->query("select  devis.id_devis as reference, devis.date_devis as date, sum(ligne_devis_client.prixU * ligne_devis_client.quantite )as Prix_Total
+from devis
+inner join ligne_devis_client on ligne_devis_client.id_devis = devis.id_devis
+inner join client on devis.id_client = client.id_client where client.id_client= $id
+group by devis.id_devis;");
 Database::disconnect();
 
 
@@ -87,8 +82,13 @@ Database::disconnect();
 
 <head>
     <title> Client</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/style.css">
-    <link rel="stylesheet" type="text/css" href="clientstyle.css">
+    <link rel="stylesheet" type="text/css" href="styledetail.css">
     <link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/datatables.css">
     <meta charset="UTF-8">
 </head>
@@ -98,17 +98,16 @@ Database::disconnect();
         <?php include('../nav.php'); ?>
 
         <section>
-            <h1>Progiplus</h1>
-            <br><input type="button" name="lienForm" value="revenir a la liste" onclick="self.location.href='index.php'" style="background-color:#3cb371" style="color:white; font-weight:bold" onclick>
 
-            </br>
-            <h2>Informations Client:</h2>
-            <div class="cadre">
+            <div id="info">
+                <h2>Informations Client:</h2>
 
-                <p>
+                <div id="cadre">
 
-                    <?php
-                   // select type_moyen_comm.libelle as type, moyen_comm.valeur as valeur
+                    <p>
+
+                        <?php
+
 					$client = $sclient->fetchObject();
                             print 'Code client :'.$client->code.'';
                             print '</br>Raison Sociale: '.$client->rs.'';
@@ -118,153 +117,155 @@ Database::disconnect();
 
 
 					?>
-                </p>
+                    </p>
+                </div>
             </div>
 
-            </br>
-            <h2>Contact</h2>
-            <table id="table_contact" class="display">
-                <thead>
-                    <tr>
-                        <th>Code client</th>
-                        <th>civilite</th>
-                        <th>nom</th>
-                        <th>prenom</th>
-                        <th>service</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    //select client.code_client as code_cli , civilite.libelle as civilite, contact.nom as nom, contact.prenom as prenom, contact.service as service
+            <div class="container">
+                <div class="table-responsive">
+                    <h3>Contact</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+<!--                                <th>Code client</th>-->
+                                <th>Civilité</th>
+                                <th>Nom client</th>
+                                <th>Prenom client</th>
+                                <th>Service</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+
 					while($client = $contact->fetchObject()){
                         print '<tr>';
-                            print '<td>'.$client->code_cli.'</td>';
-                            print '<td>'.$client->civilite.'</td>';
-                            print '<td>'.$client->nom.'</td>';
-                            print '<td>'.$client->prenom.'</td>';
-                            print '<td>'.$client->service.'</td></tr>';
-                           // print '<td class="action"><a href="detail.php?id='.$client->id_client.'"><img src="../includes/assets/pencil.png" class="petit_logo" alt="Modifier" /></a></td></tr>';
+                            //print '<td class="col-xs-2">'.$client->code_cli.'</td>';
+                            print '<td class="col-xs-2">'.$client->civilite.'</td>';
+                            print '<td class="col-xs-2">'.$client->nom.'</td>';
+                            print '<td class="col-xs-2">'.$client->prenom.'</td>';
+                            print '<td class="col-xs-2">'.$client->service.'</td></tr>';
 
                         print '';
                     }
 
 
 					?>
-                </tbody>
-            </table>
-            </br>
-            <h2>Adresse</h2>
-            <table id="table_adresse" class="display">
-                <thead>
-                    <tr>
-                        <th>Ligne1</th>
-                        <th>Ligne 2</th>
-                        <th>Code Postal</th>
-                        <th>Ville</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                   // select adresse.ligne1, adresse.ligne2,ville.cp_ville,  ville.nom_ville
+                        </tbody>
+                    </table>
+                </div>
+
+                <br>
+
+                <div class="table-responsive">
+                    <h3>Adresse</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-2">Ligne 1</th>
+                                <th class="col-xs-2">Ligne 2</th>
+                                <th class="col-xs-2">CP</th>
+                                <th class="col-xs-2">Ville</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+
 					while($client = $adresse->fetchObject()){
                         print '<tr>';
-                            print '<td>'.$client->ligne1.'</td>';
-                            print '<td>'.$client->ligne2.'</td>';
-                            print '<td>'.$client->cp.'</td>';
-                            print '<td>'.$client->ville.'</td></tr>';
+                            print '<td class="col-xs-2">'.$client->ligne1.'</td>';
+                            print '<td class="col-xs-2">'.$client->ligne2.'</td>';
+                            print '<td class="col-xs-2">'.$client->cp.'</td>';
+                            print '<td class="col-xs-2">'.$client->ville.'</td></tr>';
 
                         print '';
                    }
 
 
 					?>
-                </tbody>
-            </table>
-            </br>
-            <h2>Communication</h2>
-            <table id="table_comm" class="display">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Valeur</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive">
+                    <h3>Communication</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Valeur</th>
+                                <th>Contact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                    // select type_moyen_comm.libelle as type, moyen_comm.valeur as valeur
 					while($client = $comm->fetchObject()){
                         print '<tr>';
                             print '<td>'.$client->type.'</td>';
-                            print '<td>'.$client->valeur.'</td></tr>';
+                            print '<td>'.$client->valeur.'</td>';
+                            print '<td>'.$client->contact.'</td></tr>';
                         print '';
                    }
 
 
 					?>
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
 
-            </br>
-            <h2>Devis</h2>
-            <table id="table_devis" class="display">
-                <thead>
-                    <tr>
-                        <th>date</th>
-                        <th>durée validité</th>
-                        <th>actif/inactif</th>
-                        <th>quantité ligne devis</th>
-                        <th>prix Unitaire</th>
-                        <th>reference</th>
-                        <th>taux TVA</th>
+                <div class="table-responsive">
+                    <br>
+                    <h3>Devis</h3>
+                    <table id="table_devis" class="display">
+                        <thead>
+                            <tr>
+                                <th>reference</th>
+                                <th>date</th>
+                                <th>prix total</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                   //select devis.id_devis as id, devis.date_devis as date, devis.duree_validite as dv, devis.actif , ligne_devis_client.quantite, ligne_devis_client.prixU, ligne_devis_client.reference,tva.taux
-					while($client = $devis->fetchObject()){
+
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+                            <?php
+
+
+					while($client = $deviss->fetchObject()){
                         print '<tr>';
-                            print '<td>'.$client->date.'</td>';
-                            print '<td>'.$client->dv.'</td>';
-                            print '<td>'.$client->actif.'</td>';
-                            print '<td>'.$client->quantiteld.'</td>';
-                        print '<td>'.$client->prix.'</td>';
-                        print '<td>'.$client->reference.'</td>';
-                            print '<td>'.$client->tva.'</td></tr>';
-                           // print '<td class="action"><a href="detail.php?id='.$client->id_client.'"><img src="../includes/assets/pencil.png" class="petit_logo" alt="Modifier" /></a></td></tr>';
+                            print '<td class="col-xs-2">'.$client->reference.'</td>';
+                            print '<td class="col-xs-2">'.$client->date.'</td>';
+                            print '<td class="col-xs-2">'.$client->Prix_Total.'</td></tr>';
+
 
                         print '';
                     }
 
 
 					?>
-                </tbody>
-            </table>
-            <br><input type="button" name="lienForm" value="Ajouter un Client" onclick="self.location.href='formulaire.php'" style="background-color:#3cb371" style="color:white; font-weight:bold" onclick>
-            <br><input type="button" name="lienForm" value="revenir a la liste" onclick="self.location.href='index.php'" style="background-color:#3cb371" style="color:white; font-weight:bold" onclick>
 
+                        </tbody>
+                    </table>
+                </div>
+                <div id="inputs">
+                    <br><input style="margin-left:4px;" class="button" type="button" name="lienForm" value="Ajouter" onclick="self.location.href='formulaire.php'">
+                    <br><input class="button" type="button" name="lienForm" value="Revenir" onclick="self.location.href='index.php'">
+                </div>
+
+            </div>
         </section>
-
     </div>
+
 </body>
+
 
 <script type="text/javascript" src="../includes/scripts/general.js"></script>
 <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../includes/scripts/datatables.js"></script>
 <script type="text/javascript">
     function init() {
-        $('#table_comm').DataTable({
-            "language": getLangageDataTable("Moyens communication")
-        });
-        $('#table_adresse').DataTable({
-            "language": getLangageDataTable("adresse", true)
-        });
-        $('#table_contact').DataTable({
-            "language": getLangageDataTable("contact")
-        });
-        $('#table_devis').DataTable({
-            "language": getLangageDataTable("devi")
-        });
+
     }
 
     window.onload = init;

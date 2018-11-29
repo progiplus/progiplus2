@@ -15,9 +15,21 @@ function importerDevis()
 {
 	$id = checkInput($_POST['idDevis']);
 	$db = Database::connect();
-	$state = $db->query("call proc_devistofacture(".$id.");");
-	$state->fetchObject();
+	
+	$state = $db->query(
+	"select count(f.id_devis) as 'nb'
+	from facture f
+    where f.id_devis = ".$id.";");
+	$nbFacture = $state->fetchObject()->nb;
 	$state->closeCursor();
+	
+	if($nbFacture == 0)
+	{
+		$state = $db->query("call proc_devistofacture(".$id.");");
+		$state->fetchObject();
+		$state->closeCursor();
+	}
+	
 }
     
 Database::disconnect();

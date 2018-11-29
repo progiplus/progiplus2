@@ -17,7 +17,7 @@ $statement = $db->query('
 		INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite
 		INNER JOIN facture ON client.id_client = facture.id_client
 		INNER JOIN ligne_facture_client ON facture.id_facture = ligne_facture_client.id_facture
-		GROUP BY facture.id_facture,nom_cli;
+		GROUP BY facture.id_facture;
 		');
 Database::disconnect();
 
@@ -43,7 +43,7 @@ Database::disconnect();
         <table id="table_facture" class="display">
             <thead>
             <tr>
-                <th style="width: 100px">N Devis</th>
+                <th style="width: 100px">N° Facture</th>
                 <th style="width: 100px">Code client</th>
                 <th style="width: 200px">Clients</th>
                 <th style="width: 100px">date devis</th>

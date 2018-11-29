@@ -55,7 +55,7 @@
                     <input type="text" id="nomAdresse_MC" name="nomAdresse" value=""></div> <br>
 
 
-                <div class="element"> <label for="cPostale">Code Postale :</label>
+                <div class="element"> <label for="cPostale">Code Postal :</label>
                     <input type="text" id="cPostale_MC" name="postale" value=""></div> <br>
 
                 <div class="element"><label for="ville">Ville:</label>
@@ -251,12 +251,14 @@
                 $('#btnModaleAjouterContact').click(function () {
                     $('#modaleClient').hide();
 					$('#id_client_MCo').val($('#id_client_MC').val());
+                    $("#modaleContact .titreModale").text('Ajouter un contact');
                     displayModal("modaleContact");
                 });
 
                 $('#btnModaleModifierContact').click(function () {
                     $('#modaleClient').hide();
                     $('#id_client_MCo').val($('#id_client_MC').val());
+                      $("#modaleContact .titreModale").text('Modifier un contact');
                     displayModal("modaleContact");
                 });
 

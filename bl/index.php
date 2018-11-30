@@ -5,19 +5,19 @@ require_once('../functions.php');
 
 $db = Database::connect();
 $statement = $db->query('
-		SELECT 	client.code_client AS code_cli,
+		SELECT client.code_client AS code_cli,
 				client.id_client,
 				client.raison_sociale AS rs,
 				CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom) AS nom_cli,
-				facture.date_facture AS date,
-				facture.id_facture AS numDevis,
-				SUM(ligne_facture_client.quantite * ligne_facture_client.prixU) AS montant
+				bl.date_bl AS date,
+				bl.id_bl AS numDevis
 		FROM contact
 		INNER JOIN client ON client.id_client = contact.id_client
 		INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite
-		INNER JOIN facture ON client.id_client = facture.id_client
-		INNER JOIN ligne_facture_client ON facture.id_facture = ligne_facture_client.id_facture
-		GROUP BY facture.id_facture;
+		INNER JOIN facture f ON client.id_client = f.id_client
+		INNER JOIN bl ON bl.id_facture = f.id_facture
+		GROUP BY bl.id_bl
+        ORDER BY bl.id_bl ASC;
 		');
 Database::disconnect();
 
@@ -39,30 +39,28 @@ Database::disconnect();
 	<?php include('../nav.php'); ?>
 
     <section>
-        <h1>Liste Factures</h1>
-        <table id="table_facture" class="display">
+        <h1>Liste des Bons de Livraison</h1>
+        <table id="table_bl" class="display">
             <thead>
             <tr>
-                <th style="width: 100px">N° Facture</th>
+                <th style="width: 100px">N° BL</th>
                 <th style="width: 100px">Code client</th>
                 <th style="width: 200px">Clients</th>
-                <th style="width: 100px">date devis</th>
-                <th style="width: 100px">Montant</th>
+                <th style="width: 100px">date BL</th>
                 <th style="width: 100px">Actions</th>
             </tr>
             </thead>
             <tbody>
 			<?php
-			while($factures = $statement->fetchObject())
+			while($bl = $statement->fetchObject())
 			{
 				print '<tr>';
-				print '<td>' . $factures->numDevis . '</td>';
-				print '<td>' . $factures->code_cli . '</td>';
-				print '<td>' . identiteClient($factures->rs,$factures->nom_cli) .'</td>';
-				print '<td>' . dateFr($factures->date) . '</td>';
-				print '<td>' . $factures->montant . '</td>';
+				print '<td>' . $bl->numDevis . '</td>';
+				print '<td>' . $bl->code_cli . '</td>';
+				print '<td>' . identiteClient($bl->rs,$bl->nom_cli) .'</td>';
+				print '<td>' . dateFr($bl->date) . '</td>';
 				print '<td>
-                            <a href="detailFacture.php?id='.$factures->numDevis.'">
+                            <a href="detailFacture.php?id='.$bl->numDevis.'">
                                 <img src="../includes/assets/zoom.png" class="imageTableau" title="Afficher Facture" alt="afficher facture"/>
                             </a>
 							</td>';
@@ -78,8 +76,8 @@ Database::disconnect();
 <script type="text/javascript"  src="../includes/scripts/datatables.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#table_facture').DataTable({
-			"language": getLangageDataTable("facture", true)
+		$('#table_bl').DataTable({
+			"language": getLangageDataTable("bon de livraison", true)
 		});
 	});
 </script>

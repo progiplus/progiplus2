@@ -181,7 +181,11 @@
 							</tr>
 							<tr>
 								<td colspan="3"></td>
+<<<<<<< HEAD
 								<td colspan="2"><button type="button" class="btn-xl btn-valide">Facturation</button><button class="btn-xl btn-warning">Annulation</button></td>
+=======
+								<td colspan="2"><button type="button" id="btnToFacturation" class="btn-xl btn-valide">Facturation</button><button class="btn-xl btn-warning">Annulation</button></td>
+>>>>>>> master
 							</tr>
 						</tfoot>
 					</table>
@@ -193,6 +197,7 @@
 <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../includes/scripts/datatables.js"></script>
 <script type="text/javascript">
+<<<<<<< HEAD
 	$.ajax({
     type: "POST",
     url: "../factures/ajaxFacture.php",
@@ -201,5 +206,31 @@
         action: "changerActif"
     }
 });
+=======
+	function verifierReponse(reponse) {
+		console.log(reponse);
+		if (reponse  == "true") {
+			alert("Devis mis en facturation")
+		} else {
+			alert("Erreur, une facture existe probablement déjà pour ce devis.");
+		}
+	}
+	
+	function devisToFacture()
+	{
+		$.ajax({
+			type: "POST",
+			url: "../factures/ajaxFacture.php",
+			data: {
+				idDevis: <?php echo $numDevis ?>,
+				action: "importerDevis"
+			},
+            success: verifierReponse
+		});
+	}
+	
+	$('#btnToFacturation').click(devisToFacture);
+ 
+>>>>>>> master
 </script>
 </html>

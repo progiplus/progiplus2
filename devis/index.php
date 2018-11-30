@@ -63,7 +63,11 @@
 							print '<td>' . dateFr($devis->date) . '</td>';
 							print '<td>' . $devis->montant . '</td>';
 							print '<td>
+<<<<<<< HEAD
 										<a href="view.php?id='.$devis->numDevis.'"><img src="../includes/assets/pencil.png" class="imageTableau" title="Modifier Devis" alt="bouton_modifier"/></a>
+=======
+										<a href="view.php?id='.$devis->numDevis.'"><img src="../includes/assets/zoom.png" class="imageTableau" title="Modifier Devis" alt="bouton_modifier"/></a>
+>>>>>>> master
 
 							</td>';
 						print '</tr>';

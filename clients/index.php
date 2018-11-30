@@ -61,7 +61,7 @@ Database::disconnect();
         ?>
 
         <section>
-            <h1>Progiplus</h1>
+            <h1>Liste des Clients</h1>
             <button id="bouton_ajouter" type="button">Ajouter un nouveau client</button>
             <table id="table_client" class="display">
                 <thead>

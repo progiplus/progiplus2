@@ -181,7 +181,7 @@
 							</tr>
 							<tr>
 								<td colspan="3"></td>
-								<td colspan="2"><button type="submit" class="btn-xl btn-valide">Facturation</button><button class="btn-xl btn-warning">Annulation</button></td>
+								<td colspan="2"><button type="button" class="btn-xl btn-valide">Facturation</button><button class="btn-xl btn-warning">Annulation</button></td>
 							</tr>
 						</tfoot>
 					</table>
@@ -192,5 +192,14 @@
 </body>
 <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../includes/scripts/datatables.js"></script>
-
+<script type="text/javascript">
+	$.ajax({
+    type: "POST",
+    url: "../factures/ajaxFacture.php",
+    data: {
+        id_devis: id_devis,
+        action: "changerActif"
+    }
+});
+</script>
 </html>

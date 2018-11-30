@@ -2,7 +2,6 @@
 	require_once('../config.php');
 	require_once('../functions.php');
 
-
 	$db = Database::connect();
 		$statement = $db->query('
 		SELECT 	id_client,code_client
@@ -34,7 +33,7 @@
 			<h1>Nouveau devis Devis</h1>
 
 			<section id="devis">
-				<form method="post" action="devis.php">
+				<form method="post" >
 					<div id="info">
 						<div id="infoEnt">
 							<?php
@@ -72,12 +71,12 @@
 						</thead>
 						<tbody>
 						 	<tr>
-								<td><input class="codeProduit" type="text" name="codeProduit" /></td>
+								<td><input class="codeProduit" type="text" name="codeProduit" value=""/></td>
 								<td><input class="designation" type="text" readonly/> </td>
-								<td><input class="quantiteProduit" type="number"/></td>
+								<td><input class="quantiteProduit" type="number" name="quantiteProduit"/></td>
 								<td><input class="prix" type="text" readonly/></td>
 								<td><input class="totalHTLigne" type="text" readonly/></td>
-								<td><button class="btn-circle btn-add btn-circle-md" type="button">+</button><button class="btn-circle btn-sup btn-circle-md" type="button">-</button></td>
+								<td><button class="btn-circle btn-sup btn-circle-md" type="button">-</button></td>
 							</tr>
 						</tbody>
 						<tfoot>
@@ -178,7 +177,7 @@
 				$('#corpsDevis>tfoot>tr .totalTTC').val(totalTTC);
 		}
 		function addNewLine(){
-			$('#corpsDevis>tbody').append('<tr><td><input class="codeProduit" type="text" name="codeProduit" class="codeProduit" autofocus/></td><td><input class="designation" type="text" readonly/> </td><td><input class="quantiteProduit" type="number"/></td><td><input class="prix" type="text" readonly/></td><td><input class="totalHTLigne" type="text" readonly/></td><td><button class="btn-circle btn-add btn-circle-md" type="button">+</button><button class="btn-circle btn-sup btn-circle-md" type="button">-</button></td></tr>');
+			$('#corpsDevis>tbody').append('<tr><td><input class="codeProduit" type="text" name="codeProduit" class="codeProduit" autofocus/></td><td><input class="designation" type="text" readonly/> </td><td><input class="quantiteProduit" type="number"/></td><td><input class="prix" type="text" readonly/></td><td><input class="totalHTLigne" type="text" value="0" readonly/></td><td><button class="btn-circle btn-sup btn-circle-md" type="button">-</button></td></tr>');
 
 			$('input.codeProduit:last').change(function (){
 				idLigne = $(this).parent().parent().index();
@@ -189,10 +188,7 @@
 			$('input.quantiteProduit:last').change(function (){
 				idLigne = $(this).parent().parent().index();
 				if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
-					majDevis();
 					addNewLine();
-				}else{
-					majDevis();
 				}
 			});
 			$('input.codeProduit:last').focus();
@@ -200,15 +196,49 @@
 			$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .btn-sup').click(function(){
 				idLigne = $(this).parent().parent().index();
 				supLigne(idLigne);
-				majDevis();
 			});
+			$('.quantiteProduit').change(function(){
+				idLigne = $(this).parent().parent().index();
+				if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
+					addNewLine();
+				}
+			});
+			majDevis();
+
+			test = $('.codeProduit:eq(' + idLigne + ').value');
+			console.log(test);
 		}
 
 		function supLigne(idLIgne){
-				$('#corpsDevis>tbody>tr:eq(' + idLigne + ')').remove();
-				majDevis();
+			$('#corpsDevis>tbody>tr:eq(' + idLigne + ')').remove();
+			majDevis();
 		}
 
+		function ajouterDevis() {
+
+			var tabLigne = new Array();
+			var lignesDevis = $('#corpsDevis>tbody>tr');
+			for(var i = 0; i < lignesDevis.length - 1; i++)
+			{
+				tabLigne.push(
+					{'ref' : $('.codeProduit', lignesDevis[i]).val(),
+					'quantite' : $('.quantiteProduit', lignesDevis[i]).val()}
+				);
+			}
+			var codeClient = $('#codeClient').val();
+
+			$.ajax({
+				type: "POST",
+				url: "ajaxDevis.php",
+				data: {
+					codeClient: codeClient,
+					lignes: tabLigne
+            	},
+				success: function(data){
+					console.log(data);
+				}
+			});
+		}
 		$('#codeClient').change(function() {
 			xhr = getXhrReq();
 			xhr.onreadystatechange = function() {
@@ -260,30 +290,31 @@
 		$('.codeProduit').change(function() {
 			idLigne = $(this).parent().parent().index();
 			valCodePdt = $(this).val();
+			majDevis();
 			updateContent(idLigne, valCodePdt);
 		});
 
-		$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .btn-add').click(function(){
-			addNewLine()
-		});
-		//supression ligne
-		$('#corpsDevis>tbody>tr:eq(' + idLigne + ') .btn-sup').click(function(){
-			idLigne = $(this).parent().parent().index();
-			supLigne(idLigne);
-			majDevis();
-			addNewLine()
+		$('.btn-valide').click(function(){
+			ajouterDevis();
 		});
 
+		$('.btn-sup').click(function() {
+			idLigne = $(this).parent().parent().index();
+			supLigne(idLigne);
+			addNewLine();
+			majDevis();
+
+		});
 
 		$('.quantiteProduit').change(function(){
 			idLigne = $(this).parent().parent().index();
 			if (idLigne == $('#corpsDevis>tbody>tr:last').index()){
-				majDevis();
 				addNewLine();
-			}else{
-				majDevis();
 			}
+			majDevis();
 		});
+
 	});
 </script>
+
 </html>

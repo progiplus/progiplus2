@@ -171,4 +171,26 @@ function changerActifProduit(){
 	Database::disconnect();
 }
 
+// $codeClient = $lignes = "";
+//
+// if(!empty($_POST)){
+// 	$isValid = true;
+// 	$numDevis = 0;
+// 	$codeClient = checkInput($_POST["codeClient"]);
+// 	$lignes = $_POST['lignes'];
+// 
+// 	for($i = 0; $i < count($lignes); $i++){
+// 		$ref = checkInput($lignes[$i]['ref']);
+// 		$qt = checkInput($lignes[$i]['quantite']);
+// 	}
+//
+// 	if(empty($codeClient)){
+// 		print('Code client ne peut pas etre vide');
+// 		$isValid=false;
+// 	}
+// 	if(empty($lignes)){
+// 		print('les lignes ne peut pas etre vide');
+// 		$isValid=false;
+// 	}
+
 ?>

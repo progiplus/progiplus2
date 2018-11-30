@@ -166,7 +166,7 @@ CREATE TABLE ligne_bl(
 );
 
 DELIMITER //
-create procedure proc_devistofacture(var_id_devis INT)
+CREATE PROCEDURE proc_devistofacture(var_id_devis INT)
 begin
 	DECLARE var_id_facture INT DEFAULT -1;
     
@@ -183,4 +183,21 @@ begin
 	WHERE l.id_devis = var_id_devis;
 
 end //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE proc_facturetobl(p_id_facture INT, p_id_adresse INT)
+BEGIN
+	DECLARE v_idBL INT;
+    
+	INSERT INTO bl (date_bl, actif, id_adresse, id_facture)
+	VALUE (current_date(), 1, p_id_adresse, p_id_facture);
+    
+	SET v_idBL = last_insert_id();
+    
+    INSERT INTO ligne_bl (quantite, id_bl, id_ligne_facture)
+	SELECT quantite, v_idBL, id_ligne_facture
+	FROM ligne_facture_client
+	WHERE id_facture = p_id_facture;
+END //
 DELIMITER ;

@@ -104,7 +104,7 @@ VALUES
 (7,700,"7",3,7),
 (7,700,"6",3,8);
 
-INSERT INTO facture(date_facture,actif,id_client,id_adresse,id_devis)
+/*INSERT INTO facture(date_facture,actif,id_client,id_adresse,id_devis)
 VALUES
 ("2018-10-22",1,1,1,1),
 ("2018-10-22",1,2,2,6),
@@ -122,4 +122,4 @@ VALUES
 ("2018-11-07",1,2,3);
 
 INSERT INTO ligne_bl(quantite, id_bl, id_ligne_facture)
-VALUES (3,1,1),(1,1,2),(5,2,4),(5,3,5),(5,4,5),(5,3,6),(5,4,6);
+VALUES (3,1,1),(1,1,2),(5,2,4),(5,3,5),(5,4,5),(5,3,6),(5,4,6);*/

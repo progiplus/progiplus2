@@ -67,7 +67,7 @@ $svgLogin = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.
 			<li><a href="/progiplus2/factures/index.php">Factures</a>
 				
 			</li>
-			<li><a href="#">Bon de livraison</a></li>
+			<li><a href="/progiplus2/bl/index.php">Bon de livraison</a></li>
     	</ul>
 	</div>
 </nav>

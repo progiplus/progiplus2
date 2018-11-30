@@ -12,7 +12,8 @@ $timeZone = new DateTimeZone('Europe/Paris');
 
 $conn = $db = Database::connect();
 
-$query = 'SELECT c.code_client, c.raison_sociale, f.id_facture, f.date_facture as "date", SUM(l.quantite * l.prixU) as "montant"
+$query = 'SELECT c.code_client, c.raison_sociale, f.id_facture, f.date_facture as "date",
+f.id_adresse as "idAdresse", SUM(l.quantite * l.prixU) as "montant"
 FROM facture f
 INNER JOIN client c ON c.id_client = f.id_client
 INNER JOIN ligne_facture_client l on l.id_facture = f.id_facture
@@ -36,7 +37,16 @@ while($donneeLigneFacture[] = $result->fetchObject()){}// 4
 
 $result->closeCursor(); // 5
 
-$date = new DateTime($donneeFacture->date,$timeZone)
+$date = new DateTime($donneeFacture->date,$timeZone);
+
+
+$state = $db->query(
+    "select count(bl.id_bl) as 'nb'
+from bl
+where bl.id_facture = ".$id.";");
+$nbBl = $state->fetchObject()->nb;
+$state->closeCursor();
+
 
 ?>
 
@@ -90,6 +100,46 @@ $date = new DateTime($donneeFacture->date,$timeZone)
 <div id="centre">
 	<strong>TOTAL HT : <?php echo $donneeFacture->montant."€" ?></strong><br>
 </div>
+<input id="idFacture" type="hidden" value="<?php echo $id; ?>">
+    <input id="idAdresse" type="hidden" value="<?php echo $donneeFacture->idAdresse; ?>">
+    <?php
+    if($nbBl == 0)
+    {
+        echo '<button id="btnCreationBL">Créer un BL</button>';
+    }
+    ?>
+    <script type="text/javascript" src="../includes/scripts/jquery-3.3.1.min.js"></script>
+    <script>
+		function verifierReponse(reponse) {
+			console.log(reponse);
+			if (reponse  == "true") {
+				alert("BL créé");
+				$('#btnCreationBL').remove();
+			} else {
+				alert("Erreur, un BL est probablement déjà créé pour cette facture");
+			}
+		}
+        
+        function creerBL()
+        {
+        	var idFacture = $('#idFacture').val();
+        	var idAdresse = $('#idAdresse').val();
+        	console.log(idFacture + " " + idAdresse);
+			$.ajax({
+				type: "POST",
+				url: "../factures/ajaxFacture.php",
+				data: {
+					idFacture: idFacture,
+					idAdresse: idAdresse,
+					action: "exporterEnBl"
+				},
+                success: verifierReponse
+			});
+			
+        }
+        
+        $('#btnCreationBL').click(creerBL);
+    </script>
 </section>
 </body>
 </html>

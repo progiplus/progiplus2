@@ -40,7 +40,7 @@
 			<?php include('../nav.php'); ?>
 
 			<section>
-				<h1>Liste Devis</h1>
+				<h1>Liste Devis <a href="devis.php"><button>Nouveau Devis</button></a></h1>
 				<table id="table_client" class="display">
 					<thead>
 						<tr>
@@ -63,22 +63,25 @@
 							print '<td>' . dateFr($devis->date) . '</td>';
 							print '<td>' . $devis->montant . '</td>';
 							print '<td>
-										<a href="view.php?id='.$devis->numDevis.'"><img src="../includes/assets/pencil.png" class="imageTableau" title="Modifier Devis" alt="bouton_modifier"/></a>
-							   			<a href="#"><img src="../includes/assets/cancel.png" class="imageTableau" title="Supprimer Devis" alt="bouton_supprimer"/></a>
+										<a href="view.php?id='.$devis->numDevis.'"><img src="../includes/assets/zoom.png" class="imageTableau" title="Modifier Devis" alt="bouton_modifier"/></a>
 
 							</td>';
 						print '</tr>';
 					}
 					?>
 					</tbody>
-					<tfoot>
-						<tr><td colspan="7"><a href="devis.php"><button>Nouveau Devis</button></a></td></tr>
 
-					</tfoot>
 				</table>
 			</section>
 		</div>
     </body>
     <script type="text/javascript"  src="../includes/scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript"  src="../includes/scripts/datatables.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#table_client').DataTable({
+				"language": getLangageDataTable("Devi", false)
+			});
+		});
+	</script>
 </html>

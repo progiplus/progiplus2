@@ -15,9 +15,10 @@
     <body>
         <div class="wrapper">
 			<?php include('nav.php'); ?>
-			 <img alt="" style="width:500px;" src="/progiplus2/includes/assets/entreprise.jpg">
+			
 			<section>
-				<h1>Progiplus</h1>
+			<h1>ProgiPlus</h1>
+			 <img alt="" style="width:740px; margin-left:10px; margin-top:23px; " src="/progiplus2/includes/assets/entre.jpg">
 			</section>
 		</div>
     </body>    

@@ -64,6 +64,7 @@
                     <div class="element"><label for="ville_MC">Ville:</label>
                         <input type="text" id="ville_MC" name="ville" value=""></div>
                 </fieldset>
+                </div>
 
                 <div class="element centrer">
                     <input id="id_client_MC" type="hidden" value="">
@@ -77,7 +78,7 @@
                     <input class="button" type="button" value="Ajouter un contact" id="btnModaleAjouterContact">
                     <input class="button" type="button" value="Gérer adresse" id="btnModaleAdresse">
                 </div>
-            </div>
+            
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
         <script type="text/javascript">
@@ -273,8 +274,6 @@
             }
 
             $(document).ready(init_MC);
-
-
         </script>
         </div>
     </div>

@@ -1,3 +1,14 @@
+#container{
+    display: flex;
+}
+#fsClient_MC, #fsContact_MC, #fsAdresse_MC{
+   border:2px solid grey;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius:8px;	
+}
+
+
 #modaleClient #civilite_MC label
 {
     width: fit-content;
@@ -18,7 +29,8 @@
 {
     display: inline-block;
     width: 55%;
-    min-width: 215px;
+    min-width: 210px;
+    margin-left: 5px;
 }
 
 #modaleClient .col_MC
@@ -41,4 +53,8 @@
 #modaleClient #fsClient_MC
 {
     margin-bottom: 5px;
+}
+#fsAdresse_MC{
+    margin-left: 5px;
+
 }

@@ -163,13 +163,16 @@ Database::disconnect();
 
 
 
-				function supprimerMoyenComm(event) {
-					if ($(event.target).parent().data('idMoyenComm') != "null") {
-						//si pas null, le moyencomm existait avant, et donc il faut faire une requête ajax pour le supprimer
-						//si requête ajax échoue, effacer = false
-					}
+				function supprimerMoyenComm(event)
+                {
+				    if($('#listeMoyenComm .moyenComm').length > 1) { // On ne supprime la ligne que si ce n'est pas la seule
+                        if ($(event.target).parent().data('idMoyenComm') != "null") {
+                            //si pas null, le moyencomm existait avant, et donc il faut faire une requête ajax pour le supprimer
+                            //si requête ajax échoue, ne pas supprimer la ligne
+                        }
 
-					$(event.target).parent().remove();
+                        $(event.target).parent().remove();
+                    }
 				}
 				$(document).ready(initModaleContact);
             </script>

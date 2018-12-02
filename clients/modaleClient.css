@@ -1,0 +1,44 @@
+#modaleClient #civilite_MC label
+{
+    width: fit-content;
+    padding-left: 5px;
+    padding-right: 15px;
+    min-width: fit-content;
+}
+
+#modaleClient fieldset label, #modaleClient #lblCivilite_MC
+{
+    display: inline-block;
+    text-align: right;
+    width: 35%;
+    min-width: 135px;
+}
+
+#modaleClient fieldset input[type="text"], #modaleClient #radioCivilite_MC
+{
+    display: inline-block;
+    width: 55%;
+    min-width: 215px;
+}
+
+#modaleClient .col_MC
+{
+    display: inline-block;
+    width: 49%;
+    min-width: 230px;
+}
+
+#modaleClient .element
+{
+    margin: 18px 0px;
+}
+
+#modaleClient legend
+{
+    margin-left: 15px;
+}
+
+#modaleClient #fsClient_MC
+{
+    margin-bottom: 5px;
+}

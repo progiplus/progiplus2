@@ -26,7 +26,7 @@ Database::disconnect();
 <!DOCTYPE html>
 <html>
 <head>
-    <title> Devis</title>
+    <title>Factures</title>
     <link rel="stylesheet" type="text/css" href="../includes/styles/datatables.css">
     <link rel="stylesheet" type="text/css" href="../includes/styles/style.css">
     <link rel="icon" href="../includes/assets/favicon.ico" />

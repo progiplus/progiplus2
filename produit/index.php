@@ -20,7 +20,8 @@
 	<head>
 		<title>Produit</title>
     	<link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/style.css">
-			<link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/datatables.css">
+		<link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/datatables.css">
+        <link rel="icon" href="../includes/assets/favicon.ico" />
       <meta charset="UTF-8">
   </head>
 

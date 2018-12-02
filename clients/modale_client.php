@@ -6,7 +6,7 @@
           //je recois quelque chose dans l'adresse
 
 ?>
-
+<link rel="stylesheet" type="text/css" href="modaleClient.css">
 <div id="modaleClient" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -16,61 +16,60 @@
         <div class="modal-body">
             <br>
             <div id="container">
+                <div class="col_MC">
+                    <fieldset id="fsClient_MC">
+                        <legend>Clients</legend>
+                        <div class="element"><label for="code">Code client :</label>
+                            <input type="text" id="code_client_MC" name="code_client" required value=""></div>
 
-                <div class="element"><label for="code">Code client :</label>
-                    <input type="int" id="code_client_MC" name="code_client" required value=""></div><br>
+                        <div class="element"><label for="raison_social">Raison sociale :</label>
+                            <input type="text" id="raison_sociale_MC" name="raison_sociale" required value=""></div>
 
+                        <div class="element" id="conteneurClientActif_MC"><label for="clientActif">Actif :</label>
+                            <input type="checkbox" id="clientActif_MC" name="clientActif" required value=""></div>
+                    </fieldset>
+                    <fieldset id="fsContact_MC">
+                        <legend>Contact</legend>
+                        <div class="element" id="civilite_MC"><span id="lblCivilite_MC">Civilité :</span>
+                            <span id="radioCivilite_MC">
+                                <input type="radio" name="gender_MC" value="2" class="civilite" /><label for="mme">Mme</label>
+                                <input type="radio" name="gender_MC" value="1" class="civilite" /><label for="mr">Mr</label>
+                            </span>
+                        </div>
 
-                <div class="element"><label for="raison_social">Raison sociale :</label>
-                    <input type="text" id="raison_sociale_MC" name="raison_sociale" required value=""></div><br>
+                        <div class="element"> <label for="nom">Nom :</label>
+                            <input type="text" id="nom_MC" name="nom" value=""></div>
 
-                <div class="element" id="conteneurClientActif_MC"><label for="clientActif">Actif :</label>
-                    <input type="checkbox" id="clientActif_MC" name="clientActif" required value=""><br><br></div>
+                        <div class="element"> <label for="prenom">Prénom :</label>
+                            <input type="text" id="prenom_MC" name="prenom" value=""></div>
 
-                <div class="element" id="civilite_MC"><span style="margin-left:20px;">Civilité : </span>
-                    <label for="mme">Mme</label><input type="radio" name="gender_MC" value="2" class="civilite" required />
+                        <div class="element"> <label for="service">Service :</label>
+                            <input type="text" id="service_MC" name="service" value=""></div>
+                    </fieldset>
+                </div>
 
+                <fieldset id="fsAdresse_MC" class="col_MC">
+                    <legend>Adresse de Facturation</legend>
+                    <div class="element"> <label for="nomAdresse">Nom d'adresse :</label>
+                        <input type="text" id="nomAdresse_MC" name="nomAdresse" value="" placeholder="Siège social, usine, entrepôt..."></div>
 
-                    <label for="mr">M.</label> <input type="radio" name="gender_MC" value="1" class="civilite" required /></div><br>
+                    <div class="element"> <label for="ligne1_MC">N° et nom de rue :</label>
+                        <input type="text" id="ligne1_MC" name="id_adresse_facturation" value=""></div>
+                    <div class="element"> <label for="ligne2_MC">Complément :</label>
+                        <input type="text" id="ligne2_MC" name="id_adresse_comp" value=""></div>
 
+                    <div class="element"> <label for="cPostale_MC">Code Postal :</label>
+                        <input type="text" id="cPostale_MC" name="postale" value=""></div>
 
-                <div class="element"> <label for="nom">Nom :</label>
-                    <input type="text" id="nom_MC" name="nom" value=""></div><br>
-
-
-                <div class="element"> <label for="prenom">Prénom :</label>
-                    <input type="text" id="prenom_MC" name="prenom" value=""></div><br><br>
-
-
-                <div class="element"> <label for="service">Service :</label>
-                    <input type="text" id="service_MC" name="service" value=""></div><br>
-                                   
-                                   
-                                    <div class="element"> <label for="nomAdresse">Nom d'adresse :</label>
-                    <input type="text" id="nomAdresse_MC" name="nomAdresse" value=""></div> <br>
-
-
-                <div class="element"> <label style="width:170px;" for="ligne2">Adresse de facturation :</label>
-                    <input type="text" style="margin-right:34px;" id="ligne1_MC" name="id_adresse_facturation" value=""></div><br>
-                <div class="element"> <label style="width:170px;" for="ligne2">Complément d'adresse :</label>
-                    <input type="text" style="margin-right:34px;" id="ligne2_MC" name="id_adresse_comp" value=""></div><br>
-
-
-
-
-                <div class="element"> <label for="cPostale">Code Postal :</label>
-                    <input type="text" id="cPostale_MC" name="postale" value=""></div> <br>
-
-                <div class="element"><label for="ville">Ville:</label>
-                    <input type="text" id="ville_MC" name="ville" value=""></div> <br><br>
-
-                <input id="id_client_MC" type="hidden" value="">
-                <input id="id_adresse_facturation_MC" type="hidden" value="">
-                <input id="id_contact_MC" type="hidden" value="">
-                <input id="id_ville_MC" type="hidden" value="">
-
+                    <div class="element"><label for="ville_MC">Ville:</label>
+                        <input type="text" id="ville_MC" name="ville" value=""></div>
+                </fieldset>
 
                 <div class="element centrer">
+                    <input id="id_client_MC" type="hidden" value="">
+                    <input id="id_adresse_facturation_MC" type="hidden" value="">
+                    <input id="id_contact_MC" type="hidden" value="">
+                    <input id="id_ville_MC" type="hidden" value="">
                     <input class="button" type="button" value="Ajouter" id="btnAjouterClient">
                     <input class="button" type="button" value="Modifier" id="btnModifierClient">
                     <input class="button" type="reset" value="Annuler" id="btnAnnulerClient">
@@ -78,13 +77,7 @@
                     <input class="button" type="button" value="Ajouter un contact" id="btnModaleAjouterContact">
                     <input class="button" type="button" value="Gérer adresse" id="btnModaleAdresse">
                 </div>
-
-
-
-
-
             </div>
-        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
         <script type="text/javascript">
@@ -274,9 +267,15 @@
                 });
             }
 
+            function fixColHeight()
+            {
+                $('#modaleClient .col_MC')
+            }
+
             $(document).ready(init_MC);
 
 
         </script>
+        </div>
     </div>
 </div>

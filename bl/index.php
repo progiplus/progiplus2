@@ -10,7 +10,8 @@ $statement = $db->query('
 				client.raison_sociale AS rs,
 				CONCAT(civilite.libelle," ",contact.nom," ",contact.prenom) AS nom_cli,
 				bl.date_bl AS date,
-				bl.id_bl AS numDevis
+				bl.id_bl AS numDevis,
+		        f.id_facture AS numFacture
 		FROM contact
 		INNER JOIN client ON client.id_client = contact.id_client
 		INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite
@@ -26,7 +27,7 @@ Database::disconnect();
 <!DOCTYPE html>
 <html>
 <head>
-    <title> Devis</title>
+    <title>Bons de livraison</title>
     <link rel="stylesheet" type="text/css" href="../includes/styles/datatables.css">
     <link rel="stylesheet" type="text/css" href="../includes/styles/style.css">
     <link rel="icon" href="../includes/assets/favicon.ico" />
@@ -60,7 +61,7 @@ Database::disconnect();
 				print '<td>' . identiteClient($bl->rs,$bl->nom_cli) .'</td>';
 				print '<td>' . dateFr($bl->date) . '</td>';
 				print '<td>
-                            <a href="detailFacture.php?id='.$bl->numDevis.'">
+                            <a href="detailFacture.php?id='.$bl->numFacture.'">
                                 <img src="../includes/assets/zoom.png" class="imageTableau" title="Afficher Facture" alt="afficher facture"/>
                             </a>
 							</td>';

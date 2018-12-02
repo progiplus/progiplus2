@@ -71,7 +71,7 @@ inner join client on devis.id_client = client.id_client where client.id_client= 
 group by devis.id_devis;");
 Database::disconnect();
 
-
+$client = $sclient->fetchObject();
 ?>
 
 
@@ -79,7 +79,7 @@ Database::disconnect();
 <html>
 
 <head>
-    <title> Client</title>
+    <title>Détail client <?php echo $client->code ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -101,20 +101,14 @@ Database::disconnect();
                 <h2>Informations Client:</h2>
 
                 <div id="cadre">
-
                     <p>
-
                         <?php
-
-					$client = $sclient->fetchObject();
-                            print 'Code client :'.$client->code.'';
-                            print '</br>Raison Sociale: '.$client->rs.'';
-                            print '</br>Actif ou non actif: '.$client->actif.'';
-                            print '</br><Adresse de Facturation: >'.$client->ligne1.', '.$client->ligne2.', '.$client->cp.' '.$client->ville.'';
-                        print '';
-
-
-					?>
+                            print 'Code client : '.$client->code.'';
+                            print '</br>Raison Sociale : '.$client->rs.'';
+                            print '</br>Actif ou non actif : '.$client->actif.'';
+                            print '</br><Adresse de Facturation : >'.$client->ligne1.', '.$client->ligne2.', '.$client->cp.' '.$client->ville.'';
+                            print '';
+					    ?>
                     </p>
                 </div>
             </div>

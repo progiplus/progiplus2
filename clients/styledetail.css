@@ -8,17 +8,12 @@
 background: radial-gradient(circle, rgba(255,225,149,1) 0%, rgba(38,64,64,1) 100%);*/
     background-color: rgba(67, 112, 112, 0.2) ;
     color:white;
-    box-shadow: 6px 6px 0px #aaa; 
-    height: 200px;
     margin: 0 auto;
     text-align: center;
-    line-height: 40px;
+    line-height: 30px;
     padding: 1em;
     width: 350px;
-    max-width: 620px;
     border: 1px solid grey;
-    border-bottom-style: none;
-    border-right-style: none;
     margin-bottom: 20px;
 
 }
@@ -26,6 +21,7 @@ background: radial-gradient(circle, rgba(255,225,149,1) 0%, rgba(38,64,64,1) 100
 #cadre p {
     font-size: 16px;
     font-weight: bold;
+    margin: 0px;
 }
 
 h2 {
@@ -35,10 +31,7 @@ h2 {
 }
 
 h3{
-    box-shadow: 8px 8px 0px #aaa; 
-    text-align: center;  
-  
-    
+    text-align: center;
 }
 thead{
      padding:15px;

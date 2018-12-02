@@ -67,9 +67,9 @@ $state->closeCursor();
 <section>
 
 <h1>Facture n°<?php echo $donneeFacture->id_facture; ?></h1>
-<div id="cadre"><span class="tiers"><strong>Compte client : </strong><?php echo $donneeFacture->code_client; ?></span>
-<span class="tiers"><strong>Client : </strong><?php echo $donneeFacture->raison_sociale; ?></span>
-<span class="tiers"><strong>Date : </strong><?php echo $date->format("d/m/Y") ?></span></div> 
+<div id="cadre"><div><strong>Compte client : </strong><?php echo $donneeFacture->code_client; ?></div>
+<div><strong>Client : </strong><?php echo $donneeFacture->raison_sociale; ?></div>
+<div><strong>Date : </strong><?php echo $date->format("d/m/Y") ?></div></div>
 
 <h3></h3>
 <table>

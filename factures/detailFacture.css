@@ -2,8 +2,6 @@
 #cadre {
     background-color: rgba(67, 112, 112, 0.2) ;
     color:white;
-    box-shadow: 6px 6px 0px #aaa; 
-    height: 120px;
     margin: 0 auto;
     text-align: center;
     line-height: 40px;
@@ -11,18 +9,13 @@
     width: 180px;
     max-width: 620px;
     border: 1px solid grey;
-    border-bottom-style: none;
-   margin-top: -30px;
+    margin-top: -30px;
 }
 
 h1{
     margin-top: 50px;
 }
 
-.tiers{
-    margin-bottom: 20px;
-    color: white;
-}
 thead{
 padding:15px;
 }

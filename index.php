@@ -15,7 +15,7 @@
     <body>
         <div class="wrapper">
 			<?php include('nav.php'); ?>
-
+			 <img alt="" style="width:500px;" src="/progiplus2/includes/assets/entreprise.jpg">
 			<section>
 				<h1>Progiplus</h1>
 			</section>

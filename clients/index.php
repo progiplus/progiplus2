@@ -33,6 +33,7 @@ $statement = $db->query('SELECT client.id_client as id_client,
 			INNER JOIN civilite ON contact.id_civilite = civilite.id_civilite 
             GROUP BY client.code_client
             ORDER BY client.actif DESC, client.code_client ASC;');
+
 Database::disconnect();
 
 
@@ -47,6 +48,7 @@ Database::disconnect();
     <link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/style.css">
     <link rel="stylesheet" type="text/css" href="clientstyle.css">
     <link rel="stylesheet" type="text/css" href="/progiplus2/includes/styles/datatables.css">
+    <link rel="icon" href="../includes/assets/favicon.ico" />
     <meta charset="UTF-8">
 </head>
 
@@ -60,7 +62,7 @@ Database::disconnect();
         ?>
 
         <section>
-            <h1>Progiplus</h1>
+            <h1>Liste des Clients</h1>
             <button id="bouton_ajouter" type="button">Ajouter un nouveau client</button>
             <table id="table_client" class="display">
                 <thead>
@@ -121,7 +123,7 @@ Database::disconnect();
                     console.log(id_client);
                     var val = $(this).val();
                     console.log(val);
-                    var apply = $(this).is(':checked') ? true : false;
+                    var apply = $(this).is(':checked');
                     console.log(apply);
                     $.ajax({
                         type: "POST",
@@ -134,20 +136,11 @@ Database::disconnect();
                         }
 
                     });
-                    }/*else{
-                       <?php
-                        if($client->actif== 1){
-                       ?>
-                        $("#table_client input:checkbox").prop('checked', true);
-                  <?php
-                        }else{
-                   ?>
-                        $("#table_client input:checkbox").prop('checked', false);
-                 <?php
-                        }
-                        ?>
-
-                    }*/
+                    }
+                    else
+                    {
+                    	$(this).prop("checked", !$(this).is(':checked'));
+                    }
 
 
 

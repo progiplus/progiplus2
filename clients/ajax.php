@@ -2,20 +2,22 @@
 require_once('../config.php');
 require_once('../functions.php');
 
-$action = $_POST['action'];
+$action = checkInput($_POST['action']);
 
 switch($action)
 {
 	case "changerActif":
-		changerActifProduit();
+		changerActifClient();
 	break;
     case"ajouterClient":
         ajouterClient();
     break;
-
     case"modifierClient":
         modifierClient();
     break;
+	case"ajouterContact":
+		ajouterContact();
+		break;
     case"modifierContact":
         modifierContact();
     break;
@@ -27,16 +29,18 @@ switch($action)
     break;
 }
 
-function changerActifProduit()
+function changerActifClient()
 {
-	$id = $_POST['id_client'];
-	$val = $_POST['val'];
-	$apply = $_POST['apply'];
+	$id = checkInput($_POST['id_client']);
+	$val = checkInput($_POST['val']);
+	$apply = checkInput($_POST['apply']);
 
-	$actif = Database::connect();
-	$state = $actif->query("UPDATE client
+	$db = Database::connect();
+	$state = $db->query("UPDATE client
 	SET actif = $apply
 	where id_client =$id");
+	$state->fetchObject();
+	$state->closeCursor();
 }
 
 function ajouterClient()
@@ -47,17 +51,17 @@ function ajouterClient()
         {
             $db = Database::connect();
 
-            $codeClient=$_POST['code_client'];
-            $raisonSociale=$_POST['raison_sociale'];
-            $civilite=$_POST['civilite'];
-            $nom=$_POST['nom'];
-            $prenom=$_POST['prenom'];
-            $service=$_POST['service'];
-            $ligne1=$_POST['ligne1'];
-            $ligne2=$_POST['ligne2'];
-            $nomAdresse=$_POST['nomAdresse'];
-            $cPostale=$_POST['cPostale'];
-            $ville = $_POST['ville'];
+            $codeClient=checkInput($_POST['code_client']);
+            $raisonSociale=checkInput($_POST['raison_sociale']);
+            $civilite=checkInput($_POST['civilite']);
+            $nom=checkInput($_POST['nom']);
+            $prenom=checkInput($_POST['prenom']);
+            $service=checkInput($_POST['service']);
+            $ligne1=checkInput($_POST['ligne1']);
+            $ligne2=checkInput($_POST['ligne2']);
+            $nomAdresse=checkInput($_POST['nomAdresse']);
+            $cPostale=checkInput($_POST['cPostale']);
+            $ville = checkInput($_POST['ville']);
 
             $SQLville = 'INSERT INTO ville(nom_ville, cp_ville) VALUE ("'.$ville.'","'.$cPostale.'");';
             $result = $db->query($SQLville);
@@ -99,63 +103,6 @@ function ajouterClient()
     }
 }
 
-function modifierContact()
-{
-     try
-    {
-        if(!empty($_POST))
-        {
-            $db = Database::connect();
-
-            $codeClient=$_POST['code_client'];
-            $civilite=$_POST['civilite'];
-            $nom=$_POST['nom'];
-            $prenom=$_POST['prenom'];
-            $service=$_POST['service'];
-            $ligne1=$_POST['ligne1'];
-            $ligne2=$_POST['ligne2'];
-            $nomAdresse=$_POST['nomAdresse'];
-            $cPostale=$_POST['cPostale'];
-            $ville = $_POST['ville'];
-            $idVille = $_POST['id_ville'];
-            $idAdresseFacturation = $_POST['id_adresse_facturation'];
-            $actif_client =$_POST['clientActif'];
-            $idContact =$_POST['id_contact'];
-            $idClient=$_POST['id_client'];
-
-            $SQLville = "UPDATE ville SET nom_ville = '$ville', cp_ville='$cPostale'  WHERE id_ville = $idVille;";
-            $result = $db->query($SQLville);
-            $result->fetchObject();
-
-            $result->closeCursor();
-
-            $SQLadresse = "UPDATE adresse SET ligne1='$ligne1', ligne2='$ligne2'  WHERE id_adresse=$idAdresseFacturation;";
-            $result = $db->query($SQLadresse);
-            $result->fetchObject();
-            $result->closeCursor();
-
-            $SQLlisteadresse = "UPDATE liste_adresse SET libelle= '$nomAdresse' WHERE id_adresse=$idAdresseFacturation;";
-            $result = $db->query($SQLlisteadresse);
-            $result->fetchObject();
-            $result->closeCursor();
-
-            $SQLcontact = "UPDATE contact SET nom='$nom', prenom='$prenom', service='$service' , id_civilite=$civilite WHERE id_contact=$idContact;";
-            $result = $db->query($SQLcontact);
-            $result->fetchObject();
-            $result->closeCursor();
-            print("true");
-        }
-        else
-        {
-            print("false");
-        }
-    }
-    catch(Exception $e)
-    {
-        print("false");
-    }
-}
-
 function modifierClient()
 {
      try
@@ -164,22 +111,22 @@ function modifierClient()
         {
             $db = Database::connect();
 
-            $codeClient=$_POST['code_client'];
-            $raisonSociale=$_POST['raison_sociale'];
-            $civilite=$_POST['civilite'];
-            $nom=$_POST['nom'];
-            $prenom=$_POST['prenom'];
-            $service=$_POST['service'];
-            $ligne1=$_POST['ligne1'];
-            $ligne2=$_POST['ligne2'];
-            $nomAdresse=$_POST['nomAdresse'];
-            $cPostale=$_POST['cPostale'];
-            $ville = $_POST['ville'];
-            $idVille = $_POST['id_ville'];
-            $idAdresseFacturation = $_POST['id_adresse_facturation'];
-            $actif_client =$_POST['clientActif'];
-            $idContact =$_POST['id_contact'];
-            $idClient=$_POST['id_client'];
+            $codeClient=checkInput($_POST['code_client']);
+            $raisonSociale=checkInput($_POST['raison_sociale']);
+            $civilite=checkInput($_POST['civilite']);
+            $nom=checkInput($_POST['nom']);
+            $prenom=checkInput($_POST['prenom']);
+            $service=checkInput($_POST['service']);
+            $ligne1=checkInput($_POST['ligne1']);
+            $ligne2=checkInput($_POST['ligne2']);
+            $nomAdresse=checkInput($_POST['nomAdresse']);
+            $cPostale=checkInput($_POST['cPostale']);
+            $ville = checkInput($_POST['ville']);
+            $idVille = checkInput($_POST['id_ville']);
+            $idAdresseFacturation = checkInput($_POST['id_adresse_facturation']);
+            $actif_client =checkInput($_POST['clientActif']);
+            $idContact =checkInput($_POST['id_contact']);
+            $idClient=checkInput($_POST['id_client']);
 
 
             $SQLville = "UPDATE ville SET nom_ville = '$ville', cp_ville='$cPostale'  WHERE id_ville = $idVille;";
@@ -220,10 +167,120 @@ function modifierClient()
     }
 }
 
+function ajouterContact()
+{
+	try
+	{
+		if(!empty($_POST))
+		{
+			$db = Database::connect();
+			
+			$idClient=checkInput($_POST['idClient']);
+			$civilite=checkInput($_POST['civilite_contact']);
+			$nom=checkInput($_POST['nom_contact']);
+			$prenom=checkInput($_POST['prenom_contact']);
+			$service=checkInput($_POST['service_contact']);
+			$tabMoyensCom = $_POST['moyensCom'];
+			
+			$SQLcontact = 'INSERT INTO contact (nom, prenom, service,id_civilite, id_client)
+				VALUE ("'.$nom.'","'.$prenom.'","'.$service.'",'.$civilite.','.$idClient.');';
+			$result = $db->query($SQLcontact);
+			$result->fetchObject();
+			$idContact = $db->lastInsertId();
+			$result->closeCursor();
+			
+			$type = $valeur = $idMoyenCom = -1;
+			
+			$stmt = $db->prepare("INSERT INTO moyen_comm(valeur, id_type_moyen_comm) VALUES (:valeur, :type)");
+			$stmt->bindParam(':type', $type);
+			$stmt->bindParam(':valeur', $valeur);
+			
+			$stmt2 = $db->prepare("INSERT INTO contact_comm(id_contact, id_mcomm) VALUES (:idContact, :idMoyen)");
+			$stmt2->bindParam(':idContact', $idContact);
+			$stmt2->bindParam(':idMoyen', $idMoyenCom);
+			
+			foreach($tabMoyensCom as $moyen)
+			{
+				$type = checkInput($moyen['type']);
+				$valeur = checkInput($moyen['valeur']);
+				$stmt->execute();
+				$idMoyenCom = $db->lastInsertId();
+				$stmt2->execute();
+			}
+			
+			$stmt->closeCursor();
+			$stmt2->closeCursor();
+            print("true");
+        }
+		else
+		{
+			print("false");
+		}
+	}
+	catch(Exception $e)
+	{
+		print("false");
+	}
+}
+
+function modifierContact()
+{
+	try
+	{
+		if(!empty($_POST))
+		{
+			$db = Database::connect();
+			
+			$civilite=checkInput($_POST['civilite']);
+			$nom=checkInput($_POST['nom']);
+			$prenom=checkInput($_POST['prenom']);
+			$service=checkInput($_POST['service']);
+			$ligne1=checkInput($_POST['ligne1']);
+			$ligne2=checkInput($_POST['ligne2']);
+			$nomAdresse=checkInput($_POST['nomAdresse']);
+			$cPostale=checkInput($_POST['cPostale']);
+			$ville = checkInput($_POST['ville']);
+			$idVille = checkInput($_POST['id_ville']);
+			$idAdresseFacturation = checkInput($_POST['id_adresse_facturation']);
+			$idContact =checkInput($_POST['id_contact']);
+			
+			$SQLville = "UPDATE ville SET nom_ville = '$ville', cp_ville='$cPostale'  WHERE id_ville = $idVille;";
+			$result = $db->query($SQLville);
+			$result->fetchObject();
+			
+			$result->closeCursor();
+			
+			$SQLadresse = "UPDATE adresse SET ligne1='$ligne1', ligne2='$ligne2'  WHERE id_adresse=$idAdresseFacturation;";
+			$result = $db->query($SQLadresse);
+			$result->fetchObject();
+			$result->closeCursor();
+			
+			$SQLlisteadresse = "UPDATE liste_adresse SET libelle= '$nomAdresse' WHERE id_adresse=$idAdresseFacturation;";
+			$result = $db->query($SQLlisteadresse);
+			$result->fetchObject();
+			$result->closeCursor();
+			
+			$SQLcontact = "UPDATE contact SET nom='$nom', prenom='$prenom', service='$service' , id_civilite=$civilite WHERE id_contact=$idContact;";
+			$result = $db->query($SQLcontact);
+			$result->fetchObject();
+			$result->closeCursor();
+			print("true");
+		}
+		else
+		{
+			print("false");
+		}
+	}
+	catch(Exception $e)
+	{
+		print("false");
+	}
+}
+
 function getAdresseClient()
 {
     $db = Database::connect();
-    $idClient = $_POST['idClient'];
+    $idClient = checkInput($_POST['idClient']);
     $SQL = "select  liste_adresse.libelle, adresse.id_adresse, adresse.ligne1, adresse.ligne2, ville.cp_ville, ville.nom_ville
     from liste_adresse
     inner join client on client.id_client = liste_adresse.id_client
@@ -244,13 +301,13 @@ function getAdresseClient()
 
 function gererAdresse(){
             $db = Database::connect();
-            $ligne1=$_POST['ligne1'];
-            $ligne2=$_POST['ligne2'];
-            $nomAdresse=$_POST['nomAdresse'];
-            $cPostale=$_POST['cPostale'];
-            $ville = $_POST['ville'];
-            $idAdresseFacturation = $_POST['id_adresse_facturation'];
-            $idClient=$_POST['id_client'];
+            $ligne1=checkInput($_POST['ligne1']);
+            $ligne2=checkInput($_POST['ligne2']);
+            $nomAdresse=checkInput($_POST['nomAdresse']);
+            $cPostale=checkInput($_POST['cPostale']);
+            $ville = checkInput($_POST['ville']);
+            $idAdresseFacturation = checkInput($_POST['id_adresse_facturation']);
+            $idClient=checkInput($_POST['id_client']);
 
             $SQLclient = "update client 
             set id_adresse_facturation = $idAdresseFacturation

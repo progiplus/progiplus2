@@ -34,8 +34,6 @@ from adresse
 inner join liste_adresse on adresse.id_adresse = liste_adresse.id_adresse
 inner join ville on ville.id_ville = adresse.id_ville
 inner join client on liste_adresse.id_client = client.id_client
-inner join contact on client.id_client = contact.id_client
-
 where client.id_client =$id");
 Database::disconnect();
 
@@ -127,7 +125,7 @@ Database::disconnect();
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Code client</th>
+<!--                                <th>Code client</th>-->
                                 <th>Civilité</th>
                                 <th>Nom client</th>
                                 <th>Prenom client</th>
@@ -139,7 +137,7 @@ Database::disconnect();
 
 					while($client = $contact->fetchObject()){
                         print '<tr>';
-                            print '<td class="col-xs-2">'.$client->code_cli.'</td>';
+                            //print '<td class="col-xs-2">'.$client->code_cli.'</td>';
                             print '<td class="col-xs-2">'.$client->civilite.'</td>';
                             print '<td class="col-xs-2">'.$client->nom.'</td>';
                             print '<td class="col-xs-2">'.$client->prenom.'</td>';

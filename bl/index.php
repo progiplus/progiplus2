@@ -61,7 +61,7 @@ Database::disconnect();
 				print '<td>' . identiteClient($bl->rs,$bl->nom_cli) .'</td>';
 				print '<td>' . dateFr($bl->date) . '</td>';
 				print '<td>
-                            <a href="detailFacture.php?id='.$bl->numFacture.'">
+                            <a href="../factures/detailFacture.php?id='.$bl->numFacture.'">
                                 <img src="../includes/assets/zoom.png" class="imageTableau" title="Afficher Facture" alt="afficher facture"/>
                             </a>
 							</td>';

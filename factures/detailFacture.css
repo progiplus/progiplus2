@@ -47,3 +47,23 @@ h3{
     text-align: center;  
     border-left-style: none;
 }
+
+section button:hover {
+    background: rgb(255,225,149);
+    background: radial-gradient(circle, rgba(255,225,149,1) 0%, rgba(38,64,64,1) 100%);
+    color:#262626;
+    font-weight: bold;
+    margin: 5px;
+    width: 130px;
+    height: 30px;
+}
+
+section button {
+    justify-content: space-between;
+    background-color: white;
+    color: #262626;;
+    font-weight: bold;
+    margin:5px;
+    width: 130px;
+    height: 30px;
+}

@@ -24,10 +24,10 @@ VALUES
 ("ClPro30","Le roi du bricolage",true,4);
 
 INSERT INTO contact (nom,prenom,service,id_client,id_civilite)
-VALUES 	("Duck","Donald",NULL,1,1),
-		("Baltazar","Picsou","PDG",2,1),
-		("Duck","Daisy",NULL,3,2),
-		("Duck","Fifi","Comptable",4,1);
+VALUES 	("Dupont","Pierre",NULL,1,1),
+		("Martin","Jeanne","PDG",2,1),
+		("Bernard","Marie",NULL,3,2),
+		("Durand","Paul","Comptable",4,1);
 INSERT INTO type_moyen_comm (libelle)
 VALUES ("telephone"),("Fax"),("Mobile"),("email");
 
